@@ -27,6 +27,7 @@ namespace Alansar.Controllers
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
             return await _context.Students
+                .Include(x => x.Grade)
                 .OrderByDescending(a => a.Created)
                 .ToListAsync();
         }

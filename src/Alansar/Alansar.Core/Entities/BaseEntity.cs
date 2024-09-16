@@ -18,8 +18,8 @@ namespace Alansar.Core.Entities
         protected BaseEntity()
         {
             IsDeleted = false;
-            Created = DateTime.Now;
-            //Created = DateTime.UtcNow;
+            //Created = DateTime.Now;
+            Created = DateTime.UtcNow;
         }
     }
 }

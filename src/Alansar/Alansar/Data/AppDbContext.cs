@@ -42,11 +42,11 @@ namespace Alansar.Data
             );
 
             builder.Entity<Room>().HasData(
-                new Room { Id = 1, RoomNumber = "101", Type = "Single", IsAvailable = true, Price = 2000 },
-                new Room { Id = 2, RoomNumber = "102", Type = "Double", IsAvailable = true, Price = 3000 },
-                new Room { Id = 3, RoomNumber = "103", Type = "Single", IsAvailable = false, Price = 6000 },
-                new Room { Id = 4, RoomNumber = "104", Type = "Double", IsAvailable = true, Price = 9000 },
-                new Room { Id = 5, RoomNumber = "105", Type = "Single", IsAvailable = false, Price = 4000 }
+                new Room { Id = 1, RoomNumber = "101", Capacity = 24, Type = "Single", IsAvailable = true, Price = 2000 },
+                new Room { Id = 2, RoomNumber = "102", Capacity = 20, Type = "Double", IsAvailable = true, Price = 3000 },
+                new Room { Id = 3, RoomNumber = "103", Capacity = 54, Type = "Single", IsAvailable = false, Price = 6000 },
+                new Room { Id = 4, RoomNumber = "104", Capacity = 05, Type = "Double", IsAvailable = true, Price = 9000 },
+                new Room { Id = 5, RoomNumber = "105", Capacity = 32, Type = "Single", IsAvailable = false, Price = 4000 }
                 // Add up to 10 rooms
             );
 
@@ -66,22 +66,22 @@ namespace Alansar.Data
             //    new Session { Id = 2, Year = "2021/2022", StartDate = new DateTime(2021,9,12, 0, 0, 0, DateTimeKind.Utc), EndDate = new DateTime(2022, 9, 12, 0, 0, 0, DateTimeKind.Utc) }
             //);
 
-            builder.Entity<Session>().HasData(
-                new Session
-                {
-                    Id = 1,
-                    Year = "2022/2023",
-                    StartDate = new DateTime(2022, 9, 12),  // Force conversion to UTC
-                    EndDate = new DateTime(2023, 9, 12)     // Force conversion to UTC
-                },
-                new Session
-                {
-                    Id = 2,
-                    Year = "2021/2022",
-                    StartDate = new DateTime(2021, 9, 12).ToUniversalTime(),  // Force conversion to UTC
-                    EndDate = new DateTime(2022, 9, 12).ToUniversalTime()     // Force conversion to UTC
-                }
-            );
+            //builder.Entity<Session>().HasData(
+            //    new Session
+            //    {
+            //        Id = 1,
+            //        Year = "2022/2023",
+            //        StartDate = new DateTime(2022, 9, 12),  // Force conversion to UTC
+            //        EndDate = new DateTime(2023, 9, 12)     // Force conversion to UTC
+            //    },
+            //    new Session
+            //    {
+            //        Id = 2,
+            //        Year = "2021/2022",
+            //        StartDate = new DateTime(2021, 9, 12).ToUniversalTime(),  // Force conversion to UTC
+            //        EndDate = new DateTime(2022, 9, 12).ToUniversalTime()     // Force conversion to UTC
+            //    }
+            //);
 
 
 

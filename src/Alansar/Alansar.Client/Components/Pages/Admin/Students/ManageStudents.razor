@@ -30,6 +30,7 @@
             <MudTh>First Name</MudTh>
             <MudTh>Last Name</MudTh>
             <MudTh>Email</MudTh>
+            <MudTh>Class</MudTh>
             <MudTh>Date of Birth</MudTh>
             <MudTh>Actions</MudTh>
         </HeaderContent>
@@ -37,6 +38,7 @@
             <MudTd>@context.FirstName</MudTd>
             <MudTd>@context.LastName</MudTd>
             <MudTd>@context.Email</MudTd>
+            <MudTd>@context.Grade?.Name</MudTd>
             <MudTd>@context.DateOfBirth.ToShortDateString()</MudTd>
             <MudTd>
                 <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@(async () => await OpenEditStudentDialog(context))" StartIcon="@Icons.Material.Filled.Edit" Class="mr-2">Edit</MudButton>
