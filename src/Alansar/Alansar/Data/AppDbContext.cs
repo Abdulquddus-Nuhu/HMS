@@ -34,11 +34,12 @@ namespace Alansar.Data
                 .WithOne()
                 .HasForeignKey<Student>(s => s.UserId);
 
+
             // Seed default data
-            builder.Entity<Student>().HasData(
-                new Student { Id = 1, FirstName = "Student 1", LastName = "Student 1", Email = "student1@example.com", UserId = 3 },
-                new Student { Id = 2, FirstName = "Student 2", LastName = "Student 2", Email = "student2@example.com", UserId = 4 }
-                // Add up to 10 students
+            builder.Entity<Grade>().HasData(
+                new Grade { Id = 1, Name = "JSS1" },
+                new Grade { Id = 2, Name = "JSS2" },
+                new Grade { Id = 3, Name = "JSS3" }
             );
 
             builder.Entity<Room>().HasData(
@@ -54,34 +55,28 @@ namespace Alansar.Data
                 new DiningSpace { Id = 1, Name = "Dining Hall 1", Capacity = 100 },
                 new DiningSpace { Id = 2, Name = "Dining Hall 2", Capacity = 150 }
             );
-            
-            builder.Entity<Grade>().HasData(
-                new Grade { Id = 1, Name = "JSS1" },
-                new Grade { Id = 2, Name = "JSS2" },
-                new Grade { Id = 3, Name = "JSS3" }
-            );
 
             //builder.Entity<Session>().HasData(
             //    new Session { Id = 1, Year = "2022/2023", StartDate = new DateTime(2022, 9, 12, 0, 0, 0, DateTimeKind.Utc), EndDate = new DateTime(2023,9,12, 0, 0, 0, DateTimeKind.Utc) },
             //    new Session { Id = 2, Year = "2021/2022", StartDate = new DateTime(2021,9,12, 0, 0, 0, DateTimeKind.Utc), EndDate = new DateTime(2022, 9, 12, 0, 0, 0, DateTimeKind.Utc) }
             //);
 
-            //builder.Entity<Session>().HasData(
-            //    new Session
-            //    {
-            //        Id = 1,
-            //        Year = "2022/2023",
-            //        StartDate = new DateTime(2022, 9, 12),  // Force conversion to UTC
-            //        EndDate = new DateTime(2023, 9, 12)     // Force conversion to UTC
-            //    },
-            //    new Session
-            //    {
-            //        Id = 2,
-            //        Year = "2021/2022",
-            //        StartDate = new DateTime(2021, 9, 12).ToUniversalTime(),  // Force conversion to UTC
-            //        EndDate = new DateTime(2022, 9, 12).ToUniversalTime()     // Force conversion to UTC
-            //    }
-            //);
+            builder.Entity<Session>().HasData(
+                new Session
+                {
+                    Id = 1,
+                    Year = "2022/2023",
+                    StartDate = new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc),
+                    EndDate = new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc)
+                },
+                new Session
+                {
+                    Id = 2,
+                    Year = "2021/2022",
+                    StartDate = new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
+                    EndDate = new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc)
+                }
+            );
 
 
 
@@ -96,7 +91,8 @@ namespace Alansar.Data
                 new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin1Pass"), SecurityStamp = string.Empty },
                 new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin2Pass"), SecurityStamp = string.Empty },
                 new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Student1Pass"), SecurityStamp = string.Empty },
-                new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Student2Pass"), SecurityStamp = string.Empty }
+                new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Student2Pass"), SecurityStamp = string.Empty },
+                new User { Id = 5, RoleType = RoleType.Student, FirstName = "Student3", UserName = "student3@example.com", NormalizedUserName = "STUDENT3@EXAMPLE.COM", Email = "student3@example.com", NormalizedEmail = "STUDENT3@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Student3Pass"), SecurityStamp = string.Empty }
             );
 
             builder.Entity<IdentityUserRole<int>>().HasData(
@@ -104,6 +100,13 @@ namespace Alansar.Data
                 new IdentityUserRole<int> { UserId = 2, RoleId = 1 },
                 new IdentityUserRole<int> { UserId = 3, RoleId = 2 },
                 new IdentityUserRole<int> { UserId = 4, RoleId = 2 }
+            );
+
+            builder.Entity<Student>().HasData(
+                new Student { Id = 1, FirstName = "Student 1", LastName = "Student 1", Email = "student1@example.com", UserId = 3, GradeId = 2, DateOfBirth = new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc) },
+                new Student { Id = 2, FirstName = "Student 2", LastName = "Student 2", Email = "student2@example.com", UserId = 4, GradeId = 3, DateOfBirth = new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc) },
+                new Student { Id = 3, FirstName = "Student 3", LastName = "Student 3", Email = "student3@example.com", UserId = 5, GradeId = 3, DateOfBirth = new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc) }
+            // Add up to 10 students
             );
         }
     }
