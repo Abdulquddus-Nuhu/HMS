@@ -1,0 +1,98 @@
+﻿@using Alansar.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<MudDialog MaxWidth="MaxWidth.Medium" Class="pa-6">
+    <DialogContent>
+        <MudText Typo="Typo.h5" Class="mb-4">@(Room.Id == 0 ? "Add New Room" : "Edit Room")</MudText>
+
+        <!-- Add some spacing around the form elements -->
+        <MudForm @ref="form" Class="mb-4">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Room.RoomNumber" Label="Room Number" Required="true" FullWidth="true" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Room.Type" Label="Type" FullWidth="true" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Room.Capacity" Label="Capacity" Required="true" FullWidth="true" InputType="InputType.Number" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Room.Price" Label="Price" Required="true" FullWidth="true" InputType="InputType.Number" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSwitch @bind-Checked="Room.IsAvailable"
+                               Label="Is Available"
+                               T="bool"
+                               Class="mb-4"
+                               Disabled="@(Room.Id == 0)" />
+                </MudItem>
+
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Room Room { get; set; } = new Room();
+
+    private MudForm form;
+
+    private async Task Submit()
+    {
+        // Force form validation before submission
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            if (Room.Id == 0) // New Room
+            {
+                var response = await Http.PostAsJsonAsync("api/room", Room);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Room added successfully", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Failed to add room", Severity.Error);
+                    return; // Avoid closing the dialog on failure
+                }
+            }
+            else // Update Room
+            {
+                var response = await Http.PutAsJsonAsync($"api/room/{Room.Id}", Room);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Room updated successfully", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Failed to update room", Severity.Error);
+                    return; // Avoid closing the dialog on failure
+                }
+            }
+
+            // Trigger UI update before closing the dialog
+            StateHasChanged();
+
+            // Close the dialog after saving
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        else
+        {
+            Snackbar.Add("Please fill out the form correctly.", Severity.Warning);
+        }
+    }
+
+
+    private void Cancel() => MudDialog.Cancel();
+}

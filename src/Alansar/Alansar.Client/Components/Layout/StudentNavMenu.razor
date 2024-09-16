@@ -1,0 +1,99 @@
+﻿@* @using Microsoft.AspNetCore.Identity
+@using MudBlazorWebApp2.Entities.Identity
+@inject SignInManager<User> SignInManager
+@inject IDialogService DialogService
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@using static Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<MudNavMenu>
+    <MudNavLink Href="student-home" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="student-booking" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Hotel">Booking</MudNavLink>
+    <MudNavLink Href="student-dining" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dining">Dining Spaces</MudNavLink>
+    <AuthorizeView>
+        <Authorized>
+            @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
+            <form action="Account/Logout" method="post">
+                <AntiforgeryToken />
+                <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                <input type="hidden" name="userEmail" value="@userEmail" />
+                <button type="submit" class="mud-nav-link mud-ripple">
+                    <MudIcon Icon="@Icons.Material.Filled.Logout" Color="Color.Info" Class="mr-3"></MudIcon> Logout
+                </button>
+            </form>
+        </Authorized>
+    </AuthorizeView>
+    @* <MudNavLink Href="/Account/Logout" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink> *@
+    @* <MudNavLink Href="/Account/Login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink> *@
+    @* <MudNavLink Href="logout" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink> *@
+    @* <MudNavLink Href="register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Audiotrack">Register</MudNavLink> *@
+</MudNavMenu>
+
+
+@code {
+
+    private string? currentUrl;
+    private string? userEmail;
+
+
+    protected override void OnInitialized()
+    {
+        // currentUrl = "/Account/Login";
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        // NavigationManager.LocationChanged += OnLocationChanged;
+
+        var authState = AuthenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult();
+        var user = authState.User;
+        userEmail = user.Identity.Name ?? string.Empty;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+
+@code {
+
+    private async Task ShowLogoutConfirmation()
+    {
+        var result = await DialogService.ShowMessageBox("Logout Confirmation", "Are you sure you want to logout?", yesText: "Logout", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await Logout();
+        }
+
+    }
+
+    private async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+} *@

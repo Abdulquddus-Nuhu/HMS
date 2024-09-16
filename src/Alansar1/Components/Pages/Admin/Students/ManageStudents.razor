@@ -1,0 +1,92 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/admin/students"
+@using Alansar1.Components.Layout
+@layout MainLayout
+@using Alansar.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+<PageTitle>Students</PageTitle>
+
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4" Class="mb-4">Manage Students</MudText>
+
+    <!-- Print Button -->
+    <MudButton Href="/register-student" Variant="Variant.Filled" Color="Color.Secondary" Class="mb-2">
+        Register New Student
+    </MudButton>
+
+
+    <MudTable Items="students" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+        <HeaderContent>
+            <MudTh>First Name</MudTh>
+            <MudTh>Last Name</MudTh>
+            <MudTh>Email</MudTh>
+            <MudTh>Date of Birth</MudTh>
+            <MudTh>Actions</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>@context.FirstName</MudTd>
+            <MudTd>@context.LastName</MudTd>
+            <MudTd>@context.Email</MudTd>
+            <MudTd>@context.DateOfBirth.ToShortDateString()</MudTd>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@(async () => await OpenEditStudentDialog(context))" StartIcon="@Icons.Material.Filled.Edit" Class="mr-2">Edit</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(async () => await OpenDeleteStudentDialog(context))" StartIcon="@Icons.Material.Filled.Delete">Delete</MudButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudContainer>
+
+@code {
+    private List<Student> students = new List<Student>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudents();
+    }
+
+    private async Task LoadStudents()
+    {
+        students = await Http.GetFromJsonAsync<List<Student>>("api/student");
+    }
+
+    private async Task OpenEditStudentDialog(Student student)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
+        var parameters = new DialogParameters { ["Student"] = student };
+
+        var dialog = DialogService.Show<StudentDialog>("Edit Student", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadStudents();
+            Snackbar.Add("Student updated successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenDeleteStudentDialog(Student student)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small };
+        var parameters = new DialogParameters
+            {
+                ["ContentText"] = $"Are you sure you want to delete the student {student.FirstName} {student.LastName}?",
+                ["ButtonText"] = "Delete",
+                ["Color"] = Color.Error,
+                ["Student"] = student
+            };
+
+        var dialog = DialogService.Show<DeleteStudentDialog>("Delete Student", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await Http.DeleteAsync($"api/student/{student.Id}");
+            await LoadStudents();
+            Snackbar.Add("Student deleted successfully", Severity.Success);
+        }
+    }
+}

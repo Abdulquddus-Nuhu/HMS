@@ -1,0 +1,47 @@
+﻿@*Edit & Create*@
+@using Alansar.Entities
+@inject HttpClient Http
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form">
+            <MudTextField @bind-Value="Session.Year" Label="Session Year" Required="true" />
+            <MudDatePicker TransformOrigin="Origin.CenterLeft"
+                           Label="Start Date" @bind-Value="Session.StartDate" Required="true" />
+            <MudDatePicker TransformOrigin="Origin.CenterLeft"
+                           Label="End Date" @bind-Value="Session.EndDate" Required="true" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public Session Session { get; set; }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private MudForm form;
+
+    private async Task Submit()
+    {
+        if (form.IsValid)
+        {
+            if (Session.Id == 0)
+            {
+                await Http.PostAsJsonAsync("/api/session", Session);
+            }
+            else
+            {
+                await Http.PutAsJsonAsync($"/api/session/{Session.Id}", Session);
+            }
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

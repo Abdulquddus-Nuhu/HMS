@@ -1,0 +1,201 @@
+﻿@* @inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+ *@
+
+
+@*  @inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+<div class="container-fluid p-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Hostel Management System</a>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="NavigateToProfile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="Logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="DarkModeToggle">@DarkLightModeButtonIcon</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar & Main Content -->
+    <div class="row no-gutters">
+        <!-- Sidebar -->
+        <div class="col-md-2" style="background-color: @(_isDarkMode ? "#1a1a27" : "#ffffff"); height: 100vh;">
+            <ul class="nav flex-column p-3">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage Rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage Students</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 p-4" style="background-color: @(_isDarkMode ? "#1e1e2d" : "#f9f9f9"); color: @(_isDarkMode ? "#b2b0bf" : "#000");">
+            @Body
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+</div>
+
+@code {
+    private bool _drawerOpen = true;
+    private bool _isDarkMode = true;
+
+    private void DarkModeToggle()
+    {
+        _isDarkMode = !_isDarkMode;
+    }
+
+    private void NavigateToProfile()
+    {
+        Navigation.NavigateTo("/profile");
+    }
+
+    private void Logout()
+    {
+        // Add logout logic here
+        Navigation.NavigateTo("/login");
+    }
+
+    public string DarkLightModeButtonIcon => _isDarkMode ? "🌙 Dark Mode" : "☀️ Light Mode";
+}
+ *@
+
+
+ @inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+<div class="d-flex flex-column">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Hostel Management System</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="NavigateToProfile"><i class="bi bi-person-circle"></i> Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="Logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" @onclick="DarkModeToggle"><i class="bi bi-moon-stars"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-secondary p-3" style="min-height: 100vh; width: 250px;">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="bi bi-house-door-fill"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-calendar-check-fill"></i> Session</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-mortarboard-fill"></i> Class</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-building-fill"></i> Hostels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-egg-fried"></i> Dining Spaces</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-clipboard-fill"></i> Dining Assignments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-people-fill"></i> Manage Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 p-4" style="background-color: @(_isDarkMode ? "#1e1e2d" : "#f9f9f9"); color: @(_isDarkMode ? "#b2b0bf" : "#000");">
+            @Body
+        </div>
+    </div>
+
+    <div id="blazor-error-ui" class="alert alert-danger" style="display: none;">
+        An unhandled error has occurred.
+        <a href="" class="alert-link">Reload</a>
+        <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('blazor-error-ui').style.display='none';"></button>
+    </div>
+</div>
+
+@code {
+    private bool _isDarkMode = false;
+
+    private void DarkModeToggle()
+    {
+        _isDarkMode = !_isDarkMode;
+    }
+
+    private void NavigateToProfile()
+    {
+        Navigation.NavigateTo("/profile");
+    }
+
+    private void Logout()
+    {
+        // Add logout logic here
+        Navigation.NavigateTo("/login");
+    }
+}

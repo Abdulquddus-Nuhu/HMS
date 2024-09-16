@@ -1,0 +1,96 @@
+﻿@page "/classes"
+@rendermode InteractiveWebAssembly
+
+@* <MudPopoverProvider />*@
+<MudDialogProvider />
+<MudSnackbarProvider /> 
+
+@using Alansar.Client.Pages
+@using Alansar.Core.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+<PageTitle>Classes</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4">Manage Classes</MudText>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddClassDialog">
+        Add New Class
+    </MudButton>
+
+    <MudTable Items="classes" Bordered="true" Striped="true">
+        <HeaderContent>
+            <MudTh>Class Name</MudTh>
+            <MudTh>Actions</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>@context.Name</MudTd>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@(() => OpenEditClassDialog(context))" StartIcon="@Icons.Material.Filled.Edit">Edit</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="@(() => OpenDeleteClassDialog(context))" StartIcon="@Icons.Material.Filled.Delete">Delete</MudButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudContainer>
+
+@code {
+
+
+    private Task OpenDialogAsync()
+    {
+        return DialogService.ShowAsync<Dialog>("Options Dialog");
+    }
+
+    private List<Grade> classes = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadClasses();
+    }
+
+    private async Task LoadClasses()
+    {
+        classes = await Http.GetFromJsonAsync<List<Grade>>("/api/grade");
+    }
+
+    private async Task OpenAddClassDialog()
+    {
+        var parameters = new DialogParameters { ["Class"] = new Grade() };
+        var dialog = DialogService.Show<GradeDialog>("Add Class", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadClasses();
+            Snackbar.Add("Class added successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenEditClassDialog(Grade classModel)
+    {
+        var parameters = new DialogParameters { ["Class"] = classModel };
+        var dialog = DialogService.Show<GradeDialog>("Edit Class", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadClasses();
+            Snackbar.Add("Class updated successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenDeleteClassDialog(Grade classModel)
+    {
+        var parameters = new DialogParameters { ["ContentText"] = $"Are you sure you want to delete class {classModel.Name}?", ["Class"] = classModel };
+        var dialog = DialogService.Show<DeleteDialog>("Delete Class", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await Http.DeleteAsync($"/api/grade/{classModel.Id}");
+            await LoadClasses();
+            Snackbar.Add("Class deleted successfully", Severity.Success);
+        }
+    }
+}

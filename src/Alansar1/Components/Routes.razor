@@ -1,0 +1,48 @@
+﻿@inject NavigationManager Navigation
+@using Layout
+
+@* 
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+</Router>
+
+ *@
+
+
+@*  <CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <Login />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+             <RedirectToNotFound /> 
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState> *@
+
+@using Microsoft.AspNetCore.Components.Authorization
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+</Router>
+
+@code {
+    private void RedirectToNotFound()
+    {
+        Navigation.NavigateTo("/not-found");
+    }
+
+    private void RedirectToLogin()
+    {
+        Navigation.NavigateTo("/access-denied");
+    }
+}

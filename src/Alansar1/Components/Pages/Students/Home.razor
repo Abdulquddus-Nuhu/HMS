@@ -1,0 +1,63 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/student-home"
+@rendermode InteractiveAuto
+@using Alansar.Services
+@using Alansar1.Components.Layout
+@layout StudentLayout
+@* @inject AuthenticationState authsate *@
+@inject IHttpContextAccessor context
+@inject CookieService cookieService
+
+
+<PageTitle>Student Home</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Welcome,!</MudText>
+<MudText Class="mb-4">Here is your dashboard. We hope you enjoy your stay!</MudText>
+
+<MudCard Class="mb-4">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" GutterBottom="true">Your Room Details</MudText>
+        <MudText Typo="Typo.body1">Room Number: 203</MudText>
+        <MudText Typo="Typo.body1">Room Type: Single</MudText>
+    </MudCardContent>
+</MudCard>
+
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h5" GutterBottom="true">Dining Options</MudText>
+        <MudText Typo="Typo.body1">Today's Dining Name: Suleja</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code{
+    private record struct Data();
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var si = context.HttpContext.User.Identity.Name;
+        var k = cookieService.GetCookie();
+        var email = cookieService.GetCookie("UserEmail");
+        var name = cookieService.GetCookie("UserName");
+        var role = cookieService.GetCookie("role");
+
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        string userName;
+        if (user.Identity.IsAuthenticated)
+        {
+            userName = user.Identity.Name;
+        }
+        else
+        {
+            userName = "Not authenticated";
+        }
+
+    }
+
+}

@@ -1,0 +1,64 @@
+﻿@using Alansar.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<MudDialog MaxWidth="MaxWidth.Medium" Class="pa-6">
+    <DialogContent>
+        <MudText Typo="Typo.h5" Class="mb-4">@(Student.Id == 0 ? "Add New Student" : "Edit Student")</MudText>
+        <MudForm @ref="form">
+            <MudTextField @bind-Value="Student.FirstName" Label="First Name" Required="true" FullWidth="true" />
+            <MudTextField @bind-Value="Student.LastName" Label="Last Name" Required="true" FullWidth="true" />
+            <MudTextField @bind-Value="Student.Email" Label="Email" Required="true" FullWidth="true" InputType="InputType.Email" />
+            <MudDatePicker @bind-Value="Student.DateOfBirth" Label="Date of Birth" Required="true" TransformOrigin="Origin.BottomLeft" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Student Student { get; set; } = new Student();
+
+    private MudForm form;
+
+    private async Task Submit()
+    {
+        if (form.IsValid)
+        {
+            if (Student.Id == 0) // New Student
+            {
+                var response = await Http.PostAsJsonAsync("api/student", Student);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Student added successfully", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Failed to add student", Severity.Error);
+                }
+            }
+            else // Update Student
+            {
+                var response = await Http.PutAsJsonAsync($"api/student/{Student.Id}", Student);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Student updated successfully", Severity.Success);
+                }
+                else
+                {
+                    Snackbar.Add("Failed to update student", Severity.Error);
+                }
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,42 @@
+﻿@using Alansar.Core.Entities
+@inject HttpClient Http
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h5" Class="mb-2">Dining Assignments for @DiningSpace.Name</MudText>
+
+        <MudTable Items="assignments" Hover="true" Bordered="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Student Name</MudTh>
+                <MudTh>Start Date</MudTh>
+                <MudTh>End Date</MudTh>
+                @* <MudTh>Scheduled Date</MudTh> *@
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Student.FullName</MudTd>
+                <MudTd>@context.StartDate.ToShortDateString()</MudTd>
+                <MudTd>@context.EndDate.ToShortDateString()</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseDialog">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    [Parameter] public DiningSpace DiningSpace { get; set; }
+
+    private List<DiningAssignment> assignments = new List<DiningAssignment>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        assignments = await Http.GetFromJsonAsync<List<DiningAssignment>>($"api/diningschedule/space/{DiningSpace.Id}");
+    }
+
+    private void CloseDialog()
+    {
+        MudDialog.Close();
+    }
+}

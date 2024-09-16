@@ -1,0 +1,83 @@
+﻿@page "/payment-confirmation"
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@using Alansar.Client.Components.Layout
+@layout StudentLayout
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="pa-4" Style="text-align: center; margin-top: 50px;">
+    <MudText Typo="Typo.h4" Class="mb-4" Color="Color.Primary">Payment Confirmation</MudText>
+
+    @if (isLoading)
+    {
+        <MudPaper Class="pa-6 mt-4" Elevation="10">
+            <MudProgressCircular Size="Size.Large" Indeterminate="true" Color="Color.Primary" />
+            <MudText Typo="Typo.h6" Class="mt-2">Processing your payment...</MudText>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Class="pa-6 mt-4" Elevation="10">
+            @if (isSuccess)
+            {
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h5" Color="Color.Success">Payment Successful!</MudText>
+                <MudText Typo="Typo.body1" Class="mt-2">Thank you for your purchase. Your payment has been processed successfully.</MudText>
+            }
+            else
+            {
+                <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h5" Color="Color.Error">Payment Failed</MudText>
+                <MudText Typo="Typo.body1" Class="mt-2">Something went wrong with your payment. Please try again or contact support.</MudText>
+            }
+
+            <MudDivider Class="my-4" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoHome" StartIcon="@Icons.Material.Filled.Home">
+                Return to Homepage
+            </MudButton>
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    private bool isLoading = true;
+    private bool isSuccess = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = Navigation.ToAbsoluteUri(Navigation.Uri).Query;
+        var queryDictionary = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(query);
+
+        if (queryDictionary.ContainsKey("status"))
+        {
+            var status = queryDictionary["status"];
+            isSuccess = status == "successful";
+            isLoading = false;
+
+            // Optionally, confirm the payment with your backend
+            await ConfirmPayment(status);
+        }
+        else
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task ConfirmPayment(string status)
+    {
+        var response = await Http.PostAsJsonAsync("api/payments/confirm", new { Status = status });
+        if (!response.IsSuccessStatusCode)
+        {
+            // Handle failure in confirmation
+        }
+    }
+
+    private void GoHome()
+    {
+        Navigation.NavigateTo("/student-home");
+    }
+}

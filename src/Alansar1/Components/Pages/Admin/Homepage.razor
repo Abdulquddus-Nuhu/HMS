@@ -1,0 +1,81 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/admin-home"
+@page "/"
+@using Alansar1.Components.Layout
+@layout MainLayout
+@inject HttpClient Http
+
+
+@* <PageTitle>Hostel Management System</PageTitle> *@
+<PageTitle>HMS</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Welcome to the Hostel Management System!</MudText>
+<MudText Class="mb-8">Manage your hostel efficiently with features like booking management, dining space reservations, and more.</MudText>
+
+<MudGrid Class="mb-8">
+    <MudItem xs="12" sm="4">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6" Align="Align.Center">Number of Students</MudText>
+                <MudText Typo="Typo.h4" Align="Align.Center">@numberOfStudents</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="4">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6" Align="Align.Center">Number of Dining Halls</MudText>
+                <MudText Typo="Typo.h4" Align="Align.Center">@numberOfDiningHalls</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="4">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6" Align="Align.Center">Number of Rooms</MudText>
+                <MudText Typo="Typo.h4" Align="Align.Center">@numberOfRooms</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<MudGrid>
+    <MudItem xs="12" sm="6">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h5">Manage Bookings</MudText>
+                <MudText Typo="Typo.body2">Handle all room bookings and assignments seamlessly.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="booking">Go to Bookings</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="6">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h5">Manage Dining Spaces</MudText>
+                <MudText Typo="Typo.body2">Oversee dining space reservations and availability.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="dining">Go to Dining Spaces</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private int numberOfStudents = 150;  // Example value, replace with actual data
+    private int numberOfDiningHalls = 5;  // Example value, replace with actual data
+    private int numberOfRooms = 50;  // Example value, replace with actual data
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch the actual data from your API
+        // Example:
+        numberOfStudents = await Http.GetFromJsonAsync<int>("api/student/count");
+        numberOfDiningHalls = await Http.GetFromJsonAsync<int>("api/diningspace/count");
+        numberOfRooms = await Http.GetFromJsonAsync<int>("api/room/count");
+    }
+}

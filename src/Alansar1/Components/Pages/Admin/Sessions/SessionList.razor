@@ -1,0 +1,87 @@
+﻿@page "/sessions"
+@using Alansar.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+<PageTitle>Sessions</PageTitle>
+
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4">Manage Sessions</MudText>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddSessionDialog">
+        Add New Session
+    </MudButton>
+
+    <MudTable Items="sessions" Bordered="true" Striped="true">
+        <HeaderContent>
+            <MudTh>Session Year</MudTh>
+            <MudTh>Start Date</MudTh>
+            <MudTh>End Date</MudTh>
+            <MudTh>Actions</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>@context.Year</MudTd>
+            <MudTd>@context.StartDate.ToShortDateString()</MudTd>
+            <MudTd>@context.EndDate.ToShortDateString()</MudTd>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@(() => OpenEditSessionDialog(context))">Edit</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="@(() => OpenDeleteSessionDialog(context))">Delete</MudButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudContainer>
+
+@code {
+    private List<Session> sessions = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSessions();
+    }
+
+    private async Task LoadSessions()
+    {
+        sessions = await Http.GetFromJsonAsync<List<Session>>("/api/session");
+    }
+
+    private async Task OpenAddSessionDialog()
+    {
+        var parameters = new DialogParameters { ["Session"] = new Session() };
+        var dialog = DialogService.Show<SessionDialog>("Add Session", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadSessions();
+            Snackbar.Add("Session added successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenEditSessionDialog(Session session)
+    {
+        var parameters = new DialogParameters { ["Session"] = session };
+        var dialog = DialogService.Show<SessionDialog>("Edit Session", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadSessions();
+            Snackbar.Add("Session updated successfully", Severity.Success);
+        }
+    }
+
+    private async Task OpenDeleteSessionDialog(Session session)
+    {
+        var parameters = new DialogParameters { ["ContentText"] = $"Are you sure you want to delete session {session.Year}?", ["Session"] = session };
+        var dialog = DialogService.Show<DeleteDialog>("Delete Session", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await Http.DeleteAsync($"/api/session/{session.Id}");
+            await LoadSessions();
+            Snackbar.Add("Session deleted successfully", Severity.Success);
+        }
+    }
+}

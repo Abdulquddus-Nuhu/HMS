@@ -1,0 +1,61 @@
+﻿@*Edit & Create*@
+
+@using Alansar.Core.Entities
+@inject HttpClient Http
+
+<MudDialog MaxWidth="MaxWidth.Medium" Class="pa-6">
+    <DialogContent>
+        <MudText Typo="Typo.h5" Class="mb-4">@(Session.Id == 0 ? "Add New Session" : "Edit Session")</MudText>
+
+        <!-- Add spacing and grid layout for form elements -->
+        <MudForm @ref="form" Class="mb-4">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Session.Year" Label="Session Year" Required="true" FullWidth="true" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker Label="Start Date" @bind-Date="Session.StartDate" Required="true" TransformOrigin="Origin.CenterLeft" Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker Label="End Date" ShowWeekNumbers="true" @bind-Date="Session.EndDate" Required="true" TransformOrigin="Origin.CenterLeft" Class="mb-4" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public Session Session { get; set; }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private MudForm form;
+
+    private async Task Submit()
+    {
+        // Force form validation before submission
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            if (Session.Id == 0)
+            {
+                await Http.PostAsJsonAsync("/api/session", Session);
+            }
+            else
+            {
+                await Http.PutAsJsonAsync($"/api/session/{Session.Id}", Session);
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

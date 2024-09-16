@@ -1,0 +1,160 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/student-booking"
+@using Alansar.Client.Components.Layout
+@layout StudentLayout
+@using Alansar.Core.Entities
+@using Alansar.Client.Components.Pages.Students
+@using static MudBlazor.Icons.Material
+@inject HttpClient Http
+@inject IDialogService DialogService
+@rendermode InteractiveWebAssembly
+<PageTitle>Bookings</PageTitle>
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<MudContainer>
+    <MudText Typo="Typo.h4">Available Rooms</MudText>
+
+    @if (isLoading)
+    {
+        <MudProgressCircular Size="Size.Large" Class="d-block mx-auto my-6" Indeterminate="true" />
+    }
+    else
+    {
+        <MudGrid>
+            @foreach (var room in rooms)
+            {
+                <MudItem xs="12" sm="6">
+                    <MudCard>
+                        <MudCardHeader Title="@room.RoomNumber" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.body1">@room.Type</MudText>
+                            <MudText Typo="Typo.body1">@("Room Name: " + room.RoomNumber)</MudText>
+                            <MudText Typo="Typo.body1">@("Available: " + room.IsAvailable)</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" Disabled="!room.IsAvailable" OnClick="@(() => OpenBookingModal(room))">Book</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+</MudContainer>
+
+@code {
+    private List<Room> rooms = new List<Room>(); // Initialize the list
+    private bool isLoading = true; // Track loading state
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            string sessionYear = "2024";  // Example session year
+            rooms = await Http.GetFromJsonAsync<List<Room>>($"api/room/");
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions, e.g., show an error message to the user
+            Console.WriteLine($"Error fetching rooms: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Set loading to false when data fetching is complete
+        }
+    }
+
+    private async Task OpenBookingModal(Room room)
+    {
+        var parameters = new DialogParameters { ["Room"] = room, ["Color"] = Color.Success, ["ButtonText"] = "Proceed" };
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
+        var dialog = DialogService.Show<BookingConfirmation>("Book Room", parameters, options);
+        var result = await dialog.Result;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+@* @page "/student-booking"
+@using MudBlazorWebApp2.Components.Layout
+@layout StudentLayout
+@using MudBlazorWebApp2.Entities
+@using MudBlazorWebApp2.Components.Pages.Students
+@using static MudBlazor.Icons.Material
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+<MudContainer>
+    <MudText Typo="Typo.h4">Available Rooms</MudText>
+    <MudGrid>
+        @foreach (var room in rooms)
+        {
+            <MudItem xs="12" sm="6">
+                <MudCard>
+                    <MudCardHeader Title="@room.RoomNumber" />
+                    <MudCardContent>
+                        <MudText Typo="Typo.body1">@room.Type</MudText>
+                        <MudText Typo="Typo.body1">@("Room Name: " + room.RoomNumber)</MudText>
+                        <MudText Typo="Typo.body1">@("Available: " + room.IsAvailable)</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" Disabled="!room.IsAvailable" OnClick="@(() => OpenBookingModal(room))">Book</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private List<Room> rooms;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Example data, replace with API call
+        rooms = new List<Room>()
+        {
+            new Room { Id = 101, RoomNumber = "Room A", Type = "Single", IsAvailable = true },
+            new Room { Id = 102, RoomNumber = "Room B", Type = "Double", IsAvailable = true },
+            new Room { Id = 103, RoomNumber = "Room C", Type = "Single", IsAvailable = false },
+            // Add more rooms here
+        };
+    }
+
+
+    //method for learning
+    private Task DeleteUserAsync()
+    {
+        var parameters = new DialogParameters<BookingComponent>
+        {
+            { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        return DialogService.ShowAsync<BookingComponent>("Delete", parameters, options);
+    }
+
+
+    private async Task OpenBookingModal(Room room)
+    {
+        var parameters = new DialogParameters { ["Room"] = room, ["Color"] = Color.Success, ["ButtonText"] = "Proceed" };
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
+        var dialog = DialogService.Show<BookingConfirmation>("Book Room", parameters, options);
+        var result = await dialog.Result;
+    }
+}
+ *@

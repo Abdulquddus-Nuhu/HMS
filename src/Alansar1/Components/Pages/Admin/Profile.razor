@@ -1,0 +1,27 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/profile"
+@inject NavigationManager Navigation
+<PageTitle>Profile</PageTitle>
+
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="pa-4">
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h4" Class="mb-4">Profile Management</MudText>
+        <MudForm>
+            <MudTextField Label="Full Name" Required="true" T="string"/>
+            <MudTextField Label="Email" Required="true" T="string" />
+            <MudTextField Label="Password" InputType="InputType.Password" T="string" />
+            <MudTextField Label="Confirm Password" InputType="InputType.Password" T="string" />
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="UpdateProfile" Class="mt-4">Update Profile</MudButton>
+        </MudForm>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private void UpdateProfile()
+    {
+        // Handle profile update logic here
+        Navigation.NavigateTo("/");
+    }
+}

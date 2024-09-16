@@ -1,0 +1,63 @@
+﻿@using Alansar.Core.Entities
+@inject HttpClient Http
+
+<MudDialog>
+    <DialogContent>
+        <MudForm>
+            <!-- Select Dining Space Dropdown -->
+            <MudSelect T="int" @bind-Value="SelectedDiningSpaceId" Label="Select Dining Space" Required="true">
+                @foreach (var diningSpace in DiningSpaces)
+                {
+                    <MudSelectItem T="int" Value="diningSpace.Id">@diningSpace.Name</MudSelectItem>
+                }
+            </MudSelect>
+
+            <!-- Select Students Dropdown -->
+            <MudSelect T="List<int>" @bind-Value="SelectedStudentIds" Label="Select Students" Multiple="true" Required="true">
+                @foreach (var student in Students)
+                {
+                    <MudSelectItem T="int" Value="student.Id">@student.FullName</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Assign</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    private List<DiningSpace> DiningSpaces = new List<DiningSpace>();
+    private List<Student> Students = new List<Student>();
+
+    private int SelectedDiningSpaceId { get; set; }
+    private List<int> SelectedStudentIds { get; set; } = new List<int>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        DiningSpaces = await Http.GetFromJsonAsync<List<DiningSpace>>("api/diningspace");
+        Students = await Http.GetFromJsonAsync<List<Student>>("api/student");
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Submit()
+    {
+        var assignment = new DiningAssignmentRequest
+            {
+                DiningSpaceId = SelectedDiningSpaceId,
+                StudentIds = SelectedStudentIds
+            };
+
+        await Http.PostAsJsonAsync("api/diningschedule/assign", assignment);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private record struct DiningAssignmentRequest(int DiningSpaceId, List<int> StudentIds);
+}

@@ -1,0 +1,147 @@
+﻿@page "/view-assignments"
+@using Alansar.Entities
+@using Alansar1.Components.Layout
+@layout MainLayout
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+<PageTitle>Dining Assignments</PageTitle>
+
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4" Class="mb-4">Dining Space Assignments</MudText>
+
+    <!-- Print Button -->
+    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="PrintAssignments" Class="mb-2">
+        Print
+    </MudButton>
+
+    <!-- Filters and Search -->
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <MudTextField Label="Search by Student Name"
+                          @bind-Value="searchString"
+                          Variant="Variant.Outlined"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          Class="mb-2"
+                          Immediate="true"
+                          OnKeyUp="@((KeyboardEventArgs args) => OnSearchKeyUp(args))" />
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudSelect Label="Filter by Dining Space"
+                       T="string"
+                       Value="selectedDiningSpace"
+                       ValueChanged="OnDiningSpaceSelected"
+                       Variant="Variant.Outlined"
+                       Class="mb-2">
+                @* <MudSelectItem Value="all">All Dining Spaces</MudSelectItem> *@
+                @foreach (var space in diningSpaces)
+                {
+                    <MudSelectItem Value="@space.Name">@space.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+
+    @if (isLoading)
+    {
+        <MudProgressCircular Class="mt-4" Size="Size.Large" Indeterminate="true" />
+    }
+    else if (filteredAssignments?.Count > 0)
+    {
+        <MudTable Items="pagedAssignments" ServerData="LoadServerData" Hover="true" Bordered="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Student Name</MudTh>
+                <MudTh>Dining Space</MudTh>
+                <MudTh>Start Date</MudTh>
+                <MudTh>End Date</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Student.FullName</MudTd>
+                <MudTd>@context.DiningSpace.Name</MudTd>
+                <MudTd>@context.StartDate.ToShortDateString()</MudTd>
+                <MudTd>@context.EndDate.ToShortDateString()</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    }
+    else
+    {
+        <MudAlert Severity="Severity.Info">No assignments available to display.</MudAlert>
+    }
+</MudContainer>
+
+
+@code {
+
+    private List<DiningAssignment> assignments = new();
+    private List<DiningAssignment> filteredAssignments = new();
+    private List<DiningAssignment> pagedAssignments = new();
+    private List<DiningSpace> diningSpaces = new();
+    private bool isLoading = true;
+    private string searchString = "";
+    private string selectedDiningSpace = "all";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            diningSpaces = await Http.GetFromJsonAsync<List<DiningSpace>>("api/diningspace");
+            assignments = await Http.GetFromJsonAsync<List<DiningAssignment>>("api/diningschedule/assignments");
+            FilterAssignments(); // Initial filter
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error fetching assignments: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void FilterAssignments()
+    {
+        filteredAssignments = assignments
+            .Where(a => (string.IsNullOrEmpty(searchString) || a.Student.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                        && (selectedDiningSpace == "all" || string.IsNullOrEmpty(selectedDiningSpace) || a.DiningSpace.Name == selectedDiningSpace))
+            .ToList();
+
+        // Manually refresh the table data
+        StateHasChanged(); // Ensures that the table updates after filtering
+    }
+
+    private async Task<TableData<DiningAssignment>> LoadServerData(TableState state, CancellationToken cancellationToken)
+    {
+        // Apply filtering and pagination
+        pagedAssignments = filteredAssignments.Skip(state.Page * state.PageSize).Take(state.PageSize).ToList();
+
+        return await Task.FromResult(new TableData<DiningAssignment>
+            {
+                Items = pagedAssignments,
+                TotalItems = filteredAssignments.Count
+            });
+    }
+
+    private void OnDiningSpaceSelected(string value)
+    {
+        selectedDiningSpace = value;
+        FilterAssignments(); // Apply the filter immediately when a new value is selected
+    }
+
+    private void OnSearchKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            FilterAssignments(); // Trigger filtering when pressing Enter in the search field
+        }
+    }
+
+    private void PrintAssignments()
+    {
+        // JSRuntime.InvokeVoidAsync("print");
+    }
+}

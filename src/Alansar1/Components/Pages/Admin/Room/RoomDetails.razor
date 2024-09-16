@@ -1,0 +1,57 @@
+﻿@page "/admin/room-details/{RoomId:int}"
+@using Alansar.Entities
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4" Class="mb-4">Students in Room @RoomNumber</MudText>
+
+    @if (students == null)
+    {
+        <MudProgressCircular Indeterminate="true" />
+    }
+    else if (students.Count == 0)
+    {
+        <MudText Typo="Typo.body1">There are no students assigned to this room.</MudText>
+    }
+    else
+    {
+        <MudTable Items="students" Hover="true" Bordered="true" Striped="true">
+            <HeaderContent>
+                <MudTh>First Name</MudTh>
+                <MudTh>Last Name</MudTh>
+                <MudTh>Email</MudTh>
+                <MudTh>Date of Birth</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.FirstName</MudTd>
+                <MudTd>@context.LastName</MudTd>
+                <MudTd>@context.Email</MudTd>
+                <MudTd>@context.DateOfBirth.ToShortDateString()</MudTd>
+            </RowTemplate>
+        </MudTable>
+
+        <MudText Typo="Typo.h6" Class="mt-4">Total Students: @students.Count</MudText>
+    }
+</MudContainer>
+
+@code {
+    [Parameter] public int RoomId { get; set; }
+    private List<Student> students;
+    private string RoomNumber;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRoomDetails();
+    }
+
+    private async Task LoadRoomDetails()
+    {
+        var room = await Http.GetFromJsonAsync<Room>($"api/room/{RoomId}");
+        if (room != null)
+        {
+            RoomNumber = room.RoomNumber;
+            students = await Http.GetFromJsonAsync<List<Student>>($"api/room/{RoomId}/students");
+        }
+    }
+}

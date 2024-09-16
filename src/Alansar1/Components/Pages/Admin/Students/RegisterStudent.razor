@@ -1,0 +1,144 @@
+﻿@page "/register-student"
+@using Alansar1.Components.Layout
+@using System.Text.Json
+@layout MainLayout
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="pa-4">
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" sm="8" md="8">
+            <MudPaper Class="pa-6">
+                <MudText Typo="Typo.h4" Class="mb-4" Align="Align.Center">Student Registration</MudText>
+                <MudText Typo="Typo.body1" Class="mb-4" Align="Align.Center">
+                    Register new student to access the Hostel Management System.
+                </MudText>
+                <EditForm OnInvalidSubmit="HandleRegister" Model="registerModel" OnValidSubmit="HandleRegister">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <MudTextField Label="First Name"
+                                  @bind-Value="registerModel.FirstName"
+                                  Required="true"
+                                  Class="mb-2"
+                                  FullWidth="true" />
+
+                    <MudTextField Label="Middle Name"
+                                  @bind-Value="registerModel.MiddleName"
+                                  Class="mb-2"
+                                  FullWidth="true" />
+
+                    <MudTextField Label="Last Name"
+                                  @bind-Value="registerModel.LastName"
+                                  Required="true"
+                                  Class="mb-2"
+                                  FullWidth="true" />
+
+                    <!-- Date of Birth Field -->
+                    <MudDatePicker Label="Date of Birth"
+                                   @bind-Value="registerModel.DateOfBirth"
+                                   Required="true"
+                                   Class="mb-2"
+                                   TransformOrigin="Origin.CenterLeft"
+                                   DropDownPosition="DropDownPosition.Below"
+                                   AdorneToBody="true" />
+
+                    <MudTextField Label="Class"
+                                  @bind-Value="registerModel.Class"
+                                  Required="true"
+                                  Class="mb-2"
+                                  FullWidth="true" />
+
+                    <MudTextField Label="Email"
+                                  @bind-Value="registerModel.Email"
+                                  Required="true"
+                                  Class="mb-2"
+                                  FullWidth="true" />
+
+
+                    <MudTextField Label="Password"
+                                  @bind-Value="registerModel.Password"
+                                  Required="true"
+                                  FullWidth="true"
+                                  InputType="InputType.Password"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@passwordIcon"
+                                  OnAdornmentClick="@TogglePasswordVisibility"
+                                  Class="mb-2" />
+
+                    <!-- Confirm Password Field -->
+                    <MudTextField Label="Confirm Password"
+                                  @bind-Value="registerModel.ConfirmPassword"
+                                  Required="true"
+                                  FullWidth="true"
+                                  InputType="InputType.Password"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@passwordIcon"
+                                  OnAdornmentClick="@TogglePasswordVisibility"
+                                  Class="mb-2" />
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               ButtonType="ButtonType.Submit"
+                               Class="mt-4"
+                               FullWidth="true"
+                               Disabled="@isLoading">
+                        @if (isLoading)
+                        {
+                            <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                        }
+                        else
+                        {
+                            @:Register
+                        }
+                    </MudButton>
+                </EditForm>
+                @* <MudLink Href="/login" Class="d-block mt-4">Back to Login</MudLink> *@
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private RegisterModel registerModel = new RegisterModel();
+    private bool isLoading = false;
+    private bool showPassword = false;
+
+    private string passwordIcon => showPassword ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff;
+
+    private async Task HandleRegister()
+    {
+        // Force form validation before submission
+        // await form.Validate();
+
+        isLoading = true;
+        var response = await Http.PostAsJsonAsync("/api/Auth/register", registerModel);
+        isLoading = false;
+
+
+        var responseContent = await response.Content.ReadAsStringAsync();  // Read the response content
+        Console.WriteLine(responseContent);  // Log it to the console for debugging
+
+
+        if (response.IsSuccessStatusCode)
+        {
+            var messageResponse = JsonSerializer.Deserialize<MessageResponse>(await response.Content.ReadAsStringAsync());
+            Navigation.NavigateTo("/admin/students");
+            Snackbar.Add("Registration Successful", Severity.Success);
+        }
+        else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        {
+            var messageResponse = JsonSerializer.Deserialize<MessageResponse>(await response.Content.ReadAsStringAsync());
+            Snackbar.Add($"{messageResponse.message}", Severity.Error);
+        }
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        showPassword = !showPassword;
+    }
+
+    public record MessageResponse(string message);
+    public record struct RegisterModel(string FirstName, string LastName, string? MiddleName, string Email, string Class, string Password, string ConfirmPassword, DateTime? DateOfBirth);
+}

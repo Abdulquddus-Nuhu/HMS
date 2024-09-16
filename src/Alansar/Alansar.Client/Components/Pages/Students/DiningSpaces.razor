@@ -1,0 +1,62 @@
+﻿@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+@page "/student-dining"
+@using Alansar.Core.Entities
+@using Alansar.Client.Components.Layout
+@layout StudentLayout
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@rendermode InteractiveWebAssembly
+<PageTitle>Dining Space</PageTitle>
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<MudContainer>
+    <MudText Typo="Typo.h4">Your Dining Spaces for the Next Two Weeks</MudText>
+
+    @if (isLoading)
+    {
+        <MudProgressCircular Size="Size.Large" Class="d-block mx-auto my-6" Indeterminate="true" />
+    }
+    else
+    {
+        <MudGrid>
+            @foreach (var space in diningSpaces)
+            {
+                <MudItem xs="12" sm="6">
+                    <MudCard>
+                        <MudCardHeader Title="@space.Name" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.body1">@("Capacity: " + space.Capacity)</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+</MudContainer>
+
+@code {
+    private List<DiningSpace> diningSpaces = new List<DiningSpace>();
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var studentId = 2; // Replace with the actual logged-in student's ID
+            diningSpaces = await Http.GetFromJsonAsync<List<DiningSpace>>($"api/diningspace/student/{studentId}/dining-next-two-weeks");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching dining spaces: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
