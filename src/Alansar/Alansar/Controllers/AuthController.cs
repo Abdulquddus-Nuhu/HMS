@@ -67,6 +67,7 @@ namespace Alansar.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         MiddleName = model.MiddleName,
+                        GradeId = model.GradeId,
                         //Email = emailExist,
                         Email = model.Email,
                         UserId = user.Id,

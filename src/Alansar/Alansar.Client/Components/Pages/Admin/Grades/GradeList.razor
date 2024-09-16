@@ -56,7 +56,7 @@
 
     private async Task OpenAddClassDialog()
     {
-        var parameters = new DialogParameters { ["Class"] = new Grade() };
+        var parameters = new DialogParameters { ["Grade"] = new Grade() };
         var dialog = DialogService.Show<GradeDialog>("Add Class", parameters);
         var result = await dialog.Result;
 
@@ -69,7 +69,7 @@
 
     private async Task OpenEditClassDialog(Grade classModel)
     {
-        var parameters = new DialogParameters { ["Class"] = classModel };
+        var parameters = new DialogParameters { ["Grade"] = classModel };
         var dialog = DialogService.Show<GradeDialog>("Edit Class", parameters);
         var result = await dialog.Result;
 

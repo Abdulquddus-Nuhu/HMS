@@ -6,7 +6,7 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
-            <MudTextField @bind-Value="Class.Name" Label="Class Name" Required="true" />
+            <MudTextField @bind-Value="Grade.Name" Label="Class Name" Required="true" />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -17,7 +17,7 @@
 
 @code {
     [Parameter]
-    public Grade Class { get; set; }
+    public Grade Grade { get; set; }
 
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
@@ -28,13 +28,13 @@
     {
         if (form.IsValid)
         {
-            if (Class.Id == 0)
+            if (Grade.Id == 0)
             {
-                await Http.PostAsJsonAsync("/api/class", Class);
+                await Http.PostAsJsonAsync("/api/grade", Grade);
             }
             else
             {
-                await Http.PutAsJsonAsync($"/api/class/{Class.Id}", Class);
+                await Http.PutAsJsonAsync($"/api/grade/{Grade.Id}", Grade);
             }
             MudDialog.Close(DialogResult.Ok(true));
         }

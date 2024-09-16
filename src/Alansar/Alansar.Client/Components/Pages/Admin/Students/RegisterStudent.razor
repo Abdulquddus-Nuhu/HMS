@@ -1,6 +1,7 @@
 ﻿@page "/register-student"
 @using Alansar.Client.Components.Layout
 @using System.Text.Json
+@using Alansar.Core.Entities
 @layout AdminLayout
 @inject HttpClient Http
 @inject NavigationManager Navigation
@@ -54,12 +55,22 @@
                                    DropDownPosition="DropDownPosition.Below"
                                    AdorneToBody="false" />
 
+                    <MudSelect @bind-Value="registerModel.GradeId"
+                               Variant="Variant.Text"
+                               Label="Classes"
+                               Margin="Margin.Dense"
+                               Dense="false"
+                               Disabled="false"
+                               ReadOnly="false"
+                               Placeholder="Placeholder"
+                               HelperTextOnFocus="false"
+                               Clearable="false">
+                        @foreach (var grade in grades)
+                        {
+                            <MudSelectItem Value="grade.Id">@grade.Name</MudSelectItem>
+                        }
+                    </MudSelect>
 
-                    <MudTextField Label="Class"
-                                  @bind-Value="registerModel.Class"
-                                  Required="true"
-                                  Class="mb-2"
-                                  FullWidth="true" />
 
                     <MudTextField Label="Email"
                                   @bind-Value="registerModel.Email"
@@ -113,22 +124,27 @@
 </MudContainer>
 
 @code {
-    // private RegisterModel registerModel = new RegisterModel();
+    public record MessageResponse(string message);
+    public record struct RegisterModel(string FirstName, string LastName, string? MiddleName, string Email, int GradeId, string Password, string ConfirmPassword, DateTime? DateOfBirth);
+
+
     private RegisterModel registerModel = new RegisterModel
-        {
-            FirstName = string.Empty,
-            LastName = string.Empty,
-            Email = string.Empty,
-            Class = string.Empty,
-            Password = string.Empty,
-            ConfirmPassword = string.Empty,
-            DateOfBirth = DateTime.Now  // Default value
-        };
+    {
+        FirstName = string.Empty,
+        LastName = string.Empty,
+        Email = string.Empty,
+        Password = string.Empty,
+        ConfirmPassword = string.Empty,
+        DateOfBirth = DateTime.Now  // Default value
+    };
 
     private bool isLoading = false;
     private bool showPassword = false;
 
+
+    private void TogglePasswordVisibility() => showPassword = !showPassword;
     private string passwordIcon => showPassword ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff;
+
 
     private async Task HandleRegister()
     {
@@ -157,11 +173,9 @@
         }
     }
 
-    private void TogglePasswordVisibility()
-    {
-        showPassword = !showPassword;
-    }
 
-    public record MessageResponse(string message);
-    public record struct RegisterModel(string FirstName, string LastName, string? MiddleName, string Email, string Class, string Password, string ConfirmPassword, DateTime? DateOfBirth);
+    private List<Grade> grades = new();
+    int _value;
+    protected override async Task OnInitializedAsync() => grades = await Http.GetFromJsonAsync<List<Grade>>("/api/grade");
+
 }
