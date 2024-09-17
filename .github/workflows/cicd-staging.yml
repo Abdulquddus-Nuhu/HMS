@@ -27,7 +27,7 @@ jobs:
     - name: Substitute Environment Variables in appsettings.Staging.json
       uses: microsoft/variable-substitution@v1
       with:
-        files: src/Alansar/appsettings.Staging.json
+        files: src/Alansar/Alansar/appsettings.Staging.json
       env:
         ConnectionStrings.DefaultConnection: ${{ secrets.DB_CONNECTION }}
         Flutterwave.PublicKey: ${{ secrets.FLUTTERWAVE_PUBLICKEY }}
@@ -35,7 +35,7 @@ jobs:
         Flutterwave.EncryptionKey: ${{ secrets.FLUTTERWAVE_ENCRYPTIONKEY }}
 
     - name: Verify appsettings.Staging.json
-      run: cat src/Alansar/appsettings.Staging.json
+      run: cat src/Alansar/Alansar/appsettings.Staging.json
 
     - name: Publish
       run: dotnet publish AlansarHMS.sln --no-restore --configuration Release --output src/Alansar/bin/Release/net8.0/publish
