@@ -19,10 +19,10 @@ jobs:
         dotnet-version: '8.0.x'  # Specify your .NET version
 
     - name: Restore dependencies
-      run: dotnet restore RealtorHubAPI.sln
+      run: dotnet restore AlansarHMS.sln
 
     - name: Build
-      run: dotnet build RealtorHubAPI.sln --no-restore --configuration Release
+      run: dotnet build AlansarHMS.sln --no-restore --configuration Release
 
     - name: Substitute Environment Variables in appsettings.Staging.json
       uses: microsoft/variable-substitution@v1
