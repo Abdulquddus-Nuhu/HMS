@@ -1,0 +1,76 @@
+name: CI/CD Staging Linux
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.x'  # Specify your .NET version
+
+    - name: Restore dependencies
+      run: dotnet restore RealtorHubAPI.sln
+
+    - name: Build
+      run: dotnet build RealtorHubAPI.sln --no-restore --configuration Release
+
+    - name: Substitute Environment Variables in appsettings.Staging.json
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: src/Alansar/appsettings.Staging.json
+      env:
+        Cloudinary.CloudName: ${{ secrets.CLOUDINARY_CLOUDNAME }}
+        Cloudinary.ApiKey: ${{ secrets.CLOUDINARY_APIKEY }}
+        Cloudinary.ApiSecret: ${{ secrets.CLOUDINARY_APISECRET }}
+        Minio.Endpoint: ${{ secrets.MINIO_ENDPOINT_STAGING }}
+        Minio.AccessKey: ${{ secrets.MINIO_ACCESSKEY_STAGING }}
+        Minio.SecretKey: ${{ secrets.MINIO_SECRETKEY_STAGING }}
+        Minio.BucketName: ${{ secrets.MINIO_BUCKETNAME_STAGING }}
+        ConnectionStrings.DefaultConnection: ${{ secrets.DB_CONNECTION }}
+        ROOT_ADMIN.Email: ${{ secrets.ROOT_ADMIN_EMAIL }}
+        ROOT_ADMIN.Password: ${{ secrets.ROOT_ADMIN_PASSWORD }}
+        ROOT_ADMIN.PhoneNumber: ${{ secrets.ROOT_ADMIN_PHONENUMBER }}
+        DEMO_ADMIN.Email: ${{ secrets.DEMO_ADMIN_EMAIL }}
+        DEMO_ADMIN.Password: ${{ secrets.DEMO_ADMIN_PASSWORD }}
+        DEMO_ADMIN.PhoneNumber: ${{ secrets.DEMO_ADMIN_PHONENUMBER }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+
+    - name: Verify appsettings.Staging.json
+      run: cat src/Alansar/appsettings.Staging.json
+
+    - name: Publish
+      run: dotnet publish AlansarHMS.sln --no-restore --configuration Release --output src/Alansar/bin/Release/net8.0/publish
+
+    - name: Verify publish directory
+      run: ls -la src/Alansar/bin/Release/net8.0/publish
+
+
+    # Copy to server
+    - name: Deploy to Staging - Copy to Server via SCP
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: src/Alansar/bin/Release/net8.0/publish/
+        concurrency: 10
+        remote: ${{ secrets.REMOTE_TARGET_STAGING }}
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASSWORD }}
+
+    # Start service
+    - name: Start Alansar Service
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: service Alansar restart
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASSWORD }}
