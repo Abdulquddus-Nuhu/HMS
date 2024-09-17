@@ -11,16 +11,15 @@
 
 <MudNavMenu>
     <MudNavLink Href="/admin-home" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="/sessions" Icon="@Icons.Material.Filled.CalendarToday">Session</MudNavLink>
-    <MudNavLink Href="/classes" Icon="@Icons.Material.Filled.School">Class</MudNavLink>
+    <MudNavLink Href="/sessions" Icon="@Icons.Material.Filled.CalendarToday">Sessions</MudNavLink>
+    <MudNavLink Href="/classes" Icon="@Icons.Material.Filled.School">Classes</MudNavLink>
     <MudNavLink Href="booking" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Hotel">Hostels</MudNavLink>
     <MudNavLink Href="dining" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dining">Dining Spaces</MudNavLink>
     <MudNavLink Href="view-assignments" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Assignment">Dining Assignments</MudNavLink>
     <MudNavLink Href="admin/students" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People">Manage Students</MudNavLink> <!-- New Link -->
     <MudNavLink Href="profile" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccountCircle">Profile</MudNavLink>
-        <AuthorizeView>
+ @*        <AuthorizeView>
         <Authorized>
-            @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
             <form action="Account/Logout" method="post">
                 <AntiforgeryToken />
                 <input type="hidden" name="ReturnUrl" value="@currentUrl" />
@@ -30,10 +29,7 @@
                 </button>
             </form>
         </Authorized>
-        </AuthorizeView>
-    @* <MudNavLink Href="logout" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink> *@
-    @* <MudNavLink Href="login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Login">Login</MudNavLink> *@
-    @* <MudNavLink Icon="@Icons.Material.Filled.Logout" @onclick="ShowLogoutConfirmation">Logout</MudNavLink> *@
+        </AuthorizeView> *@
 </MudNavMenu>
 
 

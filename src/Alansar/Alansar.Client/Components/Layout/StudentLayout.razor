@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
+@using static Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] 
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
@@ -14,7 +17,21 @@
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <AdminNavMenu />
         <StudentNavMenu />
+
+     @*    <AuthorizeView Roles="Admin">
+            <Authorized>
+                <AdminNavMenu />
+            </Authorized>
+        </AuthorizeView>
+        
+        <AuthorizeView Roles="Student">
+            <Authorized>
+                <StudentNavMenu />
+            </Authorized>
+        </AuthorizeView> *@
+
     </MudDrawer>
     <MudMainContent Class="mt-16 pa-4">
         @Body

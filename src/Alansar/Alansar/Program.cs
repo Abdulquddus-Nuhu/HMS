@@ -1,4 +1,4 @@
-using Alansar.Client.Pages;
+using Alansar.Client.Components.Pages;
 using Alansar.Components;
 using Alansar.Components.Account;
 using Alansar.Core.Entities.Identity;
@@ -116,7 +116,7 @@ if (!app.Environment.IsProduction())
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<AppDbContext>();
-        context.Database.EnsureDeleted();
+        //context.Database.EnsureDeleted();
         context.Database.Migrate();
     }
 }
