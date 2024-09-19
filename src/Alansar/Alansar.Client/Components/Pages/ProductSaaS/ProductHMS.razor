@@ -1,0 +1,195 @@
+﻿@page "/popo"
+@using Alansar.Client.Components.Layout
+@layout ProductLayout
+@rendermode InteractiveAuto
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-5">
+    <MudGrid>
+        <!-- Hero Section -->
+        <MudItem xs="12" md="6">
+            @* <MudText Typo="Typo.h2" Class="mb-2">Welcome to <strong>YourHostelSaaS</strong></MudText> *@
+            <MudText Typo="Typo.h2" Class="mb-2">Welcome to <strong>NoaHQ HMS</strong></MudText>
+            <MudText Typo="Typo.h5" Class="mb-4">The Ultimate Hostel Management Platform</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Easily manage student accommodations, room assignments, dining schedules, and much more with our cloud-based solution.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/register">Get Started</MudButton>
+        </MudItem>
+
+        <!-- Hero Image -->
+        <MudItem xs="12" md="6">
+            @* <MudImage Src="your-image-path.jpg" Alt="Hostel Management System" Class="w-100" /> *@
+            <MudImage Src="https://uhdwallpapers.org/wallpaper/mclaren-720s-gt3-evo_786694/" Alt="Hostel Management System" Class="w-100" />
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-5">
+    <!-- Features Section -->
+    <MudGrid>
+        <MudItem xs="12" Class="text-center">
+            <MudText Typo="Typo.h4" Class="mb-4">Why Choose Us?</MudText>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Easy Student Management</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    Manage student profiles, room assignments, and more with ease. Keep everything organized and accessible.
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Seamless Room Booking</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    Allow students to book rooms online, and manage bookings in real-time with our intuitive platform.
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Flexible Dining Options</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    Customize dining schedules and menu options to meet the needs of your students.
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-5">
+    <!-- Pricing Section -->
+    <MudGrid>
+        <MudItem xs="12" Class="text-center">
+            <MudText Typo="Typo.h4" Class="mb-4">Pricing Plans</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTabs Rounded="true" Centered="true">
+                <MudTabPanel Text="Monthly Pricing">
+                    <!-- Monthly Pricing Plans -->
+                    <MudGrid>
+                        <!-- Basic Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Basic Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    Manage up to 50 students with basic room management and dining options.
+                                    <MudText Typo="Typo.body1">Price: $50/month</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Start Free</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+
+                        <!-- Standard Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Standard Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    All features of the Basic Plan, plus up to 200 students, custom branding, and priority support.
+                                    <MudText Typo="Typo.body1">Price: $100/month</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Choose Standard</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+
+                        <!-- Premium Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Premium Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    Unlimited students and rooms, advanced analytics, full white-label customization, and 24/7 support.
+                                    <MudText Typo="Typo.body1">Price: $200/month</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Go Premium</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </MudTabPanel>
+
+                <MudTabPanel Text="Yearly Pricing">
+                    <!-- Yearly Pricing Plans -->
+                    <MudGrid>
+                        <!-- Basic Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Basic Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    Manage up to 50 students with basic room management and dining options.
+                                    <MudText Typo="Typo.body1">Price: $500/year</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Start Free</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+
+                        <!-- Standard Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Standard Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    All features of the Basic Plan, plus up to 200 students, custom branding, and priority support.
+                                    <MudText Typo="Typo.body1">Price: $1000/year</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Choose Standard</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+
+                        <!-- Premium Plan -->
+                        <MudItem xs="12" md="4">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.h6">Premium Plan</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    Unlimited students and rooms, advanced analytics, full white-label customization, and 24/7 support.
+                                    <MudText Typo="Typo.body1">Price: $2000/year</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Outlined" Href="/register">Go Premium</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
