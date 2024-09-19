@@ -23,6 +23,8 @@ namespace Alansar.Data
         public DbSet<DiningAssignment> DiningAssignments => Set<DiningAssignment>();
         public DbSet<Session> Sessions => Set<Session>();
         public DbSet<Grade> Grades => Set<Grade>();
+        public DbSet<Tenant> Tenants => Set<Tenant>();
+        public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -83,7 +85,8 @@ namespace Alansar.Data
             // Seed roles
             builder.Entity<IdentityRole<int>>().HasData(
                 new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole<int> { Id = 2, Name = "Student", NormalizedName = "STUDENT" }
+                new IdentityRole<int> { Id = 2, Name = "Student", NormalizedName = "STUDENT" },
+                new IdentityRole<int> { Id = 3, Name = "TenantAdmin", NormalizedName = "TENANTADMIN" }
             );
 
             // Seed default admin users
@@ -99,7 +102,8 @@ namespace Alansar.Data
                 new IdentityUserRole<int> { UserId = 1, RoleId = 1 },
                 new IdentityUserRole<int> { UserId = 2, RoleId = 1 },
                 new IdentityUserRole<int> { UserId = 3, RoleId = 2 },
-                new IdentityUserRole<int> { UserId = 4, RoleId = 2 }
+                new IdentityUserRole<int> { UserId = 4, RoleId = 2 },
+                new IdentityUserRole<int> { UserId = 5, RoleId = 2 }
             );
 
             builder.Entity<Student>().HasData(
