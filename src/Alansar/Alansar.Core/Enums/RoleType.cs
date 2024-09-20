@@ -3,6 +3,8 @@
     public enum RoleType
     {
         Admin = 0,
-        Student
+        Student,
+        TenantAdmin,
+        SuperAdmin
     }
 }

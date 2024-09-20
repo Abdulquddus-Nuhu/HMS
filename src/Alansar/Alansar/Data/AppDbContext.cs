@@ -84,6 +84,7 @@ namespace Alansar.Data
 
             // Seed roles
             builder.Entity<IdentityRole<int>>().HasData(
+                new IdentityRole<int> { Id = 4, Name = "SuperAdmin", NormalizedName = "SUPERADMIN" },
                 new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "ADMIN" },
                 new IdentityRole<int> { Id = 2, Name = "Student", NormalizedName = "STUDENT" },
                 new IdentityRole<int> { Id = 3, Name = "TenantAdmin", NormalizedName = "TENANTADMIN" }
@@ -91,6 +92,7 @@ namespace Alansar.Data
 
             // Seed default admin users
             builder.Entity<User>().HasData(
+                new User { Id = 6, RoleType = RoleType.SuperAdmin, FirstName = "Boss", UserName = "boss@example.com", NormalizedUserName = "BOSS@EXAMPLE.COM", Email = "boss@example.com", NormalizedEmail = "BOSS@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Boss1Pass"), SecurityStamp = string.Empty },
                 new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin1Pass"), SecurityStamp = string.Empty },
                 new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Admin2Pass"), SecurityStamp = string.Empty },
                 new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = new PasswordHasher<User>().HashPassword(null, "Student1Pass"), SecurityStamp = string.Empty },

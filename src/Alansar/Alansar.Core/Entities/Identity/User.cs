@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Alansar.Core.Entities.Identity
 {
-    public class User : IdentityUser<int>
+    public class User : IdentityUser<int>, ITenant
     {
         public string FirstName { get; set; } = string.Empty;
         public string? MiddleName { get; set; } = string.Empty;
@@ -11,7 +11,6 @@ namespace Alansar.Core.Entities.Identity
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
         public RoleType RoleType { get; set; }
 
-        //
         public bool IsDeleted { get; set; }
         public string? DeletedBy { get; set; } = string.Empty;
         public virtual DateTime? Deleted { get; set; }
@@ -20,6 +19,7 @@ namespace Alansar.Core.Entities.Identity
         public virtual DateTime? Modified { get; set; }
         public virtual string? LastModifiedBy { get; set; }
         public bool IsActive { get; set; }
+        public int? TenantId { get; set; }
 
         //protected User() -- inherited cannot use constructor
         public User()

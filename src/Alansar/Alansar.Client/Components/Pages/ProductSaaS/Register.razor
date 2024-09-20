@@ -5,6 +5,9 @@
 @layout ProductLayout
 @inject NavigationManager NavigationManager
 @rendermode InteractiveAuto
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
 
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -19,30 +22,11 @@
                 Start managing your hostel with our easy-to-use platform. Choose a plan that fits your needs.
             </MudText>
 
-            <MudForm @ref="_form" Model="createTenantModel" OnValidSubmit="@HandleSubmit">
+            <EditForm Model="createTenantModel" OnValidSubmit="HandleSubmit">
                 <MudTextField Label="School Name" @bind-Value="createTenantModel.SchoolName" Required="true" />
                 <MudTextField Label="Admin Email" @bind-Value="createTenantModel.Email" Required="true" />
 
 
-
-@*                 <MudSelect T="SubscriptionPlanType" Margin="Margin.Normal" @bind-Value="createTenantModel.PlanType">
-                    <MudSelectItem Value="SubscriptionPlanType.Free">Free Plan - ₦0</MudSelectItem>
-                    <MudSelectItem Value="SubscriptionPlanType.Standard">Standard Plan - ₦5,000</MudSelectItem>
-                    <MudSelectItem Value="SubscriptionPlanType.Premium">Premium Plan - ₦10,000</MudSelectItem>
-                </MudSelect>
-
-
-                <MudSelect Margin="Margin.Normal" @bind-Value="createTenantModel.PlanType">
-                    <MudSelectItem Value="SubscriptionPlanType.Free">Free Plan - ₦0</MudSelectItem>
-                    <MudSelectItem Value="SubscriptionPlanType.Standard">Standard Plan - ₦5,000/month</MudSelectItem>
-                    <MudSelectItem Value="SubscriptionPlanType.Premium">Premium Plan - ₦10,000/month</MudSelectItem>
-                </MudSelect>
-
-                <MudSelect Margin="Margin.Normal" @bind-Value="createTenantModel.BillingCycle">
-                    <MudSelectItem Value="BillingCycle.Monthly">Monthly Billing</MudSelectItem>
-                    <MudSelectItem Value="BillingCycle.Yearly">Yearly Billing (10% off)</MudSelectItem>
-                </MudSelect>
- *@
 
                 <MudSelect T="SubscriptionPlanType" Margin="Margin.Normal" @bind-Value="createTenantModel.PlanType">
                     <MudSelectItem Value="SubscriptionPlanType.Free">Basic</MudSelectItem>
@@ -70,9 +54,9 @@
                 
 
 
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Type="Submit">Register</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" Type="Submit">Register</MudButton>
                 @* <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_form.IsValid)" Type="Submit">Register</MudButton> *@
-            </MudForm>
+            </EditForm>
         </MudItem>
 
         <!-- Hero Image -->
@@ -84,22 +68,29 @@
 
 @code {
     private MudForm _form;
-    public CreateTenantRequest createTenantModel = new(){PlanType = SubscriptionPlanType.Free};
+    public CreateTenantRequest createTenantModel = new();
 
 
     private async Task HandleSubmit()
     {
+        Console.WriteLine("hello");
         // Register the school and create a tenant
-        // var tenantId = await TenantService.CreateTenant(_schoolName, _adminEmail, _selectedPlan);
+        var response = await Http.PostAsJsonAsync("/api/Tenant/create-tenant", createTenantModel);
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add("Registration Successful", Severity.Success);
+        }
 
         // Navigate to the billing page if plan is not Free
-        if (createTenantModel.PlanType.ToString() != "Free")
+        if (createTenantModel.PlanType.ToString() == "Free")
         {
-            // NavigationManager.NavigateTo($"/billing/{tenantId}");
+            NavigationManager.NavigateTo($"/admin-home");
+            // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
         }
         else
         {
             // Redirect to the dashboard directly for free users
+            // NavigationManager.NavigateTo($"/billing/{tenantId}");
             // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
         }
     }

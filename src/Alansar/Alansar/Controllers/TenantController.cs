@@ -1,5 +1,6 @@
 ﻿using Alansar.Core.Entities;
 using Alansar.Core.Entities.Identity;
+using Alansar.Core.Enums;
 using Alansar.Core.Models.Requests;
 using Alansar.Data;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace Alansar.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("create-tenant")]
         public async Task<ActionResult> CreateTenant([FromBody] CreateTenantRequest request)
         {
             var tenant = new Tenant()
@@ -29,6 +30,26 @@ namespace Alansar.Controllers
                 SchoolName = request.SchoolName,
                 Email = request.Email,
             };
+            _context.Tenants.Add(tenant);
+            //await _context.SaveChangesAsync();
+
+
+            var user = new User
+            {
+                FirstName = "Admin",
+                LastName = string.Empty,
+                UserName = request.Email,
+                Email = request.Email,
+                RoleType = RoleType.TenantAdmin,
+                TenantId = tenant.Id,
+            };
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, nameof(RoleType.TenantAdmin));
+            }
+
 
             var tenantSubscription = new TenantSubscription()
             {
@@ -38,14 +59,15 @@ namespace Alansar.Controllers
                 HasPaid = false,
             };
 
-            if (request.PlanType == Core.Enums.SubscriptionPlanType.Free)
+            if (request.PlanType == SubscriptionPlanType.Free)
             {
                 tenantSubscription.StartDate = DateTime.UtcNow;
                 //todo: change later
                 tenantSubscription.EndDate = DateTime.UtcNow.AddMinutes(5);
             }
 
-            //_context.Students.Add(newStudent);
+            _context.TenantSubscriptions.Add(tenantSubscription);
+
             await _context.SaveChangesAsync();
             return Ok();
         }
