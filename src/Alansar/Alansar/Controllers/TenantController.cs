@@ -2,6 +2,7 @@
 using Alansar.Core.Entities.Identity;
 using Alansar.Core.Enums;
 using Alansar.Core.Models.Requests;
+using Alansar.Core.Models.Responses;
 using Alansar.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -25,12 +26,14 @@ namespace Alansar.Controllers
         [HttpPost("create-tenant")]
         public async Task<ActionResult> CreateTenant([FromBody] CreateTenantRequest request)
         {
+            var apiResponse = new BaseResponse();
+
             var tenant = new Tenant()
             {
                 SchoolName = request.SchoolName,
                 Email = request.Email,
             };
-            _context.Tenants.Add(tenant);
+            await _context.Tenants.AddAsync(tenant);
             //await _context.SaveChangesAsync();
 
 
@@ -48,6 +51,12 @@ namespace Alansar.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, nameof(RoleType.TenantAdmin));
+            }
+            else
+            {
+                apiResponse.Status = false;
+                apiResponse.Message = result.Errors.FirstOrDefault().Description;
+                return BadRequest(apiResponse);
             }
 
 
@@ -69,7 +78,7 @@ namespace Alansar.Controllers
             _context.TenantSubscriptions.Add(tenantSubscription);
 
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(new BaseResponse());
         }
     }
 }

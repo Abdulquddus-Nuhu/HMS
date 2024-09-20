@@ -2,9 +2,11 @@
 @using Alansar.Client.Components.Layout
 @using Alansar.Core.Enums
 @using Alansar.Core.Models.Requests
+@using Alansar.Core.Models.Responses
+@using System.Text.Json
 @layout ProductLayout
 @inject NavigationManager NavigationManager
-@rendermode InteractiveAuto
+@rendermode InteractiveWebAssembly
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
@@ -24,11 +26,12 @@
 
             <EditForm Model="createTenantModel" OnValidSubmit="HandleSubmit">
                 <MudTextField Label="School Name" @bind-Value="createTenantModel.SchoolName" Required="true" />
-                <MudTextField Label="Admin Email" @bind-Value="createTenantModel.Email" Required="true" />
+                <MudTextField Label="Email" @bind-Value="createTenantModel.Email" Required="true" />
+                <MudTextField Label="Password" @bind-Value="createTenantModel.Password" Required="true" />
+                <MudTextField Label="Confirm Password" @bind-Value="createTenantModel.ConfirmPassword" Required="true" />
 
 
-
-                <MudSelect T="SubscriptionPlanType" Margin="Margin.Normal" @bind-Value="createTenantModel.PlanType">
+                <MudSelect Placeholder="Plan" Label="Plan" T="SubscriptionPlanType" Margin="Margin.Normal" @bind-Value="createTenantModel.PlanType">
                     <MudSelectItem Value="SubscriptionPlanType.Free">Basic</MudSelectItem>
                     <MudSelectItem Value="SubscriptionPlanType.Standard">Standard</MudSelectItem>
                     <MudSelectItem Value="SubscriptionPlanType.Premium">Premium</MudSelectItem>
@@ -52,8 +55,6 @@
                 }
 
                 
-
-
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" Type="Submit">Register</MudButton>
                 @* <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_form.IsValid)" Type="Submit">Register</MudButton> *@
             </EditForm>
@@ -79,19 +80,31 @@
         if (response.IsSuccessStatusCode)
         {
             Snackbar.Add("Registration Successful", Severity.Success);
-        }
 
-        // Navigate to the billing page if plan is not Free
-        if (createTenantModel.PlanType.ToString() == "Free")
-        {
-            NavigationManager.NavigateTo($"/admin-home");
-            // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
+            // Redirect to the dashboard directly for free users
+            if (createTenantModel.PlanType.ToString() == "Free")
+            {
+                NavigationManager.NavigateTo($"/Account/Login");
+                // NavigationManager.NavigateTo($"/admin-home");
+                // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
+            }
+            else
+            {
+                // Navigate to the billing page if plan is not Free
+                // NavigationManager.NavigateTo($"/billing/{tenantId}");
+                // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
+            }
         }
         else
         {
-            // Redirect to the dashboard directly for free users
-            // NavigationManager.NavigateTo($"/billing/{tenantId}");
-            // NavigationManager.NavigateTo($"/dashboard/{tenantId}");
+            var messageResponse = JsonSerializer.Deserialize<BaseResponse>(await response.Content.ReadAsStringAsync());
+            Console.WriteLine(messageResponse.Message);
+            Console.WriteLine("erro");
+            Snackbar.Add($"{messageResponse.Message}", Severity.Error);
+            Snackbar.Add($"Error Occured. Try again!", Severity.Error);
+            Console.WriteLine(messageResponse.Message);
         }
+
+
     }
 }
