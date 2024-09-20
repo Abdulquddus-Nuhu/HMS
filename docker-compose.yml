@@ -1,0 +1,6 @@
+services:
+  alansar:
+    image: ${DOCKER_REGISTRY-}alansar
+    build:
+      context: .
+      dockerfile: src/Alansar/Alansar/Dockerfile
