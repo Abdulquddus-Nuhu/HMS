@@ -2,6 +2,7 @@
 @attribute [Authorize] *@
 @page "/admin-home"
 @page "/"
+@using System.Security.Claims
 @* @using Alansar.Client.Components.Layout
 @layout AdminLayout *@
 @inject HttpClient Http
@@ -11,6 +12,7 @@
 @rendermode InteractiveAuto
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@* @inherits ClaimsBaseComponent *@
 
 
 @* <PageTitle>Hostel Management System</PageTitle> *@
@@ -78,13 +80,20 @@
     private int numberOfStudents = 150;  
     private int numberOfDiningHalls = 5; 
     private int numberOfRooms = 50; 
+    private ClaimsPrincipal claimsPrincipal; 
+    private AuthenticationState authState;
 
 
     protected override async Task OnInitializedAsync()
     {
 
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
+        authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        claimsPrincipal = authState.User;
+
+        // Extract claims using the base class method
+        // ExtractUserClaims(claimsPrincipal);
+
+        // Http.DefaultRequestHeaders
 
 
         numberOfStudents = await Http.GetFromJsonAsync<int>("api/student/count");

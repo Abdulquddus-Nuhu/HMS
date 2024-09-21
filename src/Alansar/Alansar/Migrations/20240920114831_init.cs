@@ -83,7 +83,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,7 +105,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,7 +132,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -153,7 +156,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,7 +179,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -310,7 +315,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -384,7 +390,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -420,7 +427,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -455,7 +463,8 @@ namespace Alansar.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TenantId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -490,52 +499,52 @@ namespace Alansar.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Created", "CreatedBy", "Deleted", "DeletedBy", "Email", "EmailConfirmed", "FirstName", "IsActive", "IsDeleted", "LastModifiedBy", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "Modified", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RoleType", "SecurityStamp", "TenantId", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "35a7fb82-6e27-49b2-a37b-fb6f476f7ea5", new DateTime(2024, 9, 20, 9, 21, 19, 882, DateTimeKind.Utc).AddTicks(7593), "", null, "", "admin1@example.com", true, "Admin1", false, false, null, "", false, null, "", null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEEkiT7rOKDU2P+vHzbcuwldNZ1r7jTxh2/WdYFb+2TXtEc3YYfXVEJrkeT2sCj2mgA==", null, false, 0, "", null, false, "admin1@example.com" },
-                    { 2, 0, "93e3ea6f-b8f5-47d1-81ad-f0f0de37872a", new DateTime(2024, 9, 20, 9, 21, 19, 968, DateTimeKind.Utc).AddTicks(49), "", null, "", "admin2@example.com", true, "Admin2", false, false, null, "", false, null, "", null, "ADMIN2@EXAMPLE.COM", "ADMIN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJPGqhecgYrMn7K7JFb8JaRB4lMyGfPEZbI0B0+FSBdm/vl7sCsi1uZcmRBwUHud8Q==", null, false, 0, "", null, false, "admin2@example.com" },
-                    { 3, 0, "670d4499-98b7-437c-8bf9-c2c31ea0b417", new DateTime(2024, 9, 20, 9, 21, 20, 56, DateTimeKind.Utc).AddTicks(8545), "", null, "", "student1@example.com", true, "Student1", false, false, null, "", false, null, "", null, "STUDENT1@EXAMPLE.COM", "STUDENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAENE48NWhl2F/zPLtUKEZFdQd+aHQ1H4aZrB6GCudqbsYCNQMO5yIGimBcg/w+nrK7g==", null, false, 1, "", null, false, "student1@example.com" },
-                    { 4, 0, "693e724e-973c-4337-8623-5213873ea656", new DateTime(2024, 9, 20, 9, 21, 20, 160, DateTimeKind.Utc).AddTicks(7381), "", null, "", "student2@example.com", true, "Student2", false, false, null, "", false, null, "", null, "STUDENT2@EXAMPLE.COM", "STUDENT2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAo+gvrQ/5ht2oodtU0iBGfYxB0qEcpKYD4weYz8OljQcO8gMoBJPJNEGAnct3u9nA==", null, false, 1, "", null, false, "student2@example.com" },
-                    { 5, 0, "292cffb9-d8ac-40a1-a27d-1dd229739e41", new DateTime(2024, 9, 20, 9, 21, 20, 259, DateTimeKind.Utc).AddTicks(913), "", null, "", "student3@example.com", true, "Student3", false, false, null, "", false, null, "", null, "STUDENT3@EXAMPLE.COM", "STUDENT3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEPYF18nYXjZ223OhLft6+weUqSoZG+tjnkoyUk4vjh3YpiBUrgLgAdru5qNxvxMirA==", null, false, 1, "", null, false, "student3@example.com" },
-                    { 6, 0, "03011cb9-a5d2-417a-b9b7-c46e09a7b35c", new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4212), "", null, "", "boss@example.com", true, "Boss", false, false, null, "", false, null, "", null, "BOSS@EXAMPLE.COM", "BOSS@EXAMPLE.COM", "AQAAAAIAAYagAAAAEFOQqb7LEtMXQpEXGxXn4aKphvJAaINK81eyKMNzKkIDolt8mEDMu1WHCuFbYHpnEw==", null, false, 3, "", null, false, "boss@example.com" }
+                    { 1, 0, "1df7d423-1fde-4f8a-9aa4-6957e842c517", new DateTime(2024, 9, 20, 11, 48, 28, 505, DateTimeKind.Utc).AddTicks(8111), "", null, "", "admin1@example.com", true, "Admin1", false, false, null, "", false, null, "", null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAIAAYagAAAAENBWbpMiUGFpg9nwbq/+8CM4zFxD1EhLBBCkIXLj1nAdKjw4cBAP95ZeYt1ZwoXqqA==", null, false, 0, "", null, false, "admin1@example.com" },
+                    { 2, 0, "267c171e-1379-4f40-be26-d3aeb329bf0d", new DateTime(2024, 9, 20, 11, 48, 28, 753, DateTimeKind.Utc).AddTicks(6745), "", null, "", "admin2@example.com", true, "Admin2", false, false, null, "", false, null, "", null, "ADMIN2@EXAMPLE.COM", "ADMIN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEPbXEKjxR/F40STttsEgqGnoWQ1v/TmxuDb2nTHwlPn+7KUAA2x/CfMSrlWdOOe9gw==", null, false, 0, "", null, false, "admin2@example.com" },
+                    { 3, 0, "780a9746-1075-4dca-a6e4-eff030b2a8fb", new DateTime(2024, 9, 20, 11, 48, 28, 932, DateTimeKind.Utc).AddTicks(6773), "", null, "", "student1@example.com", true, "Student1", false, false, null, "", false, null, "", null, "STUDENT1@EXAMPLE.COM", "STUDENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEKUPE0fYqhEGZyxsjIplhEBSue3qSJaMwXLtzWmRirzdYJuKleBwHOq52JnQAXUeAQ==", null, false, 1, "", null, false, "student1@example.com" },
+                    { 4, 0, "57e4c01d-4172-40c9-918b-cbf8bc4b9814", new DateTime(2024, 9, 20, 11, 48, 29, 103, DateTimeKind.Utc).AddTicks(5476), "", null, "", "student2@example.com", true, "Student2", false, false, null, "", false, null, "", null, "STUDENT2@EXAMPLE.COM", "STUDENT2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEImK2IdK2DI2a5g7cUeOL8TVF6U9Rmz/oKxkfGO0qDTVnHhBC7PgmFkM/Sn6mSfsuA==", null, false, 1, "", null, false, "student2@example.com" },
+                    { 5, 0, "9d09a314-d7b0-4cde-9557-359f0b2205ee", new DateTime(2024, 9, 20, 11, 48, 29, 393, DateTimeKind.Utc).AddTicks(2095), "", null, "", "student3@example.com", true, "Student3", false, false, null, "", false, null, "", null, "STUDENT3@EXAMPLE.COM", "STUDENT3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEGEFwXH9NNXPhqPXSBZYRAVxmlVR0+zAPHCY+kCdKCcxEkVFBWVnEYyMiYjzQ+7R9g==", null, false, 1, "", null, false, "student3@example.com" },
+                    { 6, 0, "d9c4e95b-016a-44de-91cc-bddc0d202ee4", new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5841), "", null, "", "boss@example.com", true, "Boss", false, false, null, "", false, null, "", null, "BOSS@EXAMPLE.COM", "BOSS@EXAMPLE.COM", "AQAAAAIAAYagAAAAEPzv7B3dbJrh21pXpiKsUtyhbiW5FZnNGxbjENpJ9bDnlsFyVkVSHpql+bnf9mBQ0Q==", null, false, 3, "", null, false, "boss@example.com" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DiningSpaces",
-                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name" },
+                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name", "TenantId" },
                 values: new object[,]
                 {
-                    { 1, 100, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4043), "", null, "", false, false, null, null, "Dining Hall 1" },
-                    { 2, 150, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4045), "", null, "", false, false, null, null, "Dining Hall 2" }
+                    { 1, 100, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5564), "", null, "", false, false, null, null, "Dining Hall 1", null },
+                    { 2, 150, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5568), "", null, "", false, false, null, null, "Dining Hall 2", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Grades",
-                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name" },
+                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name", "TenantId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3805), "", null, "", false, false, null, null, "JSS1" },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3809), "", null, "", false, false, null, null, "JSS2" },
-                    { 3, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3810), "", null, "", false, false, null, null, "JSS3" }
+                    { 1, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5207), "", null, "", false, false, null, null, "JSS1", null },
+                    { 2, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5221), "", null, "", false, false, null, null, "JSS2", null },
+                    { 3, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5223), "", null, "", false, false, null, null, "JSS3", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Rooms",
-                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsAvailable", "IsDeleted", "LastModifiedBy", "Modified", "Price", "RoomNumber", "SessionYear", "Type" },
+                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsAvailable", "IsDeleted", "LastModifiedBy", "Modified", "Price", "RoomNumber", "SessionYear", "TenantId", "Type" },
                 values: new object[,]
                 {
-                    { 1, 24, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3990), "", null, "", false, true, false, null, null, 2000m, "101", null, "Single" },
-                    { 2, 20, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3997), "", null, "", false, true, false, null, null, 3000m, "102", null, "Double" },
-                    { 3, 54, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3999), "", null, "", false, false, false, null, null, 6000m, "103", null, "Single" },
-                    { 4, 5, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4001), "", null, "", false, true, false, null, null, 9000m, "104", null, "Double" },
-                    { 5, 32, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4003), "", null, "", false, false, false, null, null, 4000m, "105", null, "Single" }
+                    { 1, 24, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5487), "", null, "", false, true, false, null, null, 2000m, "101", null, null, "Single" },
+                    { 2, 20, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5497), "", null, "", false, true, false, null, null, 3000m, "102", null, null, "Double" },
+                    { 3, 54, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5501), "", null, "", false, false, false, null, null, 6000m, "103", null, null, "Single" },
+                    { 4, 5, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5504), "", null, "", false, true, false, null, null, 9000m, "104", null, null, "Double" },
+                    { 5, 32, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5508), "", null, "", false, false, false, null, null, 4000m, "105", null, null, "Single" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Sessions",
-                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "EndDate", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "StartDate", "Year" },
+                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "EndDate", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "StartDate", "TenantId", "Year" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4082), "", null, "", new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc), "2022/2023" },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4090), "", null, "", new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), "2021/2022" }
+                    { 1, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5625), "", null, "", new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc), null, "2022/2023" },
+                    { 2, new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5640), "", null, "", new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), null, "2021/2022" }
                 });
 
             migrationBuilder.InsertData(
@@ -552,12 +561,12 @@ namespace Alansar.Migrations
 
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "Id", "Created", "CreatedBy", "DateOfBirth", "Deleted", "DeletedBy", "Email", "FirstName", "GradeId", "IsActive", "IsDeleted", "LastModifiedBy", "LastName", "MiddleName", "Modified", "Password", "RoomId", "UserId" },
+                columns: new[] { "Id", "Created", "CreatedBy", "DateOfBirth", "Deleted", "DeletedBy", "Email", "FirstName", "GradeId", "IsActive", "IsDeleted", "LastModifiedBy", "LastName", "MiddleName", "Modified", "Password", "RoomId", "TenantId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3705), "", new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student1@example.com", "Student 1", 2, false, false, null, "Student 1", "", null, null, null, 3 },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3716), "", new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student2@example.com", "Student 2", 3, false, false, null, "Student 2", "", null, null, null, 4 },
-                    { 3, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3728), "", new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student3@example.com", "Student 3", 3, false, false, null, "Student 3", "", null, null, null, 5 }
+                    { 1, new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(300), "", new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student1@example.com", "Student 1", 2, false, false, null, "Student 1", "", null, null, null, null, 3 },
+                    { 2, new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(320), "", new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student2@example.com", "Student 2", 3, false, false, null, "Student 2", "", null, null, null, null, 4 },
+                    { 3, new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(326), "", new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student3@example.com", "Student 3", 3, false, false, null, "Student 3", "", null, null, null, null, 5 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -15,6 +15,7 @@ using System.Net;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Alansar.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,7 @@ if (builder.Environment.IsStaging())
 // Add core services
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CookieService>();
+builder.Services.AddTransient<ITenantService, TenantService>();
 
 // Add controllers, razor pages, and HTTP context accessor
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -134,17 +136,17 @@ else
     app.UseHsts();
 }
 
-
+//Handling api error that blow up
 app.UseExceptionHandler(a => a.Run(async context =>
 {
     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
     var error = exceptionHandlerPathFeature?.Error;
 
-    var statusCode = context.Response.StatusCode; // Get the actual status code
+    var statusCode = context.Response.StatusCode;
 
     var problemDetails = new ProblemDetails
     {
-        Status = statusCode, // Set the status code from the response context
+        Status = statusCode,
         Title = "An error occurred",
         Detail = error?.Message ?? "An unexpected error occurred.",
     };
@@ -161,6 +163,8 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
+
+app.UseMiddleware<TenantMiddleware>();
 
 
 // Configure Razor components and map endpoints

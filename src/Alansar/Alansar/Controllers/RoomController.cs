@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Alansar.Data;
 using Alansar.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace Alansar.Controllers
 {
@@ -13,10 +15,12 @@ namespace Alansar.Controllers
     public class RoomController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoomController(AppDbContext context)
+        public RoomController(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet("count")]

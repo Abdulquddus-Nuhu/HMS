@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Alansar.Core.Entities
 {
-    public class BaseEntity
+    public class BaseEntity : ITenant
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -15,6 +15,8 @@ namespace Alansar.Core.Entities
         public virtual DateTime? Modified { get; set; }
         public virtual string? LastModifiedBy { get; set; }
         public bool IsActive { get; set; }
+        public int? TenantId { get; set; }
+
         protected BaseEntity()
         {
             IsDeleted = false;
