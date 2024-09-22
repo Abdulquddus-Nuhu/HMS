@@ -19,7 +19,7 @@ namespace Alansar.Core.Entities.Identity
         public virtual DateTime? Modified { get; set; }
         public virtual string? LastModifiedBy { get; set; }
         public bool IsActive { get; set; }
-        public int? TenantId { get; set; }
+        public string TenantKey { get; set; }
 
         //protected User() -- inherited cannot use constructor
         public User()

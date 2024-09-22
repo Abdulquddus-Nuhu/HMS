@@ -67,8 +67,9 @@ namespace Alansar.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -123,8 +124,9 @@ namespace Alansar.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -176,8 +178,9 @@ namespace Alansar.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -227,8 +230,9 @@ namespace Alansar.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -239,23 +243,25 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             Capacity = 100,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5564),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2932),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
                             IsDeleted = false,
-                            Name = "Dining Hall 1"
+                            Name = "Dining Hall 1",
+                            TenantKey = "1"
                         },
                         new
                         {
                             Id = 2,
                             Capacity = 150,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5568),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2937),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
                             IsDeleted = false,
-                            Name = "Dining Hall 2"
+                            Name = "Dining Hall 2",
+                            TenantKey = "1"
                         });
                 });
 
@@ -296,8 +302,9 @@ namespace Alansar.Migrations
                         .HasMaxLength(55)
                         .HasColumnType("character varying(55)");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -307,32 +314,35 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5207),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2479),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
                             IsDeleted = false,
-                            Name = "JSS1"
+                            Name = "JSS1",
+                            TenantKey = "1"
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5221),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2488),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
                             IsDeleted = false,
-                            Name = "JSS2"
+                            Name = "JSS2",
+                            TenantKey = "1"
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5223),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2491),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
                             IsDeleted = false,
-                            Name = "JSS3"
+                            Name = "JSS3",
+                            TenantKey = "1"
                         });
                 });
 
@@ -422,8 +432,9 @@ namespace Alansar.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -448,8 +459,8 @@ namespace Alansar.Migrations
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9c4e95b-016a-44de-91cc-bddc0d202ee4",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5841),
+                            ConcurrencyStamp = "936be39d-e3dc-44a4-bdf4-26d8c6a800c0",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(3317),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "boss@example.com",
@@ -462,10 +473,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "BOSS@EXAMPLE.COM",
                             NormalizedUserName = "BOSS@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPzv7B3dbJrh21pXpiKsUtyhbiW5FZnNGxbjENpJ9bDnlsFyVkVSHpql+bnf9mBQ0Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPS0FKFp0SMHUTT44GlNy2tfKmrgwIEYr4yD2s6wjscO/2AHTdjMdj9SHLHiPLUZ9w==",
                             PhoneNumberConfirmed = false,
                             RoleType = 3,
                             SecurityStamp = "",
+                            TenantKey = "",
                             TwoFactorEnabled = false,
                             UserName = "boss@example.com"
                         },
@@ -473,8 +485,8 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1df7d423-1fde-4f8a-9aa4-6957e842c517",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 505, DateTimeKind.Utc).AddTicks(8111),
+                            ConcurrencyStamp = "36f23991-a631-4f14-92ff-6ed971dbf270",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 746, DateTimeKind.Utc).AddTicks(1808),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "admin1@example.com",
@@ -487,10 +499,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "ADMIN1@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENBWbpMiUGFpg9nwbq/+8CM4zFxD1EhLBBCkIXLj1nAdKjw4cBAP95ZeYt1ZwoXqqA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN9PxgXpl+OrpnPyoE9k9e3ZDsP7/b/DzhxGKlVeinhta8pjuE0ZHLJS5+nB5FhZgQ==",
                             PhoneNumberConfirmed = false,
                             RoleType = 0,
                             SecurityStamp = "",
+                            TenantKey = "1",
                             TwoFactorEnabled = false,
                             UserName = "admin1@example.com"
                         },
@@ -498,8 +511,8 @@ namespace Alansar.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "267c171e-1379-4f40-be26-d3aeb329bf0d",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 753, DateTimeKind.Utc).AddTicks(6745),
+                            ConcurrencyStamp = "7801d48f-2237-450f-8372-df93d97e2910",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 928, DateTimeKind.Utc).AddTicks(1687),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "admin2@example.com",
@@ -512,10 +525,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "ADMIN2@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPbXEKjxR/F40STttsEgqGnoWQ1v/TmxuDb2nTHwlPn+7KUAA2x/CfMSrlWdOOe9gw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGw/QFyCW/O9WKSn1CDn6GKYXHG0EN1aKz/EgmaYKFTaP0Ww0U/5TGqNlea8CADvFQ==",
                             PhoneNumberConfirmed = false,
                             RoleType = 0,
                             SecurityStamp = "",
+                            TenantKey = "1",
                             TwoFactorEnabled = false,
                             UserName = "admin2@example.com"
                         },
@@ -523,8 +537,8 @@ namespace Alansar.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "780a9746-1075-4dca-a6e4-eff030b2a8fb",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 932, DateTimeKind.Utc).AddTicks(6773),
+                            ConcurrencyStamp = "588fafae-4b2c-4e65-839f-6bdaceb489ad",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 101, DateTimeKind.Utc).AddTicks(4135),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student1@example.com",
@@ -537,10 +551,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT1@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKUPE0fYqhEGZyxsjIplhEBSue3qSJaMwXLtzWmRirzdYJuKleBwHOq52JnQAXUeAQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBXgVZBk2JUFfcowAEAPeutIhFO/CSriv/8m83K97qcWgJuovycV4tzZDcWebPSR5w==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
+                            TenantKey = "1",
                             TwoFactorEnabled = false,
                             UserName = "student1@example.com"
                         },
@@ -548,8 +563,8 @@ namespace Alansar.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "57e4c01d-4172-40c9-918b-cbf8bc4b9814",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 29, 103, DateTimeKind.Utc).AddTicks(5476),
+                            ConcurrencyStamp = "c11789c3-46bb-44e1-a9ce-03f171b63be5",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 290, DateTimeKind.Utc).AddTicks(1965),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student2@example.com",
@@ -562,10 +577,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT2@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEImK2IdK2DI2a5g7cUeOL8TVF6U9Rmz/oKxkfGO0qDTVnHhBC7PgmFkM/Sn6mSfsuA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKg+oK5USrtAmIC5WsLWuq13B5hJ5rNnIk43CZ3Pu0Xc769F2YVX6WYwVDeS1C6uJg==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
+                            TenantKey = "1",
                             TwoFactorEnabled = false,
                             UserName = "student2@example.com"
                         },
@@ -573,8 +589,8 @@ namespace Alansar.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9d09a314-d7b0-4cde-9557-359f0b2205ee",
-                            Created = new DateTime(2024, 9, 20, 11, 48, 29, 393, DateTimeKind.Utc).AddTicks(2095),
+                            ConcurrencyStamp = "68a2aab6-d6d2-4a08-aa6b-c49287b73d81",
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 452, DateTimeKind.Utc).AddTicks(8250),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student3@example.com",
@@ -587,10 +603,11 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT3@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGEFwXH9NNXPhqPXSBZYRAVxmlVR0+zAPHCY+kCdKCcxEkVFBWVnEYyMiYjzQ+7R9g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKMNfEmsccVAmBCv5NhP0KfgMCX2Cg7PSVTmqLKcjbo44GxL2PWcn908n4qDO5NeZw==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
+                            TenantKey = "1",
                             TwoFactorEnabled = false,
                             UserName = "student3@example.com"
                         });
@@ -644,8 +661,9 @@ namespace Alansar.Migrations
                     b.Property<string>("SessionYear")
                         .HasColumnType("text");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Type")
                         .HasColumnType("text");
@@ -659,7 +677,7 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             Capacity = 24,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5487),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2835),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -667,13 +685,14 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             Price = 2000m,
                             RoomNumber = "101",
+                            TenantKey = "1",
                             Type = "Single"
                         },
                         new
                         {
                             Id = 2,
                             Capacity = 20,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5497),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2849),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -681,13 +700,14 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             Price = 3000m,
                             RoomNumber = "102",
+                            TenantKey = "1",
                             Type = "Double"
                         },
                         new
                         {
                             Id = 3,
                             Capacity = 54,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5501),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2853),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -695,13 +715,14 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             Price = 6000m,
                             RoomNumber = "103",
+                            TenantKey = "1",
                             Type = "Single"
                         },
                         new
                         {
                             Id = 4,
                             Capacity = 5,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5504),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2856),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -709,13 +730,14 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             Price = 9000m,
                             RoomNumber = "104",
+                            TenantKey = "1",
                             Type = "Double"
                         },
                         new
                         {
                             Id = 5,
                             Capacity = 32,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5508),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(2860),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -723,6 +745,7 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             Price = 4000m,
                             RoomNumber = "105",
+                            TenantKey = "1",
                             Type = "Single"
                         });
                 });
@@ -765,8 +788,9 @@ namespace Alansar.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Year")
                         .IsRequired()
@@ -781,25 +805,27 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5625),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(3079),
                             CreatedBy = "",
                             DeletedBy = "",
                             EndDate = new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
                             IsActive = false,
                             IsDeleted = false,
                             StartDate = new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc),
+                            TenantKey = "1",
                             Year = "2022/2023"
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 28, 269, DateTimeKind.Utc).AddTicks(5640),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(3091),
                             CreatedBy = "",
                             DeletedBy = "",
                             EndDate = new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
                             IsActive = false,
                             IsDeleted = false,
                             StartDate = new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
+                            TenantKey = "1",
                             Year = "2021/2022"
                         });
                 });
@@ -863,8 +889,9 @@ namespace Alansar.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -884,7 +911,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(300),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 614, DateTimeKind.Utc).AddTicks(6412),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -895,12 +922,13 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             LastName = "Student 1",
                             MiddleName = "",
+                            TenantKey = "1",
                             UserId = 3
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(320),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 614, DateTimeKind.Utc).AddTicks(6433),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -911,12 +939,13 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             LastName = "Student 2",
                             MiddleName = "",
+                            TenantKey = "1",
                             UserId = 4
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 9, 20, 11, 48, 29, 572, DateTimeKind.Utc).AddTicks(326),
+                            Created = new DateTime(2024, 9, 22, 2, 11, 42, 614, DateTimeKind.Utc).AddTicks(6438),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -927,6 +956,7 @@ namespace Alansar.Migrations
                             IsDeleted = false,
                             LastName = "Student 3",
                             MiddleName = "",
+                            TenantKey = "1",
                             UserId = 5
                         });
                 });
@@ -971,12 +1001,22 @@ namespace Alansar.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tenants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2024, 9, 22, 2, 11, 41, 592, DateTimeKind.Utc).AddTicks(3010),
+                            CreatedBy = "",
+                            DeletedBy = "",
+                            Email = "admin@admin.com",
+                            IsActive = false,
+                            IsDeleted = false,
+                            SchoolName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.TenantSubscription", b =>
@@ -1034,6 +1074,10 @@ namespace Alansar.Migrations
 
                     b.Property<int>("TenantId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TenantKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

@@ -44,7 +44,7 @@ namespace Alansar.Controllers
                 UserName = request.Email,
                 Email = request.Email,
                 RoleType = RoleType.TenantAdmin,
-                TenantId = tenant.Id,
+                TenantKey = $"{tenant.Id}",
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -63,6 +63,7 @@ namespace Alansar.Controllers
             var tenantSubscription = new TenantSubscription()
             {
                 TenantId = tenant.Id,
+                TenantKey = tenant.Id.ToString(),  //required for filteration by tenant
                 PlanType = request.PlanType,
                 BillingCycle = request.BillingCycle,
                 HasPaid = false,

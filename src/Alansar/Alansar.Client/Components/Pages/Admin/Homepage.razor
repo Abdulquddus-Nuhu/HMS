@@ -13,6 +13,8 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @* @inherits ClaimsBaseComponent *@
+@using Alansar.Client.ApiCalls
+@inject IStudentApi StudentApi
 
 
 @* <PageTitle>Hostel Management System</PageTitle> *@
@@ -82,7 +84,9 @@
     private int numberOfRooms = 50; 
     private ClaimsPrincipal claimsPrincipal; 
     private AuthenticationState authState;
-
+    private string tenantId;
+    private string role;
+    private string email;
 
     protected override async Task OnInitializedAsync()
     {
@@ -95,9 +99,82 @@
 
         // Http.DefaultRequestHeaders
 
+        tenantId = claimsPrincipal.FindFirst("TenantId")?.Value;
+        role = claimsPrincipal.FindFirst("role")?.Value;
+        email = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
 
-        numberOfStudents = await Http.GetFromJsonAsync<int>("api/student/count");
-        numberOfDiningHalls = await Http.GetFromJsonAsync<int>("api/diningspace/count");
-        numberOfRooms = await Http.GetFromJsonAsync<int>("api/room/count");
+        // Call the API using Refit
+        // numberOfStudents = await StudentApi.GetStudentCountAsync(tenantId, role, email);
+        // numberOfDiningHalls = await StudentApi.GetDiningSpaceCountAsync(tenantId, role, email);
+        // numberOfRooms = await StudentApi.GetRoomCountAsync(tenantId, role, email);
+
+
+        // numberOfStudents = await Http.GetFromJsonAsync<int>("api/student/count");
+        // numberOfDiningHalls = await Http.GetFromJsonAsync<int>("api/diningspace/count");
+        // numberOfRooms = await Http.GetFromJsonAsync<int>("api/room/count");
+
+        // Log these values to ensure they are not null
+        Console.WriteLine($"TenantId: {tenantId}, Role: {role}, Email: {email}");
+
+        // Call the API using HttpClient
+        numberOfStudents = await GetStudentCountAsync(tenantId, role, email);
+        numberOfDiningHalls = await GetDiningSpaceCountAsync(tenantId, role, email);
+        numberOfRooms = await GetRoomCountAsync(tenantId, role, email);
+    }
+
+    // Helper method to add headers and make the request
+    private async Task<int> GetStudentCountAsync(string tenantId, string role, string email)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/student/count");
+        request.Headers.Add("TenantId", tenantId);
+        request.Headers.Add("Role", role);
+        request.Headers.Add("Email", email);
+
+        var response = await Http.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<int>();
+        }
+        else
+        {
+            // Handle error (you can throw or log the error)
+            return 0;
+        }
+    }
+
+    private async Task<int> GetDiningSpaceCountAsync(string tenantId, string role, string email)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/diningspace/count");
+        request.Headers.Add("TenantId", tenantId);
+        request.Headers.Add("Role", role);
+        request.Headers.Add("Email", email);
+
+        var response = await Http.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<int>();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private async Task<int> GetRoomCountAsync(string tenantId, string role, string email)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/room/count");
+        request.Headers.Add("TenantId", tenantId);
+        request.Headers.Add("Role", role);
+        request.Headers.Add("Email", email);
+
+        var response = await Http.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<int>();
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

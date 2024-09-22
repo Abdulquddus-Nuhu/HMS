@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Alansar.Core.Entities
 {
-    interface ITenant
+    public interface ITenant
     {
-        public int? TenantId { get; set; }
+        public string TenantKey { get; set; }
     }
 }

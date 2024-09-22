@@ -7,12 +7,14 @@
 @using Microsoft.AspNetCore.Identity
 @using Alansar.Data
 @using System.Security.Claims
+@using Microsoft.EntityFrameworkCore
 
 @inject UserManager<User> UserManager
 @inject SignInManager<User> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject AppDbContext dbContext
 @* @inject AuthenticationStateProvider AuthenticationStateProvider *@
 
 <PageTitle>Log in</PageTitle>
@@ -93,7 +95,8 @@
             Logger.LogInformation("User logged in.");
 
             // Retrieve the user
-            var user = await UserManager.FindByEmailAsync(Input.Email);
+            // var user = await UserManager.FindByEmailAsync(Input.Email);
+            var user = await dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
             if (user is not null)
             {
                 var claims = new List<Claim>()
@@ -101,7 +104,7 @@
                     new Claim("id", user.Id.ToString()),
                     new Claim("fullname", user.FullName.ToString()),
                     new Claim("role", user.RoleType.ToString()),
-                    new Claim("tenantId", user.TenantId.Value.ToString() ?? string.Empty),
+                    new Claim("tenantId", user.TenantKey ?? string.Empty),
                 };
 
                 // Add claims to user

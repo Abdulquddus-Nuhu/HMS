@@ -16,6 +16,8 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Alansar.Middlewares;
+using Alansar.Client.ApiCalls;
+using Refit;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,7 @@ if (builder.Environment.IsStaging())
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CookieService>();
 builder.Services.AddTransient<ITenantService, TenantService>();
+builder.Services.AddScoped<TenantSaveChangesInterceptor>();
 
 // Add controllers, razor pages, and HTTP context accessor
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -39,6 +42,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
+
+// Register the Refit client for your API
+builder.Services.AddRefitClient<IStudentApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://localhost:5081/"));
 
 
 // Configure HTTP client for the app
@@ -144,7 +151,7 @@ app.UseExceptionHandler(a => a.Run(async context =>
 
     var statusCode = context.Response.StatusCode;
 
-    var problemDetails = new ProblemDetails
+    var problemDetails = new Microsoft.AspNetCore.Mvc.ProblemDetails
     {
         Status = statusCode,
         Title = "An error occurred",
