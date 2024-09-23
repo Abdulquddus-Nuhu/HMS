@@ -17,14 +17,19 @@ namespace Alansar.Data
         }
 
         public DbSet<Tenant> Tenants { get; set; }
-        //public DbSet<Tenant> Tenants => Set<Tenant>();
 
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.AddInterceptors(new SyncEntityInterceptor());
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
         // No global TenantId filter here
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.HasDefaultSchema("Identity");
 
             // Configure composite primary key for IdentityUserRole<int>
             builder.Entity<IdentityUserRole<int>>()

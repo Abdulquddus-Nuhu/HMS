@@ -39,6 +39,12 @@ public class AppDbContext : DbContext
     /// duplicate table of aspnetusers
     /// </summary>
     public DbSet<User> User => Set<User>();
+
+    /// <summary>
+    /// duplicate tBLE FOR Tenant
+    /// </summary>
+    public DbSet<Tenant> Tenant => Set<Tenant>();
+
     public DbSet<DiningSpace> DiningSpaces => Set<DiningSpace>();
     public DbSet<Room> Rooms => Set<Room>();
     public DbSet<DiningSchedule> DiningSchedules => Set<DiningSchedule>();
@@ -48,15 +54,16 @@ public class AppDbContext : DbContext
     public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
 
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.AddInterceptors(new TenantSaveChangesInterceptor(_httpContextAccessor, _tenantService));
-    //    base.OnConfiguring(optionsBuilder);
-    //}
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(new TenantSaveChangesInterceptor(_httpContextAccessor, _tenantService));
+        base.OnConfiguring(optionsBuilder);
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.HasDefaultSchema("App");
 
         //builder.Entity<Student>()
         //    .HasOne(s => s.User)

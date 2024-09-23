@@ -19,7 +19,6 @@ using Alansar.Middlewares;
 using Alansar.Client.ApiCalls;
 using Refit;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // If running in staging, set specific URLs
@@ -33,6 +32,8 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CookieService>();
 builder.Services.AddTransient<ITenantService, TenantService>();
 builder.Services.AddScoped<TenantSaveChangesInterceptor>();
+builder.Services.AddScoped<SyncEntityInterceptor>();
+
 
 // Add controllers, razor pages, and HTTP context accessor
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -90,6 +91,12 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddEntityFrameworkStores<IdentityDbContext>()
     .AddDefaultTokenProviders();
 
+//interceptor for identityDbContext
+builder.Services.AddDbContext<IdentityDbContext>((serviceProvider, options) =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .AddInterceptors(serviceProvider.GetRequiredService<SyncEntityInterceptor>());
+});
 
 
 // Add exception filter for database-related issues

@@ -17,6 +17,7 @@ namespace Alansar.Migrations.AppDb
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("App")
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -77,7 +78,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningAssignment", b =>
@@ -134,7 +135,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DiningAssignments");
+                    b.ToTable("DiningAssignments", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningSchedule", b =>
@@ -188,7 +189,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DiningSchedules");
+                    b.ToTable("DiningSchedules", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningSpace", b =>
@@ -236,7 +237,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiningSpaces");
+                    b.ToTable("DiningSpaces", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Grade", b =>
@@ -282,7 +283,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Grades");
+                    b.ToTable("Grades", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Identity.User", b =>
@@ -379,7 +380,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Room", b =>
@@ -439,7 +440,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Session", b =>
@@ -491,7 +492,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Sessions", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Student", b =>
@@ -568,7 +569,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Tenant", b =>
@@ -613,7 +614,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenant");
+                    b.ToTable("Tenant", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.TenantSubscription", b =>
@@ -680,7 +681,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TenantSubscriptions");
+                    b.ToTable("TenantSubscriptions", "App");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Booking", b =>

@@ -12,8 +12,12 @@ namespace Alansar.Migrations.AppDb
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "App");
+
             migrationBuilder.CreateTable(
                 name: "DiningSpaces",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -37,6 +41,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Grades",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -59,6 +64,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Rooms",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -86,6 +92,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Sessions",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -110,6 +117,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Tenant",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -132,6 +140,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "User",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -171,6 +180,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "TenantSubscriptions",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -199,6 +209,7 @@ namespace Alansar.Migrations.AppDb
                     table.ForeignKey(
                         name: "FK_TenantSubscriptions_Tenant_TenantId",
                         column: x => x.TenantId,
+                        principalSchema: "App",
                         principalTable: "Tenant",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -206,6 +217,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Students",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -235,16 +247,19 @@ namespace Alansar.Migrations.AppDb
                     table.ForeignKey(
                         name: "FK_Students_Grades_GradeId",
                         column: x => x.GradeId,
+                        principalSchema: "App",
                         principalTable: "Grades",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Students_Rooms_RoomId",
                         column: x => x.RoomId,
+                        principalSchema: "App",
                         principalTable: "Rooms",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Students_User_UserId",
                         column: x => x.UserId,
+                        principalSchema: "App",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -252,6 +267,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "Bookings",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -276,12 +292,14 @@ namespace Alansar.Migrations.AppDb
                     table.ForeignKey(
                         name: "FK_Bookings_Rooms_RoomId",
                         column: x => x.RoomId,
+                        principalSchema: "App",
                         principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bookings_Students_StudentId",
                         column: x => x.StudentId,
+                        principalSchema: "App",
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -289,6 +307,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "DiningAssignments",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -313,12 +332,14 @@ namespace Alansar.Migrations.AppDb
                     table.ForeignKey(
                         name: "FK_DiningAssignments_DiningSpaces_DiningSpaceId",
                         column: x => x.DiningSpaceId,
+                        principalSchema: "App",
                         principalTable: "DiningSpaces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DiningAssignments_Students_StudentId",
                         column: x => x.StudentId,
+                        principalSchema: "App",
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -326,6 +347,7 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateTable(
                 name: "DiningSchedules",
+                schema: "App",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -349,12 +371,14 @@ namespace Alansar.Migrations.AppDb
                     table.ForeignKey(
                         name: "FK_DiningSchedules_DiningSpaces_DiningSpaceId",
                         column: x => x.DiningSpaceId,
+                        principalSchema: "App",
                         principalTable: "DiningSpaces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DiningSchedules_Students_StudentId",
                         column: x => x.StudentId,
+                        principalSchema: "App",
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -362,51 +386,61 @@ namespace Alansar.Migrations.AppDb
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_RoomId",
+                schema: "App",
                 table: "Bookings",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_StudentId",
+                schema: "App",
                 table: "Bookings",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiningAssignments_DiningSpaceId",
+                schema: "App",
                 table: "DiningAssignments",
                 column: "DiningSpaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiningAssignments_StudentId",
+                schema: "App",
                 table: "DiningAssignments",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiningSchedules_DiningSpaceId",
+                schema: "App",
                 table: "DiningSchedules",
                 column: "DiningSpaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiningSchedules_StudentId",
+                schema: "App",
                 table: "DiningSchedules",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_GradeId",
+                schema: "App",
                 table: "Students",
                 column: "GradeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_RoomId",
+                schema: "App",
                 table: "Students",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
+                schema: "App",
                 table: "Students",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TenantSubscriptions_TenantId",
+                schema: "App",
                 table: "TenantSubscriptions",
                 column: "TenantId");
         }
@@ -415,37 +449,48 @@ namespace Alansar.Migrations.AppDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookings");
+                name: "Bookings",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "DiningAssignments");
+                name: "DiningAssignments",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "DiningSchedules");
+                name: "DiningSchedules",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "Sessions",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "TenantSubscriptions");
+                name: "TenantSubscriptions",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "DiningSpaces");
+                name: "DiningSpaces",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Students",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "Tenant");
+                name: "Tenant",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "Grades");
+                name: "Grades",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Rooms",
+                schema: "App");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "User",
+                schema: "App");
         }
     }
 }
