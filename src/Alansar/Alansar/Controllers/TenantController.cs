@@ -14,12 +14,14 @@ namespace Alansar.Controllers
     [ApiController]
     public class TenantController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _appDbContext;
+        private readonly IdentityDbContext _identityDbContext;
         private readonly UserManager<User> _userManager;
 
-        public TenantController(AppDbContext context, UserManager<User> userManager)
+        public TenantController(AppDbContext appDbContext, IdentityDbContext identityDbContext, UserManager<User> userManager)
         {
-            _context = context;
+            _appDbContext = appDbContext;
+            _identityDbContext = identityDbContext;
             _userManager = userManager;
         }
 
@@ -33,7 +35,7 @@ namespace Alansar.Controllers
                 SchoolName = request.SchoolName,
                 Email = request.Email,
             };
-            await _context.Tenants.AddAsync(tenant);
+            await _identityDbContext.Tenants.AddAsync(tenant);
             //await _context.SaveChangesAsync();
 
 
@@ -76,9 +78,9 @@ namespace Alansar.Controllers
                 tenantSubscription.EndDate = DateTime.UtcNow.AddMinutes(5);
             }
 
-            _context.TenantSubscriptions.Add(tenantSubscription);
+            _appDbContext.TenantSubscriptions.Add(tenantSubscription);
 
-            await _context.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
             return Ok(new BaseResponse());
         }
     }

@@ -15,6 +15,7 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject AppDbContext dbContext
+@inject IdentityDbContext IdentityContext
 @* @inject AuthenticationStateProvider AuthenticationStateProvider *@
 
 <PageTitle>Log in</PageTitle>
@@ -96,7 +97,7 @@
 
             // Retrieve the user
             // var user = await UserManager.FindByEmailAsync(Input.Email);
-            var user = await dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
+            var user = await IdentityContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
             if (user is not null)
             {
                 var claims = new List<Claim>()

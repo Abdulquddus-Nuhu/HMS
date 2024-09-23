@@ -32,9 +32,4 @@
 	<PackageReference Include="Refit" Version="7.2.1" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
 </Project>
