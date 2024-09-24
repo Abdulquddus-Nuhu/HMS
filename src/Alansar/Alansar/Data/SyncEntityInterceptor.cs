@@ -17,17 +17,21 @@ namespace Alansar.Data
             _identityContext = identityContext;
         }
 
-        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
-        {
-            var context = eventData.Context;
 
+
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            var context = eventData.Context;  // Get the DbContext instance
             if (context is IdentityDbContext)
             {
-                SyncIdentityChanges(eventData);
+                Console.WriteLine("Interceptor is working on IdentityDbContext.");
+                SyncIdentityChanges(eventData);  // Pass eventData instead of context
             }
 
-            return base.SavingChanges(eventData, result);
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
+
+
 
         private void SyncIdentityChanges(DbContextEventData eventData)
         {
@@ -56,6 +60,11 @@ namespace Alansar.Data
 
         private void SyncAddEntity(object entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null in SyncAddEntity.");
+            }
+
             if (entity is User user)
             {
                 var newUser = new User
@@ -90,6 +99,13 @@ namespace Alansar.Data
                     TwoFactorEnabled = user.TwoFactorEnabled,
                     // map other fields as needed
                 };
+
+                // Ensure _appDbContext is not null
+                if (_appDbContext == null)
+                {
+                    throw new InvalidOperationException("AppDbContext is not initialized.");
+                }
+
                 _appDbContext.User.Add(newUser);
             }
             else if (entity is Tenant tenant)
@@ -108,6 +124,12 @@ namespace Alansar.Data
                     LastModifiedBy = tenant.LastModifiedBy,
                     Modified = tenant.Modified,
                 };
+
+                if (_appDbContext == null)
+                {
+                    throw new InvalidOperationException("AppDbContext is not initialized.");
+                }
+
                 _appDbContext.Tenant.Add(newTenant);
             }
 
@@ -116,6 +138,17 @@ namespace Alansar.Data
 
         private void SyncUpdateEntity(object entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null in SyncUpdateEntity.");
+            }
+
+            // Ensure _appDbContext is not null
+            if (_appDbContext == null)
+            {
+                throw new InvalidOperationException("AppDbContext is not initialized.");
+            }
+
             if (entity is User user)
             {
                 var existingUser = _appDbContext.User.FirstOrDefault(u => u.Id == user.Id);
@@ -129,6 +162,7 @@ namespace Alansar.Data
                     existingUser.IsActive = user.IsActive;  
                     existingUser.FirstName = user.FirstName;
                     existingUser.LastName = user.LastName;
+
 
                     _appDbContext.User.Update(existingUser);
                 }
@@ -149,6 +183,17 @@ namespace Alansar.Data
 
         private void SyncDeleteEntity(object entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null in SyncDeleteEntity.");
+            }
+
+            // Ensure _appDbContext is not null
+            if (_appDbContext == null)
+            {
+                throw new InvalidOperationException("AppDbContext is not initialized.");
+            }
+
             if (entity is User user)
             {
                 var existingUser = _appDbContext.User.FirstOrDefault(u => u.Id == user.Id);

@@ -11,6 +11,14 @@ namespace Alansar.Data
 
     public class IdentityDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
+        private readonly AppDbContext _appDbContext;
+
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options, AppDbContext appDbContext)
+            : base(options)
+        {
+            _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
+        }
+
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
             : base(options)
         {
@@ -19,11 +27,11 @@ namespace Alansar.Data
         public DbSet<Tenant> Tenants { get; set; }
 
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.AddInterceptors(new SyncEntityInterceptor());
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new SyncEntityInterceptor(_appDbContext, this));
+            base.OnConfiguring(optionsBuilder);
+        }
 
         // No global TenantId filter here
         protected override void OnModelCreating(ModelBuilder builder)

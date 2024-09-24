@@ -32,7 +32,6 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CookieService>();
 builder.Services.AddTransient<ITenantService, TenantService>();
 builder.Services.AddScoped<TenantSaveChangesInterceptor>();
-builder.Services.AddScoped<SyncEntityInterceptor>();
 
 
 // Add controllers, razor pages, and HTTP context accessor
@@ -92,11 +91,14 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddDefaultTokenProviders();
 
 //interceptor for identityDbContext
+builder.Services.AddScoped<SyncEntityInterceptor>();
+
 builder.Services.AddDbContext<IdentityDbContext>((serviceProvider, options) =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
            .AddInterceptors(serviceProvider.GetRequiredService<SyncEntityInterceptor>());
 });
+
 
 
 // Add exception filter for database-related issues

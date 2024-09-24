@@ -27,15 +27,15 @@ namespace Alansar.Data
         {
 
             // Seed Tenants
-            if (!context.Tenants.Any())
-            {
-                context.Tenants.AddRange(
-                    new Tenant { Id = 1, SchoolName = "Boyo", Email = "boyo@gmail.com" },
-                    new Tenant { Id = 2, SchoolName = "Goyo", Email = "goyo@gmail.com" },
-                    new Tenant { Id = 3, SchoolName = "Qoyo", Email = "qoyo@gmail.com" }
-                );
-                await context.SaveChangesAsync();
-            }
+            //if (!context.Tenants.Any())
+            //{
+            //    context.Tenants.AddRange(
+            //        new Tenant { Id = 1, SchoolName = "Boyo", Email = "boyo@gmail.com" },
+            //        new Tenant { Id = 2, SchoolName = "Goyo", Email = "goyo@gmail.com" },
+            //        new Tenant { Id = 3, SchoolName = "Qoyo", Email = "qoyo@gmail.com" }
+            //    );
+            //    await context.SaveChangesAsync();
+            //}
 
             // Seed roles
             if (!context.Roles.Any())
@@ -77,11 +77,6 @@ namespace Alansar.Data
                     new IdentityUserRole<int> { UserId = 5, RoleId = 2 }
                 );
                 await context.SaveChangesAsync();
-            }
-            if (context.Database.EnsureCreated())
-            {
-
-
             }
         }
 
@@ -131,34 +126,34 @@ namespace Alansar.Data
                 await context.SaveChangesAsync();
             }
 
-            // Seed users
-            if (!context.User.Any())
-            {
-                var passwordHasher = new PasswordHasher<User>();
-                var users = new List<User>
-                    {
-                        new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin1Pass"), TenantKey = "1" },
-                        new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin2Pass"), TenantKey = "1" },
-                        new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student1Pass"), TenantKey = "1" },
-                        new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student2Pass"), TenantKey = "1" },
-                        new User { Id = 5, RoleType = RoleType.Student, FirstName = "Student3", UserName = "student3@example.com", NormalizedUserName = "STUDENT3@EXAMPLE.COM", Email = "student3@example.com", NormalizedEmail = "STUDENT3@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student3Pass"), TenantKey = "1" },
-                        new User { Id = 6, RoleType = RoleType.SuperAdmin, FirstName = "Boss", UserName = "boss@example.com", NormalizedUserName = "BOSS@EXAMPLE.COM", Email = "boss@example.com", NormalizedEmail = "BOSS@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Boss1Pass"), TenantKey = "" },
-                    };
-                context.User.AddRange(users);
-                await context.SaveChangesAsync();
-            }
+            //// Seed users
+            //if (!context.User.Any())
+            //{
+            //    var passwordHasher = new PasswordHasher<User>();
+            //    var users = new List<User>
+            //        {
+            //            new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin1Pass"), TenantKey = "1" },
+            //            new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin2Pass"), TenantKey = "1" },
+            //            new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student1Pass"), TenantKey = "1" },
+            //            new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student2Pass"), TenantKey = "1" },
+            //            new User { Id = 5, RoleType = RoleType.Student, FirstName = "Student3", UserName = "student3@example.com", NormalizedUserName = "STUDENT3@EXAMPLE.COM", Email = "student3@example.com", NormalizedEmail = "STUDENT3@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student3Pass"), TenantKey = "1" },
+            //            new User { Id = 6, RoleType = RoleType.SuperAdmin, FirstName = "Boss", UserName = "boss@example.com", NormalizedUserName = "BOSS@EXAMPLE.COM", Email = "boss@example.com", NormalizedEmail = "BOSS@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Boss1Pass"), TenantKey = "" },
+            //        };
+            //    context.User.AddRange(users);
+            //    await context.SaveChangesAsync();
+            //}
 
 
-            // Seed Students
-            if (!context.Students.Any())
-            {
-                context.Students.AddRange(
-                    new Student { Id = 1, FirstName = "Student 1", LastName = "Student 1", Email = "student1@example.com", UserId = 3, GradeId = 2, DateOfBirth = DateTime.SpecifyKind(new DateTime(2000, 12, 3), DateTimeKind.Utc), TenantKey = "1" },
-                    new Student { Id = 2, FirstName = "Student 2", LastName = "Student 2", Email = "student2@example.com", UserId = 4, GradeId = 3, DateOfBirth = DateTime.SpecifyKind(new DateTime(2001, 6, 7), DateTimeKind.Utc), TenantKey = "1" },
-                    new Student { Id = 3, FirstName = "Student 3", LastName = "Student 3", Email = "student3@example.com", UserId = 5, GradeId = 3, DateOfBirth = DateTime.SpecifyKind(new DateTime(2004, 4, 2), DateTimeKind.Utc), TenantKey = "1" }
-                );
-                await context.SaveChangesAsync();
-            }
+            //// Seed Students
+            //if (!context.Students.Any())
+            //{
+            //    context.Students.AddRange(
+            //        new Student { Id = 1, FirstName = "Student 1", LastName = "Student 1", Email = "student1@example.com", UserId = 3, GradeId = 2, DateOfBirth = DateTime.SpecifyKind(new DateTime(2000, 12, 3), DateTimeKind.Utc), TenantKey = "1" },
+            //        new Student { Id = 2, FirstName = "Student 2", LastName = "Student 2", Email = "student2@example.com", UserId = 4, GradeId = 3, DateOfBirth = DateTime.SpecifyKind(new DateTime(2001, 6, 7), DateTimeKind.Utc), TenantKey = "1" },
+            //        new Student { Id = 3, FirstName = "Student 3", LastName = "Student 3", Email = "student3@example.com", UserId = 5, GradeId = 3, DateOfBirth = DateTime.SpecifyKind(new DateTime(2004, 4, 2), DateTimeKind.Utc), TenantKey = "1" }
+            //    );
+            //    await context.SaveChangesAsync();
+            //}
 
         }
     }

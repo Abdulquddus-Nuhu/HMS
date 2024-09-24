@@ -19,8 +19,13 @@ namespace Alansar.Data
 
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {
-            var context = eventData.Context;
+            if (_httpContextAccessor.HttpContext is null)
+            {
+                return base.SavingChanges(eventData, result);
+            }
 
+
+            var context = eventData.Context;
             if (context != null)
             {
                 var user = _httpContextAccessor.HttpContext.User;
