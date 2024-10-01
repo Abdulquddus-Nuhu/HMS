@@ -28,15 +28,15 @@ namespace Alansar.Data
         {
 
             // Seed Tenants
-            //if (!context.Tenants.Any())
-            //{
-            //    context.Tenants.AddRange(
-            //        new Tenant { Id = 1, SchoolName = "Boyo", Email = "boyo@gmail.com" },
-            //        new Tenant { Id = 2, SchoolName = "Goyo", Email = "goyo@gmail.com" },
-            //        new Tenant { Id = 3, SchoolName = "Qoyo", Email = "qoyo@gmail.com" }
-            //    );
-            //    await context.SaveChangesAsync();
-            //}
+            if (!context.Tenants.Any())
+            {
+                context.Tenants.AddRange(
+                    new Tenant { Id = 1, SchoolName = "Boyo", Email = "boyo@gmail.com" },
+                    new Tenant { Id = 2, SchoolName = "Goyo", Email = "goyo@gmail.com" },
+                    new Tenant { Id = 3, SchoolName = "Qoyo", Email = "qoyo@gmail.com" }
+                );
+                await context.SaveChangesAsync();
+            }
 
             // Seed roles
             if (!context.Roles.Any())
