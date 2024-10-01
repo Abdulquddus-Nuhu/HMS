@@ -143,14 +143,10 @@ if (!app.Environment.IsProduction())
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        //var context = services.GetRequiredService<AppDbContext>();
-        //context.Database.EnsureDeleted();
-        //context.Database.Migrate();
-
 
         // Apply IdentityDbContext migrations
         var identityDbContext = services.GetRequiredService<IdentityDbContext>();
-        identityDbContext.Database.EnsureDeleted();
+        //identityDbContext.Database.EnsureDeleted();
         identityDbContext.Database.Migrate();
 
         // Apply AppDbContext migrations
