@@ -2,6 +2,7 @@
 using Alansar.Core.Entities;
 using Alansar.Core.Enums;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 namespace Alansar.Data
 {
@@ -55,12 +56,12 @@ namespace Alansar.Data
                 var passwordHasher = new PasswordHasher<User>();
                 var users = new List<User>
                     {
-                        new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin1Pass"), TenantKey = "1" },
-                        new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Admin2Pass"), TenantKey = "1" },
-                        new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student1Pass"), TenantKey = "1" },
-                        new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student2Pass"), TenantKey = "1" },
-                        new User { Id = 5, RoleType = RoleType.Student, FirstName = "Student3", UserName = "student3@example.com", NormalizedUserName = "STUDENT3@EXAMPLE.COM", Email = "student3@example.com", NormalizedEmail = "STUDENT3@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Student3Pass"), TenantKey = "1" },
-                        new User { Id = 6, RoleType = RoleType.SuperAdmin, FirstName = "Boss", UserName = "boss@example.com", NormalizedUserName = "BOSS@EXAMPLE.COM", Email = "boss@example.com", NormalizedEmail = "BOSS@EXAMPLE.COM", EmailConfirmed = true, PasswordHash = passwordHasher.HashPassword(null, "Boss1Pass"), TenantKey = "" },
+                        new User { Id = 1, RoleType = RoleType.Admin, FirstName = "Admin1", UserName = "admin1@example.com", NormalizedUserName = "ADMIN1@EXAMPLE.COM", Email = "admin1@example.com", NormalizedEmail = "ADMIN1@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(), PasswordHash = passwordHasher.HashPassword(null, "Admin1Pass"), TenantKey = "1" },
+                        new User { Id = 2, RoleType = RoleType.Admin, FirstName = "Admin2", UserName = "admin2@example.com", NormalizedUserName = "ADMIN2@EXAMPLE.COM", Email = "admin2@example.com", NormalizedEmail = "ADMIN2@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(),PasswordHash = passwordHasher.HashPassword(null, "Admin2Pass"), TenantKey = "1" },
+                        new User { Id = 3, RoleType = RoleType.Student, FirstName = "Student1", UserName = "student1@example.com", NormalizedUserName = "STUDENT1@EXAMPLE.COM", Email = "student1@example.com", NormalizedEmail = "STUDENT1@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(),PasswordHash = passwordHasher.HashPassword(null, "Student1Pass"), TenantKey = "1" },
+                        new User { Id = 4, RoleType = RoleType.Student, FirstName = "Student2", UserName = "student2@example.com", NormalizedUserName = "STUDENT2@EXAMPLE.COM", Email = "student2@example.com", NormalizedEmail = "STUDENT2@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(), PasswordHash = passwordHasher.HashPassword(null, "Student2Pass"), TenantKey = "1" },
+                        new User { Id = 5, RoleType = RoleType.Student, FirstName = "Student3", UserName = "student3@example.com", NormalizedUserName = "STUDENT3@EXAMPLE.COM", Email = "student3@example.com", NormalizedEmail = "STUDENT3@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(), PasswordHash = passwordHasher.HashPassword(null, "Student3Pass"), TenantKey = "1" },
+                        new User { Id = 6, RoleType = RoleType.SuperAdmin, FirstName = "Boss", UserName = "boss@example.com", NormalizedUserName = "BOSS@EXAMPLE.COM", Email = "boss@example.com", NormalizedEmail = "BOSS@EXAMPLE.COM", EmailConfirmed = true, SecurityStamp = GenerateSecurityStamp(),PasswordHash = passwordHasher.HashPassword(null, "Boss1Pass"), TenantKey = "" },
                     };
                 context.Users.AddRange(users);
                 await context.SaveChangesAsync();
@@ -78,6 +79,16 @@ namespace Alansar.Data
                 );
                 await context.SaveChangesAsync();
             }
+        }
+
+        private static string GenerateSecurityStamp()
+        {
+            byte[] randomBytes = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+            return Convert.ToBase64String(randomBytes);
         }
 
         private static async Task SeedAppData(AppDbContext context)
