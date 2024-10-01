@@ -7,6 +7,7 @@ using Alansar.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Alansar.Controllers
 {
@@ -25,6 +26,38 @@ namespace Alansar.Controllers
             _userManager = userManager;
         }
 
+        // Assuming you have your DbContext as `IdentityDbContext`
+        private async Task AddRoleToUserManually(int userId, string roleName)
+        {
+            // Get the user by ID
+            var user = await _identityDbContext.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            // Get the role by name
+            var role = await _identityDbContext.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+            if (role == null)
+            {
+                throw new Exception("Role not found");
+            }
+
+            // Create a new IdentityUserRole object
+            var userRole = new IdentityUserRole<int>
+            {
+                UserId = user.Id, // Set the user ID
+                RoleId = role.Id  // Set the role ID
+            };
+
+            // Add the user-role relationship to the IdentityUserRoles table
+            _identityDbContext.UserRoles.Add(userRole);
+
+            // Save the changes to the database
+            await _identityDbContext.SaveChangesAsync();
+        }
+
+
         [HttpPost("create-tenant")]
         public async Task<ActionResult> CreateTenant([FromBody] CreateTenantRequest request)
         {
@@ -32,6 +65,7 @@ namespace Alansar.Controllers
 
             var tenant = new Tenant()
             {
+                Id = 50,
                 SchoolName = request.SchoolName,
                 Email = request.Email,
             };
@@ -41,6 +75,7 @@ namespace Alansar.Controllers
 
             var user = new User
             {
+                Id = 50,
                 FirstName = "Admin",
                 LastName = string.Empty,
                 UserName = request.Email,
@@ -52,7 +87,10 @@ namespace Alansar.Controllers
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, nameof(RoleType.TenantAdmin));
+                var createdUser = await _userManager.FindByEmailAsync(user.Email);
+
+                await AddRoleToUserManually(createdUser.Id, nameof(RoleType.TenantAdmin));
+                //await _userManager.AddToRoleAsync(createdUser, nameof(RoleType.TenantAdmin));
             }
             else
             {

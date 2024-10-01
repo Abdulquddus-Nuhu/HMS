@@ -44,7 +44,7 @@ namespace Alansar.Data
 
 
 
-
+    //code from stack overflow for soft delete
     public static class SoftDeleteModelBuilderExtensions
     {
         public static ModelBuilder ApplySoftDeleteQueryFilter(this ModelBuilder modelBuilder)

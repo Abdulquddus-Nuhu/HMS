@@ -100,13 +100,34 @@
             var user = await IdentityContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
             if (user is not null)
             {
-                var claims = new List<Claim>()
+                // var claims = new List<Claim>()
+                // {
+                //     new Claim("id", user.Id.ToString()),
+                //     new Claim("fullname", user.FullName.ToString()),
+                //     new Claim("role", user.RoleType.ToString()),
+                //     new Claim("tenantId", user.TenantKey ?? string.Empty),
+                // };
+
+                var claims = new List<Claim>();
+
+                if (!string.IsNullOrWhiteSpace(user.Id.ToString()))
+                    claims.Add(new Claim("id", user.Id.ToString()));
+
+                if (!string.IsNullOrWhiteSpace(user.FullName))
+                    claims.Add(new Claim("fullname", user.FullName));
+
+                if (!string.IsNullOrWhiteSpace(user.RoleType.ToString()))
+                    claims.Add(new Claim("role", user.RoleType.ToString()));
+
+                if (!string.IsNullOrWhiteSpace(user.TenantKey))
+                    claims.Add(new Claim("tenantId", user.TenantKey ?? string.Empty));
+
+                // Log claims to ensure they are valid
+                foreach (var claim in claims)
                 {
-                    new Claim("id", user.Id.ToString()),
-                    new Claim("fullname", user.FullName.ToString()),
-                    new Claim("role", user.RoleType.ToString()),
-                    new Claim("tenantId", user.TenantKey ?? string.Empty),
-                };
+                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+                }
+
 
                 // Add claims to user
                 await UserManager.AddClaimsAsync(user, claims);
