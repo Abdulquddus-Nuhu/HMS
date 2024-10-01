@@ -21,12 +21,12 @@ public class AppDbContext : DbContext
     private readonly ITenantService _tenantService;
 
 
-    //public AppDbContext(DbContextOptions<AppDbContext> option,ITenantService tenantService, IHttpContextAccessor httpContextAccessor) : base(option) 
-    //{
-    //    _httpContextAccessor = httpContextAccessor;
-    //    _tenantService = tenantService;
-    //}
-    
+    public AppDbContext(DbContextOptions<AppDbContext> option, ITenantService tenantService, IHttpContextAccessor httpContextAccessor) : base(option)
+    {
+        _httpContextAccessor = httpContextAccessor;
+        _tenantService = tenantService;
+    }
+
     public AppDbContext(DbContextOptions<AppDbContext> option) : base(option) 
     {
     }
@@ -41,7 +41,7 @@ public class AppDbContext : DbContext
     public DbSet<User> User => Set<User>();
 
     /// <summary>
-    /// duplicate tBLE FOR Tenant
+    /// duplicate taBLE FOR Tenant
     /// </summary>
     public DbSet<Tenant> Tenant => Set<Tenant>();
 
