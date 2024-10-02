@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alansar.Client", "src\Alans
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alansar.Core", "src\Alansar\Alansar.Core\Alansar.Core.csproj", "{66F0D1E6-BD36-4B56-8A55-E4C9580A8ED6}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{10D3BA94-8B9D-451E-96B9-AE0E109ECAD3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +29,6 @@ Global
 		{66F0D1E6-BD36-4B56-8A55-E4C9580A8ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66F0D1E6-BD36-4B56-8A55-E4C9580A8ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66F0D1E6-BD36-4B56-8A55-E4C9580A8ED6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10D3BA94-8B9D-451E-96B9-AE0E109ECAD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10D3BA94-8B9D-451E-96B9-AE0E109ECAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10D3BA94-8B9D-451E-96B9-AE0E109ECAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10D3BA94-8B9D-451E-96B9-AE0E109ECAD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
