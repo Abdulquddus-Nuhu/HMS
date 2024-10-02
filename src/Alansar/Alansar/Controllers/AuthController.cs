@@ -56,7 +56,9 @@ namespace Alansar.Controllers
                     //Email = emailExist,
                     UserName = model.Email,
                     Email = model.Email,
-                    RoleType = RoleType.Student
+                    RoleType = RoleType.Student,
+                    TenantKey = "1"
+                    
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -71,8 +73,9 @@ namespace Alansar.Controllers
                         //Email = emailExist,
                         Email = model.Email,
                         UserId = user.Id,
-                        DateOfBirth = DateTime.UtcNow,  // Store the Date of Birth
-                        //DateOfBirth = model.DateOfBirth.Value,  // Store the Date of Birth
+                        DateOfBirth = DateTime.UtcNow,
+                        TenantKey = "1"
+
                     };
                     _context.Students.Add(student);
                     await _context.SaveChangesAsync();

@@ -15,7 +15,9 @@ using System.Net;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-
+using Alansar.Middlewares;
+using Alansar.Client.ApiCalls;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,9 @@ if (builder.Environment.IsStaging())
 // Add core services
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CookieService>();
+builder.Services.AddTransient<ITenantService, TenantService>();
+builder.Services.AddScoped<TenantSaveChangesInterceptor>();
+
 
 // Add controllers, razor pages, and HTTP context accessor
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -37,6 +42,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
+
+// Register the Refit client for your API
+builder.Services.AddRefitClient<IStudentApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://localhost:5081/"));
 
 
 // Configure HTTP client for the app
@@ -73,17 +82,36 @@ builder.Services.AddDbContextFactory<AppDbContext>(opt =>
     opt.EnableSensitiveDataLogging();
 });
 
+//identity
+builder.Services.AddDbContext<IdentityDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<IdentityDbContext>()
+    .AddDefaultTokenProviders();
+
+//interceptor for identityDbContext
+builder.Services.AddScoped<SyncEntityInterceptor>();
+
+builder.Services.AddDbContext<IdentityDbContext>((serviceProvider, options) =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .AddInterceptors(serviceProvider.GetRequiredService<SyncEntityInterceptor>());
+});
+
+
+
 // Add exception filter for database-related issues
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure Identity with user and role management
-builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
-{
-    options.User.RequireUniqueEmail = true;
-})
-.AddEntityFrameworkStores<AppDbContext>()
-.AddSignInManager()
-.AddDefaultTokenProviders();
+//builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+//{
+//    options.User.RequireUniqueEmail = true;
+//})
+//.AddEntityFrameworkStores<AppDbContext>()
+//.AddSignInManager()
+//.AddDefaultTokenProviders();
 
 // Register a no-op email sender for identity
 builder.Services.AddSingleton<IEmailSender<User>, IdentityNoOpEmailSender>();
@@ -115,9 +143,19 @@ if (!app.Environment.IsProduction())
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<AppDbContext>();
-        //context.Database.EnsureDeleted();
-        context.Database.Migrate();
+
+        // Apply IdentityDbContext migrations
+        var identityDbContext = services.GetRequiredService<IdentityDbContext>();
+        //identityDbContext.Database.EnsureDeleted();
+        identityDbContext.Database.Migrate();
+
+        // Apply AppDbContext migrations
+        var appDbContext = services.GetRequiredService<AppDbContext>();
+        //appDbContext.Database.EnsureDeleted();
+        appDbContext.Database.Migrate();
+
+        // Seed data for both contexts
+        await SeedData.SeedAsync(services);
     }
 }
 
@@ -134,17 +172,17 @@ else
     app.UseHsts();
 }
 
-
+//Handling api error that blow up
 app.UseExceptionHandler(a => a.Run(async context =>
 {
     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
     var error = exceptionHandlerPathFeature?.Error;
 
-    var statusCode = context.Response.StatusCode; // Get the actual status code
+    var statusCode = context.Response.StatusCode;
 
-    var problemDetails = new ProblemDetails
+    var problemDetails = new Microsoft.AspNetCore.Mvc.ProblemDetails
     {
-        Status = statusCode, // Set the status code from the response context
+        Status = statusCode,
         Title = "An error occurred",
         Detail = error?.Message ?? "An unexpected error occurred.",
     };
@@ -161,6 +199,8 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
+
+app.UseMiddleware<TenantMiddleware>();
 
 
 // Configure Razor components and map endpoints
@@ -192,43 +232,7 @@ app.Run();
 
 
 
-//var builder = WebApplication.CreateBuilder(args);
 
-//if (builder.Environment.IsStaging())
-//{
-//    builder.WebHost.UseUrls("http://localhost:5081");
-//}
-
-//builder.Services.AddScoped<UserService>();
-//builder.Services.AddScoped<CookieService>();
-
-
-//builder.Services.AddControllers();
-//builder.Services.AddRazorPages();
-////builder.Services.AddRazorPages(options =>
-////{
-////    options.Conventions.AddPageRoute("/Auth/Login", "/Auth/Login");
-////});
-
-//builder.Services.AddHttpClient();
-//builder.Services.AddHttpClient("MyAppClient", client =>
-//{
-//    client.BaseAddress = new Uri("http://localhost:5081/");
-//});
-//builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("MyAppClient"));
-//builder.Services.AddHttpContextAccessor();
-
-//// Add MudBlazor services
-////builder.Services.AddMudServices();
-//builder.Services.AddMudServices(config =>
-//{
-//    config.PopoverOptions.ThrowOnDuplicateProvider = false; // Disable the duplicate provider warning
-//});
-
-//// Add services to the container.
-//builder.Services.AddRazorComponents()
-//    .AddInteractiveServerComponents()
-//    .AddInteractiveWebAssemblyComponents();
 
 //builder.Services.AddCascadingAuthenticationState();
 //builder.Services.AddScoped<IdentityUserAccessor>();
@@ -242,18 +246,6 @@ app.Run();
 //    })
 //    .AddIdentityCookies();
 
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-////builder.Services.AddDbContext<AppDbContext>(options =>
-////    options.UseSqlServer(connectionString));
-//builder.Services.AddDbContextFactory<AppDbContext>(opt =>
-//{
-//    opt.UseNpgsql(connectionString);
-//    opt.EnableSensitiveDataLogging();
-//});
-
-
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 //builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 ////builder.Services.AddIdentityCore<User>(options => 
 //{
@@ -265,61 +257,8 @@ app.Run();
 //.AddSignInManager()
 //.AddDefaultTokenProviders();
 
-//builder.Services.AddSingleton<IEmailSender<User>, IdentityNoOpEmailSender>();
 
-
-
-
-//var app = builder.Build();
-
-//// Apply migrations on startup
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    var context = services.GetRequiredService<AppDbContext>();
-//    context.Database.EnsureDeleted();
-//    context.Database.Migrate();
-//}
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseWebAssemblyDebugging();
-//    app.UseMigrationsEndPoint();
-//}
-//else
-//{
-//    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseStaticFiles();
-////app.UseAntiforgery();
-
-//app.MapRazorComponents<App>()
-//    .AddInteractiveServerRenderMode()
-//    .AddInteractiveWebAssemblyRenderMode()
-//    .AddAdditionalAssemblies(typeof(Alansar.Client._Imports).Assembly);
-
-//// Add additional endpoints required by the Identity /Account Razor components.
 //app.MapAdditionalIdentityEndpoints();
-
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-//app.UseAntiforgery();
-
-
-////app.UseRouting();
-////app.UseAntiforgery();
-
-//app.MapControllers();
-//app.MapRazorPages();
-
-//app.Run();
 
 
 

@@ -7,12 +7,15 @@
 @using Microsoft.AspNetCore.Identity
 @using Alansar.Data
 @using System.Security.Claims
+@using Microsoft.EntityFrameworkCore
 
 @inject UserManager<User> UserManager
 @inject SignInManager<User> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject AppDbContext dbContext
+@inject IdentityDbContext IdentityContext
 @* @inject AuthenticationStateProvider AuthenticationStateProvider *@
 
 <PageTitle>Log in</PageTitle>
@@ -92,38 +95,39 @@
         {
             Logger.LogInformation("User logged in.");
 
-            // Build the URL with query string parameters
-            string homeUrl = string.Empty;
-
-            var user = await UserManager.FindByEmailAsync(Input.Email);
+            // Retrieve the user
+            // var user = await UserManager.FindByEmailAsync(Input.Email);
+            var user = await IdentityContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
             if (user is not null)
             {
-                switch (user.RoleType)
+                // var claims = new List<Claim>()
+                // {
+                //     new Claim("id", user.Id.ToString()),
+                //     new Claim("fullname", user.FullName.ToString()),
+                //     new Claim("role", user.RoleType.ToString()),
+                //     new Claim("tenantId", user.TenantKey ?? string.Empty),
+                // };
+
+                var claims = new List<Claim>();
+
+                if (!string.IsNullOrWhiteSpace(user.Id.ToString()))
+                    claims.Add(new Claim("id", user.Id.ToString()));
+
+                if (!string.IsNullOrWhiteSpace(user.FullName))
+                    claims.Add(new Claim("fullname", user.FullName));
+
+                if (!string.IsNullOrWhiteSpace(user.RoleType.ToString()))
+                    claims.Add(new Claim("role", user.RoleType.ToString()));
+
+                if (!string.IsNullOrWhiteSpace(user.TenantKey))
+                    claims.Add(new Claim("tenantId", user.TenantKey ?? string.Empty));
+
+                // Log claims to ensure they are valid
+                foreach (var claim in claims)
                 {
-                    case RoleType.Admin:
-                        homeUrl = $"/admin-home?userId={user.Id}&role={user.RoleType}";
-                        break;
-                    case RoleType.Student:
-                        homeUrl = $"/student-home?userId={user.Id}&role={user.RoleType}";
-                        break;
-                    default:
-                        break;
+                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
                 }
-            }
 
-            // Redirect to the Home component with query strings
-            // NavigationManager.NavigateTo(homeUrl);
-
-            // Retrieve the user
-            var user1 = await UserManager.FindByEmailAsync(Input.Email);
-            if (user1 is not null)
-            {
-                var claims = new List<Claim>()
-                {
-                    new Claim("id", user.Id.ToString()),
-                    new Claim("fullname", user.FullName.ToString()),
-                    new Claim("role", user.RoleType.ToString()),
-                };
 
                 // Add claims to user
                 await UserManager.AddClaimsAsync(user, claims);

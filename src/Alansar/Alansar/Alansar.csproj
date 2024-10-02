@@ -8,6 +8,7 @@
 	<WasmEnableAOT>false</WasmEnableAOT>
 	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	<DockerfileContext>..\..\..</DockerfileContext>
+	<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
 
@@ -26,11 +27,9 @@
 
 
 	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-  </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+	<PackageReference Include="Refit" Version="7.2.1" />
   </ItemGroup>
 
 </Project>
