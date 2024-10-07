@@ -11,8 +11,8 @@ namespace Alansar.Core.Entities
     public class Tenant
     {
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        //[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
         public string? DeletedBy { get; set; } = string.Empty;
         public virtual DateTime? Deleted { get; set; }
@@ -29,6 +29,7 @@ namespace Alansar.Core.Entities
 
         public Tenant()
         {
+            Id = Guid.NewGuid();
             IsDeleted = false;
             Created = DateTime.UtcNow;
         }

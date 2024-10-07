@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Alansar.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240923220925_InitialAppMigration")]
+    [Migration("20241002215642_InitialAppMigration")]
     partial class InitialAppMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,6 @@ namespace Alansar.Migrations.AppDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("App")
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -72,7 +71,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -81,7 +79,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Bookings", "App");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningAssignment", b =>
@@ -129,7 +127,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -138,7 +135,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DiningAssignments", "App");
+                    b.ToTable("DiningAssignments");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningSchedule", b =>
@@ -183,7 +180,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -192,7 +188,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("DiningSchedules", "App");
+                    b.ToTable("DiningSchedules");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.DiningSpace", b =>
@@ -235,12 +231,11 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiningSpaces", "App");
+                    b.ToTable("DiningSpaces");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Grade", b =>
@@ -281,12 +276,11 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("character varying(55)");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Grades", "App");
+                    b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Identity.User", b =>
@@ -301,6 +295,7 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
@@ -316,7 +311,8 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
@@ -351,10 +347,12 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -379,11 +377,19 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", "App");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Room", b =>
@@ -435,7 +441,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Type")
@@ -443,7 +448,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", "App");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Session", b =>
@@ -485,7 +490,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Year")
@@ -495,7 +499,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sessions", "App");
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Student", b =>
@@ -558,7 +562,6 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("UserId")
@@ -570,9 +573,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasIndex("RoomId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Students", "App");
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Tenant", b =>
@@ -617,7 +618,7 @@ namespace Alansar.Migrations.AppDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenant", "App");
+                    b.ToTable("Tenants");
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.TenantSubscription", b =>
@@ -677,14 +678,145 @@ namespace Alansar.Migrations.AppDb
                         .HasColumnType("integer");
 
                     b.Property<string>("TenantKey")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TenantSubscriptions", "App");
+                    b.ToTable("TenantSubscriptions");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Booking", b =>
@@ -754,12 +886,6 @@ namespace Alansar.Migrations.AppDb
                         .WithMany("Students")
                         .HasForeignKey("RoomId");
 
-                    b.HasOne("Alansar.Core.Entities.Identity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Grade");
                 });
 
@@ -772,6 +898,57 @@ namespace Alansar.Migrations.AppDb
                         .IsRequired();
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("Alansar.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("Alansar.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Alansar.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("Alansar.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Room", b =>

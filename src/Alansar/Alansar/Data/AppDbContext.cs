@@ -15,7 +15,8 @@ using System.Xml;
 namespace Alansar.Data;
 
 //public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+//public class AppDbContext : DbContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITenantService _tenantService;
@@ -38,12 +39,12 @@ public class AppDbContext : DbContext
     /// <summary>
     /// duplicate table of aspnetusers
     /// </summary>
-    public DbSet<User> User => Set<User>();
+    //public DbSet<User> User => Set<User>();
 
     /// <summary>
     /// duplicate taBLE FOR Tenant
     /// </summary>
-    public DbSet<Tenant> Tenant => Set<Tenant>();
+    //public DbSet<Tenant> Tenant => Set<Tenant>();
 
     public DbSet<DiningSpace> DiningSpaces => Set<DiningSpace>();
     public DbSet<Room> Rooms => Set<Room>();
@@ -51,7 +52,10 @@ public class AppDbContext : DbContext
     public DbSet<DiningAssignment> DiningAssignments => Set<DiningAssignment>();
     public DbSet<Session> Sessions => Set<Session>();
     public DbSet<Grade> Grades => Set<Grade>();
+    public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
+
+    //public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
 
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -63,40 +67,35 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("App");
+        //builder.HasDefaultSchema("App");
 
         //builder.Entity<Student>()
-        //    .HasOne(s => s.User)
-        //    .WithOne()
-        //    .HasForeignKey<Student>(s => s.UserId);
-
-        builder.Entity<Student>()
-            .HasOne<User>() // Reference User by its ID, without mapping the entire entity
-            .WithMany()
-            .HasForeignKey(s => s.UserId);
+        //    .HasOne<User>()
+        //    .WithMany()
+        //    .HasForeignKey(s => s.UserId);
 
 
 
         //for migration
-        if (_httpContextAccessor?.HttpContext == null)
-        {
-            // Design-time logic (e.g., when running migrations)
-            // Do not apply tenant-based or role-based filtering during design-time operations
-            return;
-        }
+        //if (_httpContextAccessor?.HttpContext == null)
+        //{
+        //    // Design-time logic (e.g., when running migrations)
+        //    // Do not apply tenant-based or role-based filtering during design-time operations
+        //    return;
+        //}
 
         // Retrieve TenantKey from the context or service
-        string tenantKey = string.Empty;
-        string role3 = string.Empty;
+        //string tenantKey = string.Empty;
+        //string role3 = string.Empty;
 
-        if (_httpContextAccessor.HttpContext != null)
-        {
-            //tenantKey = _tenantService.GetCurrentUserTenantId();
-            //role3 = _tenantService.GetCurrentUserRole();
+        //if (_httpContextAccessor.HttpContext != null)
+        //{
+        //    //tenantKey = _tenantService.GetCurrentUserTenantId();
+        //    //role3 = _tenantService.GetCurrentUserRole();
 
-            tenantKey = GetTenantIdFromHeaders();
-            role3 = GetRoleFromHeaders();
-        }
+        //    tenantKey = GetTenantIdFromHeaders();
+        //    role3 = GetRoleFromHeaders();
+        //}
 
         // Apply the tenant filter to entities
         //if (role3 != "Admin" && role3 != "SuperAdmin" || _httpContextAccessor.HttpContext.User is not null)
@@ -111,17 +110,17 @@ public class AppDbContext : DbContext
 
 
         // Extract TenantId and Role from headers
-        var tenantId = GetTenantIdFromHeaders();
-        var role = GetRoleFromHeaders();
+        //var tenantId = GetTenantIdFromHeaders();
+        //var role = GetRoleFromHeaders();
  
-        string tenantId2 = string.Empty;
-        string role2 = string.Empty;
+        //string tenantId2 = string.Empty;
+        //string role2 = string.Empty;
 
-        if (_httpContextAccessor.HttpContext is not null)
-        {
-            tenantId2 = _tenantService.GetCurrentUserTenantId();
-            role2 = _tenantService.GetCurrentUserRole();
-        }
+        //if (_httpContextAccessor.HttpContext is not null)
+        //{
+        //    tenantId2 = _tenantService.GetCurrentUserTenantId();
+        //    role2 = _tenantService.GetCurrentUserRole();
+        //}
 
     }
 

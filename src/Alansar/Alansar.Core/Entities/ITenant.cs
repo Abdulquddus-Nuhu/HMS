@@ -8,6 +8,6 @@ namespace Alansar.Core.Entities
 {
     public interface ITenant
     {
-        public string TenantKey { get; set; }
+        public string? TenantKey { get; set; }
     }
 }

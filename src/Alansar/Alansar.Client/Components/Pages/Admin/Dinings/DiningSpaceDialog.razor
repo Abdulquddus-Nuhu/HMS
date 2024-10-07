@@ -114,7 +114,8 @@
             if (DiningSpace.Id == 0)
             {
                 // Call API to add new dining space
-                response = await Http.PostAsJsonAsync("api/diningspace", DiningSpace);
+                response = await Http.PostAsJsonAsync("api/diningspace/create", DiningSpace);
+                Console.WriteLine(response.StatusCode);
             }
             else
             {

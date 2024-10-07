@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Alansar.Core.Entities.Identity
 {
-    public class User : IdentityUser<int>, ITenant
+    public class User : IdentityUser<Guid>, ITenant
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string? MiddleName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -28,6 +28,7 @@ namespace Alansar.Core.Entities.Identity
         //protected User() -- inherited cannot use constructor
         public User()
         {
+            Id = Guid.NewGuid();
             IsDeleted = false;
             Created = DateTime.UtcNow;
         }

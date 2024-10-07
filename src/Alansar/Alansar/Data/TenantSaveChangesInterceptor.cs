@@ -55,8 +55,16 @@ namespace Alansar.Data
                         }
                         else
                         {
+                            if (tenantKey is null)
+                            {
+                                tenantEntity.TenantKey = "default";
+                            }
+                            else
+                            {
+                                tenantEntity.TenantKey = tenantKey;
+                            }
                             // For other roles, set the TenantKey to the user's tenant key
-                            tenantEntity.TenantKey = tenantKey;
+                            //tenantEntity.TenantKey = tenantKey;
                         }
                     }
 

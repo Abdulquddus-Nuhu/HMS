@@ -9,7 +9,7 @@ namespace Alansar.Core.Entities
 {
     public class TenantSubscription : BaseEntity
     {
-        public int TenantId { get; set; }
+        public Guid TenantId { get; set; }
         public Tenant? Tenant { get; set; }
 
         public SubscriptionPlanType PlanType { get; set; }

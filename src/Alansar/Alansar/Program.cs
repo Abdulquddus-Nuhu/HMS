@@ -82,22 +82,38 @@ builder.Services.AddDbContextFactory<AppDbContext>(opt =>
     opt.EnableSensitiveDataLogging();
 });
 
-//identity
-builder.Services.AddDbContext<IdentityDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+// Add Identity For DbContext
 builder.Services.AddIdentity<User, IdentityRole<int>>()
-    .AddEntityFrameworkStores<IdentityDbContext>()
+    .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-//interceptor for identityDbContext
-builder.Services.AddScoped<SyncEntityInterceptor>();
+//identity
+//builder.Services.AddDbContext<IdentityDbContext>(options =>
+//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<IdentityDbContext>((serviceProvider, options) =>
+//builder.Services.AddIdentity<User, IdentityRole<int>>()
+//    .AddEntityFrameworkStores<IdentityDbContext>()
+//    .AddDefaultTokenProviders();
+
+//interceptor for identityDbContext
+//builder.Services.AddScoped<SyncEntityInterceptor>();
+
+//builder.Services.AddDbContext<IdentityDbContext>((serviceProvider, options) =>
+//{
+//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+//           .AddInterceptors(serviceProvider.GetRequiredService<SyncEntityInterceptor>());
+//});
+
+
+//interceptor for AppDbContext
+builder.Services.AddScoped<TenantSaveChangesInterceptor>();
+
+builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .AddInterceptors(serviceProvider.GetRequiredService<SyncEntityInterceptor>());
+           .AddInterceptors(serviceProvider.GetRequiredService<TenantSaveChangesInterceptor>());
 });
+
 
 
 
@@ -145,9 +161,9 @@ if (!app.Environment.IsProduction())
         var services = scope.ServiceProvider;
 
         // Apply IdentityDbContext migrations
-        var identityDbContext = services.GetRequiredService<IdentityDbContext>();
+        //var identityDbContext = services.GetRequiredService<IdentityDbContext>();
         //identityDbContext.Database.EnsureDeleted();
-        identityDbContext.Database.Migrate();
+        //identityDbContext.Database.Migrate();
 
         // Apply AppDbContext migrations
         var appDbContext = services.GetRequiredService<AppDbContext>();

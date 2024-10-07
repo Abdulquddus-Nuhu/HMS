@@ -44,7 +44,7 @@ namespace Alansar.Controllers
             return diningSpace;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<DiningSpace>> CreateDiningSpace(DiningSpace diningSpace)
         {
             _context.DiningSpaces.Add(diningSpace);

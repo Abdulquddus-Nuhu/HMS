@@ -7,8 +7,6 @@ namespace Alansar.Core.Entities
     /// </summary>
     public class Session : BaseEntity
     {
-        public int Id { get; set; }
-
         [MaxLength(55)]
         public string Year { get; set; } // Format: "2023/2024"
         public DateTime? StartDate { get; set; }  

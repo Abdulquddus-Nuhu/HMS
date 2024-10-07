@@ -25,13 +25,15 @@ namespace Alansar.Data
         }
 
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.AddInterceptors(new SyncEntityInterceptor(_appDbContext, this));
-            base.OnConfiguring(optionsBuilder);
-        }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.AddInterceptors(new SyncEntityInterceptor(_appDbContext, this));
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
         // No global TenantId filter here
         protected override void OnModelCreating(ModelBuilder builder)
@@ -40,12 +42,8 @@ namespace Alansar.Data
             builder.HasDefaultSchema("Identity");
 
             // Configure composite primary key for IdentityUserRole<int>
-            builder.Entity<IdentityUserRole<int>>()
-                .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            // User and Tenant schema managed by IdentityDbContext
-            //builder.Entity<User>().ToTable("User");
-            //builder.Entity<Tenant>().ToTable("Tenant");
+            //builder.Entity<IdentityUserRole<int>>()
+            //    .HasKey(ur => new { ur.UserId, ur.RoleId });
 
             // Configure other Identity-related entities if needed
         }
