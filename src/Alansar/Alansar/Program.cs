@@ -106,13 +106,13 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
 
 
 //interceptor for AppDbContext
-builder.Services.AddScoped<TenantSaveChangesInterceptor>();
+//builder.Services.AddScoped<TenantSaveChangesInterceptor>();
 
-builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .AddInterceptors(serviceProvider.GetRequiredService<TenantSaveChangesInterceptor>());
-});
+//builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+//{
+//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+//           .AddInterceptors(serviceProvider.GetRequiredService<TenantSaveChangesInterceptor>());
+//});
 
 
 
@@ -167,7 +167,7 @@ if (!app.Environment.IsProduction())
 
         // Apply AppDbContext migrations
         var appDbContext = services.GetRequiredService<AppDbContext>();
-        //appDbContext.Database.EnsureDeleted();
+        appDbContext.Database.EnsureDeleted();
         appDbContext.Database.Migrate();
 
         // Seed data for both contexts

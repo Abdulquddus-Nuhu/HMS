@@ -90,56 +90,99 @@
     public async Task LoginUser()
     {
         var usert = await UserManager.FindByEmailAsync(Input.Email);
+        if (usert is null)
+        {
+            errorMessage = "Error: User not found.";
+            return;
+        }
         Console.WriteLine(JsonSerializer.Serialize(usert));
+
+        // var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+
+        // Check if the provided password matches the user's stored password
+        var isPasswordValid = await UserManager.CheckPasswordAsync(usert, Input.Password);
+        if (!isPasswordValid)
+        {
+            errorMessage = "Error: Invalid login attempt.";
+            Logger.LogWarning("Invalid password for user {Email}.", Input.Email);
+            return;
+        }
+        else if (isPasswordValid)
+        {
+            // If the password is valid, create a list of claims
+            var claims = new List<Claim>
+            {
+                new Claim("id", usert.Id.ToString()),
+                new Claim("fullname", usert.FullName ?? string.Empty),
+                new Claim("role", usert.RoleType.ToString() ?? string.Empty),
+                new Claim("tenantId", usert.TenantKey ?? string.Empty)
+            };
+
+            // Add the claims to the user
+            // await UserManager.AddClaimsAsync(usert, claims);
+
+            // Create a new ClaimsIdentity with the added claims
+            var identity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            // Sign in the user with the new claims
+            await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+
+            Logger.LogInformation("User {Email} logged in successfully.", Input.Email);
+
+            // Redirect to the return URL or another appropriate location
+            RedirectManager.RedirectTo(ReturnUrl);
+        }
 
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-        if (result.Succeeded)
-        {
-            Logger.LogInformation("User logged in.");
+        // var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        // if (result.Succeeded)
+        // {
+        //     Logger.LogInformation("User logged in.");
 
-            // Retrieve the user
-            // var user = await UserManager.FindByEmailAsync(Input.Email);
-            // var user = await IdentityContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
-            // var user = await dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
-            // if (user is not null)
-            // {
-            //     var claims = new List<Claim>()
-            //     {
-            //         new Claim("id", user.Id.ToString()),
-            //         new Claim("fullname", user.FullName.ToString()),
-            //         new Claim("role", user.RoleType.ToString()),
-            //         new Claim("tenantId", user.TenantKey ?? string.Empty),
-            //     };
+        //     // Retrieve the user
+        //     // var user = await UserManager.FindByEmailAsync(Input.Email);
+        //     // var user = await IdentityContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
+        //     // var user = await dbContext.Users.IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Email == Input.Email);
+        //     // if (user is not null)
+        //     // {
+        //     //     var claims = new List<Claim>()
+        //     //     {
+        //     //         new Claim("id", user.Id.ToString()),
+        //     //         new Claim("fullname", user.FullName.ToString()),
+        //     //         new Claim("role", user.RoleType.ToString()),
+        //     //         new Claim("tenantId", user.TenantKey ?? string.Empty),
+        //     //     };
 
-            //     // Add claims to user
-            //     await UserManager.AddClaimsAsync(user, claims);
+        //     //     // Add claims to user
+        //     //     await UserManager.AddClaimsAsync(user, claims);
 
-            //     // Sign in the user again with the new claims
-            //     var identity = new ClaimsIdentity(claims, IdentityConstants.ExternalScheme);
-            //     var principal = new ClaimsPrincipal(identity);
+        //     //     // Sign in the user again with the new claims
+        //     //     var identity = new ClaimsIdentity(claims, IdentityConstants.ExternalScheme);
+        //     //     var principal = new ClaimsPrincipal(identity);
 
-            //     // var claims = await userManager.GetClaimsAsync(user);
-            //     var newPrincipal = new ClaimsPrincipal(identity);
-            //     var authState = Task.FromResult(new AuthenticationState(newPrincipal));
+        //     //     // var claims = await userManager.GetClaimsAsync(user);
+        //     //     var newPrincipal = new ClaimsPrincipal(identity);
+        //     //     var authState = Task.FromResult(new AuthenticationState(newPrincipal));
 
-            //     await HttpContext.SignInAsync(IdentityConstants.ExternalScheme, principal);
-            // }
+        //     //     await HttpContext.SignInAsync(IdentityConstants.ExternalScheme, principal);
+        //     // }
 
-            RedirectManager.RedirectTo(ReturnUrl);
-        }
-        else if (result.RequiresTwoFactor)
-        {
-            RedirectManager.RedirectTo(
-                "Account/LoginWith2fa",
-                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
-        }
-        else if (result.IsLockedOut)
-        {
-            Logger.LogWarning("User account locked out.");
-            RedirectManager.RedirectTo("Account/Lockout");
-        }
+        //     RedirectManager.RedirectTo(ReturnUrl);
+        // }
+        // else if (result.RequiresTwoFactor)
+        // {
+        //     RedirectManager.RedirectTo(
+        //         "Account/LoginWith2fa",
+        //         new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
+        // }
+        // else if (result.IsLockedOut)
+        // {
+        //     Logger.LogWarning("User account locked out.");
+        //     RedirectManager.RedirectTo("Account/Lockout");
+        // }
         else
         {
             errorMessage = "Error: Invalid login attempt.";

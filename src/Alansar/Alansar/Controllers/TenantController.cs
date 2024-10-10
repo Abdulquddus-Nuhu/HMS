@@ -59,6 +59,39 @@ namespace Alansar.Controllers
         //    //await _identityDbContext.SaveChangesAsync();
         //}
 
+        //Assuming you have your DbContext as `IdentityDbContext`
+        private async Task AddRoleToUserManually(int userId, string roleName)
+        {
+            // Get the user by ID
+            var user = await _appDbContext.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            // Get the role by name
+            var role = await _appDbContext.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+            if (role == null)
+            {
+                throw new Exception("Role not found");
+            }
+
+            // Create a new IdentityUserRole object
+            var userRole = new IdentityUserRole<int>
+            {
+                UserId = user.Id, // Set the user ID
+                RoleId = role.Id  // Set the role ID
+            };
+
+            // Add the user-role relationship to the IdentityUserRoles table
+            //_appDbContext.UserRoles.Add(userRole);
+            //_identityDbContext.UserRoles.Add(userRole);
+
+            // Save the changes to the database
+            await _appDbContext.SaveChangesAsync();
+            //await _identityDbContext.SaveChangesAsync();
+        }
+
 
         [HttpPost("create-tenant")]
         public async Task<ActionResult> CreateTenant([FromBody] CreateTenantRequest request)
@@ -67,7 +100,7 @@ namespace Alansar.Controllers
 
             var tenant = new Tenant()
             {
-                Id = 50,
+                Id = Guid.NewGuid(),
                 SchoolName = request.SchoolName,
                 Email = request.Email,
             };
@@ -93,9 +126,9 @@ namespace Alansar.Controllers
                 //var createdUser = await _userManager.FindByEmailAsync(user.Email);
 
                 //await AddRoleToUserManually(user.Id, nameof(RoleType.TenantAdmin));
-                //await AddRoleToUserManually(createdUser.Id, nameof(RoleType.TenantAdmin));
+                await AddRoleToUserManually(user.Id, nameof(RoleType.TenantAdmin));
                 //await _userManager.AddToRoleAsync(createdUser, nameof(RoleType.TenantAdmin));
-                await _userManager.AddToRoleAsync(user, nameof(RoleType.TenantAdmin));
+                //await _userManager.AddToRoleAsync(user, nameof(RoleType.TenantAdmin));
             }
             else
             {

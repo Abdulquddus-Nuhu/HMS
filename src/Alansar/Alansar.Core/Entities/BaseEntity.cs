@@ -6,7 +6,7 @@ namespace Alansar.Core.Entities
     public class BaseEntity : ITenant
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public string? DeletedBy { get; set; } = string.Empty;
         public virtual DateTime? Deleted { get; set; }
@@ -19,7 +19,7 @@ namespace Alansar.Core.Entities
 
         protected BaseEntity()
         {
-            Id = Guid.NewGuid();
+            //Id = Guid.NewGuid();
             IsDeleted = false;
             //Created = DateTime.Now;
             Created = DateTime.UtcNow;

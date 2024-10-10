@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Alansar.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241002215642_InitialAppMigration")]
+    [Migration("20241010193100_InitialAppMigration")]
     partial class InitialAppMigration
     {
         /// <inheritdoc />
@@ -578,11 +578,9 @@ namespace Alansar.Migrations.AppDb
 
             modelBuilder.Entity("Alansar.Core.Entities.Tenant", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
@@ -674,8 +672,8 @@ namespace Alansar.Migrations.AppDb
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("TenantKey")
                         .HasColumnType("text");

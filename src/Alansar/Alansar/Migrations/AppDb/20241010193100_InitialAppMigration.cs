@@ -166,8 +166,7 @@ namespace Alansar.Migrations.AppDb
                 name: "Tenants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedBy = table.Column<string>(type: "text", nullable: true),
                     Deleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -336,7 +335,7 @@ namespace Alansar.Migrations.AppDb
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TenantId = table.Column<int>(type: "integer", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: false),
                     PlanType = table.Column<int>(type: "integer", nullable: false),
                     BillingCycle = table.Column<int>(type: "integer", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
