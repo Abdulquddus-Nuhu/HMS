@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Alansar.Core.Entities
 {
-    public class BaseEntity : ITenant
+    public class BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

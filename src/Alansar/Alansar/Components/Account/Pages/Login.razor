@@ -97,6 +97,7 @@
         }
         Console.WriteLine(JsonSerializer.Serialize(usert));
 
+<<<<<<< HEAD
         // var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
 
@@ -118,6 +119,40 @@
                 new Claim("role", usert.RoleType.ToString() ?? string.Empty),
                 new Claim("tenantId", usert.TenantKey ?? string.Empty)
             };
+=======
+            // Build the URL with query string parameters
+            string homeUrl = string.Empty;
+
+            var user = await UserManager.FindByEmailAsync(Input.Email);
+            if (user is not null)
+            {
+                switch (user.RoleType)
+                {
+                    case RoleType.Admin:
+                        homeUrl = $"/admin-home?userId={user.Id}&role={user.RoleType}";
+                        break;
+                    case RoleType.Student:
+                        homeUrl = $"/student-home?userId={user.Id}&role={user.RoleType}";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Redirect to the Home component with query strings
+            // NavigationManager.NavigateTo(homeUrl);
+
+            // Retrieve the user
+            var user1 = await UserManager.FindByEmailAsync(Input.Email);
+            if (user1 is not null)
+            {
+                var claims = new List<Claim>()
+                {
+                    new Claim("id", user.Id.ToString()),
+                    new Claim("fullname", user.FullName.ToString()),
+                    new Claim("role", user.RoleType.ToString()),
+                };
+>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service)
 
             // Add the claims to the user
             // await UserManager.AddClaimsAsync(usert, claims);
