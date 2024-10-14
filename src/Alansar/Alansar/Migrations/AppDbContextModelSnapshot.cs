@@ -17,7 +17,7 @@ namespace Alansar.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -227,7 +227,7 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             Capacity = 100,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9220),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5313),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -238,7 +238,7 @@ namespace Alansar.Migrations
                         {
                             Id = 2,
                             Capacity = 150,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9224),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5316),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -292,7 +292,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(8658),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5030),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -302,7 +302,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(8664),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5032),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -312,7 +312,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(8665),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5033),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -430,8 +430,8 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "97f5bf01-33e7-43bb-bd9d-af6803dd5161",
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9481),
+                            ConcurrencyStamp = "9a2b8697-e989-47bc-a611-b9dd2a3ec9cc",
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5540),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "admin1@example.com",
@@ -444,7 +444,7 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "ADMIN1@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPZkl8AluQjieEgWZLmWBObzM7nxtvq0Z8ndGOCbNtGRH51aRJW0vzCRJR7tqTzueA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENbtu5kxUtughTsi9EdPEB7UfEwqTXU1qLDdzlkhN5vxJJV0ce5wiLbc3c1nGVOTxA==",
                             PhoneNumberConfirmed = false,
                             RoleType = 0,
                             SecurityStamp = "",
@@ -455,8 +455,8 @@ namespace Alansar.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0fee4a1b-8c35-4777-a578-5ce31c894b80",
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 193, DateTimeKind.Utc).AddTicks(1871),
+                            ConcurrencyStamp = "d84ba3ee-00b5-4ab5-9a4c-cc1ec8dcb6f5",
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 565, DateTimeKind.Utc).AddTicks(8658),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "admin2@example.com",
@@ -469,7 +469,7 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "ADMIN2@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENOL5+96VZkYfvF+GSz1AELJ1cAoTRohAEliayIpWJw/XKcIv1bYyoFHMn/ugUh9EA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJCZiSGVmteinKX/kC1Qw7gtGdNb4km+gcN20qoP7lca+7Syu+HgYhhk8uArhNgzog==",
                             PhoneNumberConfirmed = false,
                             RoleType = 0,
                             SecurityStamp = "",
@@ -480,8 +480,8 @@ namespace Alansar.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a693c94b-5ec2-464b-9bd4-a82d10de067e",
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 321, DateTimeKind.Utc).AddTicks(4859),
+                            ConcurrencyStamp = "5f6976bf-e71e-40ab-9fc9-8a9c3c363d1d",
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 692, DateTimeKind.Utc).AddTicks(2457),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student1@example.com",
@@ -494,7 +494,7 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT1@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENftfjg7i5beXgcRyiRd63QZZD7Btem1ElwXDbMr9int5UQvE5JEk+/9FW1NU6+vpA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN1wv3m3vN4q0OAJ5rc9DEC1Rb5rXntu+eO1NAFaliHxOFemG6ESRkF/JJaSUAoAFA==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
@@ -505,8 +505,8 @@ namespace Alansar.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "268dbf4e-d149-4ce7-9624-bb85389b7f24",
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 451, DateTimeKind.Utc).AddTicks(1408),
+                            ConcurrencyStamp = "1829cb16-9fc4-4433-a637-a4984fba1571",
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 816, DateTimeKind.Utc).AddTicks(337),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student2@example.com",
@@ -519,7 +519,7 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT2@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEC3WsjeHoQWcV8Ez0mG9Gsb0gAPNXJA9ovF1IjZSpFmMz/CI5Bfk5SZPWZBjs9oZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEByPUnGzoQ79sj0tjM7eHVyF/Jn1vmIlYXJEsl0eoM2Oi7maTkpUFVfKVQOejXGpVw==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
@@ -530,8 +530,8 @@ namespace Alansar.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ca15fd02-b6dc-47c3-9811-de8af18d7d33",
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 587, DateTimeKind.Utc).AddTicks(8242),
+                            ConcurrencyStamp = "6b4b33de-4641-4ba2-8247-da4f33d9c248",
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 934, DateTimeKind.Utc).AddTicks(8501),
                             CreatedBy = "",
                             DeletedBy = "",
                             Email = "student3@example.com",
@@ -544,7 +544,7 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             NormalizedEmail = "STUDENT3@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMwY6l1QslnvRi6hwJQ8YF52L3sJ4620B1jxUhkSkCUB+dKdLKV1ESsdDgNdrELBiA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENHW2V3y3NEsyYztxOFNnv9PJJumKuMoJWSznJgC0TAtz1N4ZvKzDYLC04Tin4as0Q==",
                             PhoneNumberConfirmed = false,
                             RoleType = 1,
                             SecurityStamp = "",
@@ -613,7 +613,7 @@ namespace Alansar.Migrations
                         {
                             Id = 1,
                             Capacity = 24,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9021),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5248),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -627,7 +627,7 @@ namespace Alansar.Migrations
                         {
                             Id = 2,
                             Capacity = 20,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9031),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5256),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -641,7 +641,7 @@ namespace Alansar.Migrations
                         {
                             Id = 3,
                             Capacity = 54,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9140),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5259),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -655,7 +655,7 @@ namespace Alansar.Migrations
                         {
                             Id = 4,
                             Capacity = 5,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9144),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5262),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -669,7 +669,7 @@ namespace Alansar.Migrations
                         {
                             Id = 5,
                             Capacity = 32,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9148),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5264),
                             CreatedBy = "",
                             DeletedBy = "",
                             IsActive = false,
@@ -732,7 +732,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9284),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5362),
                             CreatedBy = "",
                             DeletedBy = "",
                             EndDate = new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
@@ -744,7 +744,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 65, DateTimeKind.Utc).AddTicks(9296),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 35, 433, DateTimeKind.Utc).AddTicks(5374),
                             CreatedBy = "",
                             DeletedBy = "",
                             EndDate = new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
@@ -832,7 +832,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 715, DateTimeKind.Utc).AddTicks(3660),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 36, 54, DateTimeKind.Utc).AddTicks(8295),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -848,7 +848,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 715, DateTimeKind.Utc).AddTicks(3676),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 36, 54, DateTimeKind.Utc).AddTicks(8313),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -864,7 +864,7 @@ namespace Alansar.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 9, 16, 21, 58, 16, 715, DateTimeKind.Utc).AddTicks(3685),
+                            Created = new DateTime(2024, 10, 14, 15, 8, 36, 54, DateTimeKind.Utc).AddTicks(8317),
                             CreatedBy = "",
                             DateOfBirth = new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             DeletedBy = "",
@@ -877,6 +877,114 @@ namespace Alansar.Migrations
                             MiddleName = "",
                             UserId = 5
                         });
+                });
+
+            modelBuilder.Entity("Alansar.Core.Entities.Tenant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("SchoolName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
+                });
+
+            modelBuilder.Entity("Alansar.Core.Entities.TenantSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("BillingCycle")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("FeeAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("HasPaid")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PlanType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantSubscriptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -919,6 +1027,12 @@ namespace Alansar.Migrations
                             Id = 2,
                             Name = "Student",
                             NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "TenantAdmin",
+                            NormalizedName = "TENANTADMIN"
                         });
                 });
 
@@ -1025,6 +1139,11 @@ namespace Alansar.Migrations
                         {
                             UserId = 4,
                             RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            RoleId = 2
                         });
                 });
 
@@ -1123,6 +1242,17 @@ namespace Alansar.Migrations
                     b.Navigation("Grade");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Alansar.Core.Entities.TenantSubscription", b =>
+                {
+                    b.HasOne("Alansar.Core.Entities.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
