@@ -38,9 +38,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 
-// Register the Refit client for your API
-builder.Services.AddRefitClient<IStudentApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://localhost:5081/"));
 
 
 // Configure HTTP client for the app

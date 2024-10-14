@@ -74,7 +74,7 @@ namespace Alansar.Controllers
                         Email = model.Email,
                         UserId = user.Id,
                         DateOfBirth = DateTime.UtcNow,
-                        TenantKey = "1"
+                        //TenantKey = "1"
 
                     };
                     _context.Students.Add(student);

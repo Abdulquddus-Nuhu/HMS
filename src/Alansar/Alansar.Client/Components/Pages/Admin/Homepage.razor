@@ -11,10 +11,11 @@
 @rendermode InteractiveAuto
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims
 
 @* @inherits ClaimsBaseComponent *@
-@using Alansar.Client.ApiCalls
-@inject IStudentApi StudentApi
+@* @using Alansar.Client.ApiCalls *@
+@* @inject IStudentApi StudentApi *@
 
 
 @* <PageTitle>Hostel Management System</PageTitle> *@
@@ -84,11 +85,9 @@
     private int numberOfRooms = 50; 
     private ClaimsPrincipal claimsPrincipal; 
     private AuthenticationState authState;
-  private ClaimsPrincipal claimsPrincipal; 
-  private AuthenticationState authState;
-  private string tenantId;
-  private string role;
-  private string email;
+    private string tenantId = string.Empty;
+    private string role = string.Empty;
+    private string email = string.Empty;
 
 
     protected override async Task OnInitializedAsync()
@@ -97,9 +96,9 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
-        tenantId = claimsPrincipal.FindFirst("TenantId")?.Value;
-        role = claimsPrincipal.FindFirst("role")?.Value;
-        email = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
+        // tenantId = claimsPrincipal.FindFirst("TenantId")?.Value;
+        // role = claimsPrincipal.FindFirst("role")?.Value;
+        // email = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
 
         // Call the API using Refit
         // numberOfStudents = await StudentApi.GetStudentCountAsync(tenantId, role, email);

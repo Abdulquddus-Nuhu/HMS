@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Alansar.Migrations.AppDb
+namespace Alansar.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialAppMigration : Migration
+    public partial class revert_inint : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,12 +81,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -107,12 +102,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -138,12 +128,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -166,12 +151,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -190,13 +170,9 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     SchoolName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false)
-========
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -331,12 +307,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -374,8 +345,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -405,12 +375,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -446,12 +411,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -486,12 +446,7 @@ namespace Alansar.Migrations.AppDb
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    TenantKey = table.Column<string>(type: "text", nullable: true)
-========
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
                 },
                 constraints: table =>
                 {
@@ -510,95 +465,6 @@ namespace Alansar.Migrations.AppDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.cs
-========
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { 1, null, "Admin", "ADMIN" },
-                    { 2, null, "Student", "STUDENT" },
-                    { 3, null, "TenantAdmin", "TENANTADMIN" },
-                    { 4, null, "SuperAdmin", "SUPERADMIN" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Created", "CreatedBy", "Deleted", "DeletedBy", "Email", "EmailConfirmed", "FirstName", "IsActive", "IsDeleted", "LastModifiedBy", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "Modified", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RoleType", "SecurityStamp", "TenantId", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { 1, 0, "35a7fb82-6e27-49b2-a37b-fb6f476f7ea5", new DateTime(2024, 9, 20, 9, 21, 19, 882, DateTimeKind.Utc).AddTicks(7593), "", null, "", "admin1@example.com", true, "Admin1", false, false, null, "", false, null, "", null, "ADMIN1@EXAMPLE.COM", "ADMIN1@EXAMPLE.COM", "AQAAAAIAAYagAAAAEEkiT7rOKDU2P+vHzbcuwldNZ1r7jTxh2/WdYFb+2TXtEc3YYfXVEJrkeT2sCj2mgA==", null, false, 0, "", null, false, "admin1@example.com" },
-                    { 2, 0, "93e3ea6f-b8f5-47d1-81ad-f0f0de37872a", new DateTime(2024, 9, 20, 9, 21, 19, 968, DateTimeKind.Utc).AddTicks(49), "", null, "", "admin2@example.com", true, "Admin2", false, false, null, "", false, null, "", null, "ADMIN2@EXAMPLE.COM", "ADMIN2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEJPGqhecgYrMn7K7JFb8JaRB4lMyGfPEZbI0B0+FSBdm/vl7sCsi1uZcmRBwUHud8Q==", null, false, 0, "", null, false, "admin2@example.com" },
-                    { 3, 0, "670d4499-98b7-437c-8bf9-c2c31ea0b417", new DateTime(2024, 9, 20, 9, 21, 20, 56, DateTimeKind.Utc).AddTicks(8545), "", null, "", "student1@example.com", true, "Student1", false, false, null, "", false, null, "", null, "STUDENT1@EXAMPLE.COM", "STUDENT1@EXAMPLE.COM", "AQAAAAIAAYagAAAAENE48NWhl2F/zPLtUKEZFdQd+aHQ1H4aZrB6GCudqbsYCNQMO5yIGimBcg/w+nrK7g==", null, false, 1, "", null, false, "student1@example.com" },
-                    { 4, 0, "693e724e-973c-4337-8623-5213873ea656", new DateTime(2024, 9, 20, 9, 21, 20, 160, DateTimeKind.Utc).AddTicks(7381), "", null, "", "student2@example.com", true, "Student2", false, false, null, "", false, null, "", null, "STUDENT2@EXAMPLE.COM", "STUDENT2@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAo+gvrQ/5ht2oodtU0iBGfYxB0qEcpKYD4weYz8OljQcO8gMoBJPJNEGAnct3u9nA==", null, false, 1, "", null, false, "student2@example.com" },
-                    { 5, 0, "292cffb9-d8ac-40a1-a27d-1dd229739e41", new DateTime(2024, 9, 20, 9, 21, 20, 259, DateTimeKind.Utc).AddTicks(913), "", null, "", "student3@example.com", true, "Student3", false, false, null, "", false, null, "", null, "STUDENT3@EXAMPLE.COM", "STUDENT3@EXAMPLE.COM", "AQAAAAIAAYagAAAAEPYF18nYXjZ223OhLft6+weUqSoZG+tjnkoyUk4vjh3YpiBUrgLgAdru5qNxvxMirA==", null, false, 1, "", null, false, "student3@example.com" },
-                    { 6, 0, "03011cb9-a5d2-417a-b9b7-c46e09a7b35c", new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4212), "", null, "", "boss@example.com", true, "Boss", false, false, null, "", false, null, "", null, "BOSS@EXAMPLE.COM", "BOSS@EXAMPLE.COM", "AQAAAAIAAYagAAAAEFOQqb7LEtMXQpEXGxXn4aKphvJAaINK81eyKMNzKkIDolt8mEDMu1WHCuFbYHpnEw==", null, false, 3, "", null, false, "boss@example.com" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "DiningSpaces",
-                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name" },
-                values: new object[,]
-                {
-                    { 1, 100, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4043), "", null, "", false, false, null, null, "Dining Hall 1" },
-                    { 2, 150, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4045), "", null, "", false, false, null, null, "Dining Hall 2" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Grades",
-                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "Name" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3805), "", null, "", false, false, null, null, "JSS1" },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3809), "", null, "", false, false, null, null, "JSS2" },
-                    { 3, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3810), "", null, "", false, false, null, null, "JSS3" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Rooms",
-                columns: new[] { "Id", "Capacity", "Created", "CreatedBy", "Deleted", "DeletedBy", "IsActive", "IsAvailable", "IsDeleted", "LastModifiedBy", "Modified", "Price", "RoomNumber", "SessionYear", "Type" },
-                values: new object[,]
-                {
-                    { 1, 24, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3990), "", null, "", false, true, false, null, null, 2000m, "101", null, "Single" },
-                    { 2, 20, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3997), "", null, "", false, true, false, null, null, 3000m, "102", null, "Double" },
-                    { 3, 54, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3999), "", null, "", false, false, false, null, null, 6000m, "103", null, "Single" },
-                    { 4, 5, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4001), "", null, "", false, true, false, null, null, 9000m, "104", null, "Double" },
-                    { 5, 32, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4003), "", null, "", false, false, false, null, null, 4000m, "105", null, "Single" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Sessions",
-                columns: new[] { "Id", "Created", "CreatedBy", "Deleted", "DeletedBy", "EndDate", "IsActive", "IsDeleted", "LastModifiedBy", "Modified", "StartDate", "Year" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4082), "", null, "", new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc), "2022/2023" },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4090), "", null, "", new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), false, false, null, null, new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc), "2021/2022" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 1, 2 },
-                    { 2, 3 },
-                    { 2, 4 },
-                    { 2, 5 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Students",
-                columns: new[] { "Id", "Created", "CreatedBy", "DateOfBirth", "Deleted", "DeletedBy", "Email", "FirstName", "GradeId", "IsActive", "IsDeleted", "LastModifiedBy", "LastName", "MiddleName", "Modified", "Password", "RoomId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3705), "", new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student1@example.com", "Student 1", 2, false, false, null, "Student 1", "", null, null, null, 3 },
-                    { 2, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3716), "", new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student2@example.com", "Student 2", 3, false, false, null, "Student 2", "", null, null, null, 4 },
-                    { 3, new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3728), "", new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc), null, "", "student3@example.com", "Student 3", 3, false, false, null, "Student 3", "", null, null, null, 5 }
-                });
-
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.cs
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

@@ -141,7 +141,7 @@ namespace Alansar.Controllers
             var tenantSubscription = new TenantSubscription()
             {
                 TenantId = tenant.Id,
-                TenantKey = tenant.Id.ToString(),  //required for filteration by tenant
+                //TenantKey = tenant.Id.ToString(),  //required for filteration by tenant
                 PlanType = request.PlanType,
                 BillingCycle = request.BillingCycle,
                 HasPaid = false,

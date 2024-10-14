@@ -106,7 +106,7 @@
                     new Claim("id", user.Id.ToString()),
                     new Claim("fullname", user.FullName.ToString()),
                     new Claim("role", user.RoleType.ToString()),
-                    new Claim("tenantId", user.TenantId.Value.ToString() ?? string.Empty),
+                    new Claim("tenantId", user.TenantKey.ToString() ?? string.Empty),
                 };
 
             // Add the claims to the user

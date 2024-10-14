@@ -3,29 +3,21 @@ using System;
 using Alansar.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Alansar.Migrations.AppDb
+namespace Alansar.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-    [Migration("20241010193100_InitialAppMigration")]
-    partial class InitialAppMigration
-========
-    [Migration("20240920092123_init")]
-    partial class init
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -75,12 +67,6 @@ namespace Alansar.Migrations.AppDb
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
@@ -134,12 +120,6 @@ namespace Alansar.Migrations.AppDb
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.HasKey("Id");
 
                     b.HasIndex("DiningSpaceId");
@@ -190,12 +170,6 @@ namespace Alansar.Migrations.AppDb
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.HasKey("Id");
 
                     b.HasIndex("DiningSpaceId");
@@ -244,42 +218,9 @@ namespace Alansar.Migrations.AppDb
                         .IsRequired()
                         .HasColumnType("text");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("DiningSpaces");
-========
-                    b.HasKey("Id");
-
-                    b.ToTable("DiningSpaces");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 100,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4043),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsDeleted = false,
-                            Name = "Dining Hall 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 150,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4045),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsDeleted = false,
-                            Name = "Dining Hall 2"
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Grade", b =>
@@ -319,50 +260,9 @@ namespace Alansar.Migrations.AppDb
                         .HasMaxLength(55)
                         .HasColumnType("character varying(55)");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("Grades");
-========
-                    b.HasKey("Id");
-
-                    b.ToTable("Grades");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3805),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsDeleted = false,
-                            Name = "JSS1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3809),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsDeleted = false,
-                            Name = "JSS2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3810),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsDeleted = false,
-                            Name = "JSS3"
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Identity.User", b =>
@@ -472,161 +372,6 @@ namespace Alansar.Migrations.AppDb
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-========
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 6,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "03011cb9-a5d2-417a-b9b7-c46e09a7b35c",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4212),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "boss@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Boss",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "BOSS@EXAMPLE.COM",
-                            NormalizedUserName = "BOSS@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFOQqb7LEtMXQpEXGxXn4aKphvJAaINK81eyKMNzKkIDolt8mEDMu1WHCuFbYHpnEw==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 3,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "boss@example.com"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "35a7fb82-6e27-49b2-a37b-fb6f476f7ea5",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 882, DateTimeKind.Utc).AddTicks(7593),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "admin1@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Admin1",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "ADMIN1@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEkiT7rOKDU2P+vHzbcuwldNZ1r7jTxh2/WdYFb+2TXtEc3YYfXVEJrkeT2sCj2mgA==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 0,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin1@example.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "93e3ea6f-b8f5-47d1-81ad-f0f0de37872a",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 968, DateTimeKind.Utc).AddTicks(49),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "admin2@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Admin2",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "ADMIN2@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJPGqhecgYrMn7K7JFb8JaRB4lMyGfPEZbI0B0+FSBdm/vl7sCsi1uZcmRBwUHud8Q==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 0,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin2@example.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "670d4499-98b7-437c-8bf9-c2c31ea0b417",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 56, DateTimeKind.Utc).AddTicks(8545),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "student1@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Student1",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "STUDENT1@EXAMPLE.COM",
-                            NormalizedUserName = "STUDENT1@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENE48NWhl2F/zPLtUKEZFdQd+aHQ1H4aZrB6GCudqbsYCNQMO5yIGimBcg/w+nrK7g==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 1,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "student1@example.com"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "693e724e-973c-4337-8623-5213873ea656",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 160, DateTimeKind.Utc).AddTicks(7381),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "student2@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Student2",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "STUDENT2@EXAMPLE.COM",
-                            NormalizedUserName = "STUDENT2@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAo+gvrQ/5ht2oodtU0iBGfYxB0qEcpKYD4weYz8OljQcO8gMoBJPJNEGAnct3u9nA==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 1,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "student2@example.com"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "292cffb9-d8ac-40a1-a27d-1dd229739e41",
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 259, DateTimeKind.Utc).AddTicks(913),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            Email = "student3@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Student3",
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MiddleName = "",
-                            NormalizedEmail = "STUDENT3@EXAMPLE.COM",
-                            NormalizedUserName = "STUDENT3@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPYF18nYXjZ223OhLft6+weUqSoZG+tjnkoyUk4vjh3YpiBUrgLgAdru5qNxvxMirA==",
-                            PhoneNumberConfirmed = false,
-                            RoleType = 1,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "student3@example.com"
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Room", b =>
@@ -677,93 +422,12 @@ namespace Alansar.Migrations.AppDb
                     b.Property<string>("SessionYear")
                         .HasColumnType("text");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-========
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 24,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3990),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Price = 2000m,
-                            RoomNumber = "101",
-                            Type = "Single"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 20,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3997),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Price = 3000m,
-                            RoomNumber = "102",
-                            Type = "Double"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 54,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(3999),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Price = 6000m,
-                            RoomNumber = "103",
-                            Type = "Single"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Capacity = 5,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4001),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Price = 9000m,
-                            RoomNumber = "104",
-                            Type = "Double"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Capacity = 32,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4003),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            IsActive = false,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Price = 4000m,
-                            RoomNumber = "105",
-                            Type = "Single"
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Session", b =>
@@ -804,12 +468,6 @@ namespace Alansar.Migrations.AppDb
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.Property<string>("Year")
                         .IsRequired()
                         .HasMaxLength(55)
@@ -818,35 +476,6 @@ namespace Alansar.Migrations.AppDb
                     b.HasKey("Id");
 
                     b.ToTable("Sessions");
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-========
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4082),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            EndDate = new DateTime(2023, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
-                            IsActive = false,
-                            IsDeleted = false,
-                            StartDate = new DateTime(2022, 9, 16, 21, 46, 17, 608, DateTimeKind.Utc),
-                            Year = "2022/2023"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 19, 799, DateTimeKind.Utc).AddTicks(4090),
-                            CreatedBy = "",
-                            DeletedBy = "",
-                            EndDate = new DateTime(2022, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
-                            IsActive = false,
-                            IsDeleted = false,
-                            StartDate = new DateTime(2021, 9, 12, 21, 46, 17, 608, DateTimeKind.Utc),
-                            Year = "2021/2022"
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Student", b =>
@@ -908,12 +537,6 @@ namespace Alansar.Migrations.AppDb
                     b.Property<int?>("RoomId")
                         .HasColumnType("integer");
 
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
-
-========
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
@@ -924,59 +547,6 @@ namespace Alansar.Migrations.AppDb
                     b.HasIndex("RoomId");
 
                     b.ToTable("Students");
-<<<<<<<< HEAD:src/Alansar/Alansar/Migrations/AppDb/20241010193100_InitialAppMigration.Designer.cs
-========
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3705),
-                            CreatedBy = "",
-                            DateOfBirth = new DateTime(2000, 12, 3, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DeletedBy = "",
-                            Email = "student1@example.com",
-                            FirstName = "Student 1",
-                            GradeId = 2,
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "Student 1",
-                            MiddleName = "",
-                            UserId = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3716),
-                            CreatedBy = "",
-                            DateOfBirth = new DateTime(2001, 6, 7, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DeletedBy = "",
-                            Email = "student2@example.com",
-                            FirstName = "Student 2",
-                            GradeId = 3,
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "Student 2",
-                            MiddleName = "",
-                            UserId = 4
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(2024, 9, 20, 9, 21, 20, 364, DateTimeKind.Utc).AddTicks(3728),
-                            CreatedBy = "",
-                            DateOfBirth = new DateTime(2004, 4, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DeletedBy = "",
-                            Email = "student3@example.com",
-                            FirstName = "Student 3",
-                            GradeId = 3,
-                            IsActive = false,
-                            IsDeleted = false,
-                            LastName = "Student 3",
-                            MiddleName = "",
-                            UserId = 5
-                        });
->>>>>>>> parent of 11e6028 (setting up filteration by tenant middleware & service):src/Alansar/Alansar/Migrations/20240920092123_init.Designer.cs
                 });
 
             modelBuilder.Entity("Alansar.Core.Entities.Tenant", b =>
@@ -1077,9 +647,6 @@ namespace Alansar.Migrations.AppDb
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("TenantKey")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

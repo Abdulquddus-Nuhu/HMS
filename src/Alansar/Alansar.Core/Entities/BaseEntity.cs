@@ -15,7 +15,7 @@ namespace Alansar.Core.Entities
         public virtual DateTime? Modified { get; set; }
         public virtual string? LastModifiedBy { get; set; }
         public bool IsActive { get; set; }
-        public string? TenantKey { get; set; }
+        //public string? TenantKey { get; set; }
 
         protected BaseEntity()
         {
