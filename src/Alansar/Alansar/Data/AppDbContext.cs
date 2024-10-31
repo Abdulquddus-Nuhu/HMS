@@ -25,6 +25,7 @@ namespace Alansar.Data
         public DbSet<Grade> Grades => Set<Grade>();
         public DbSet<Tenant> Tenants => Set<Tenant>();
         public DbSet<TenantSubscription> TenantSubscriptions => Set<TenantSubscription>();
+        public DbSet<Plan> Plans => Set<Plan>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)

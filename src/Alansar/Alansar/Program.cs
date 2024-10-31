@@ -15,6 +15,7 @@ using System.Net;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using System.Net.Http.Headers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,6 @@ if (builder.Environment.IsStaging())
 
 // Add core services
 builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<CookieService>();
 
 // Add controllers, razor pages, and HTTP context accessor
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -38,8 +38,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 
-
 // Configure HTTP client for the app
+builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("MyAppClient", client =>
 {
     client.BaseAddress = new Uri("http://localhost:5081/");
@@ -116,7 +116,7 @@ if (!app.Environment.IsProduction())
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<AppDbContext>();
-        context.Database.EnsureDeleted();
+        //context.Database.EnsureDeleted();
         context.Database.Migrate();
     }
 }
