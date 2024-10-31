@@ -1,6 +1,6 @@
 ﻿using Alansar.Core.Entities;
 using Alansar.Core.Entities.Identity;
-using Alansar.Core.Models.Requests;
+using Alansar.Core.Models.Requests.Plan;
 using Alansar.Core.Models.Responses;
 using Alansar.Data;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +32,6 @@ namespace Alansar.Controllers
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(_configuration["Flutterwave:Link"]);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration["Flutterwave:SecretKey"]);
-
         }
 
         [HttpPost]
@@ -45,7 +44,7 @@ namespace Alansar.Controllers
             {
                 response.Status = false;
                 response.Code = 400;
-                response.Message = "Plan with the same name already exist!";
+                response.Message = "Plan with the same name already exists!";
                 return BadRequest(response);
             }
 
@@ -62,24 +61,22 @@ namespace Alansar.Controllers
                 }
                 else if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    _logger.LogInformation("Recieved bad request status code from flutterwave");
+                    _logger.LogInformation("Received bad request status code from Flutterwave");
                     return BadRequest();
                 }
-
             }
             catch (Exception ex)
             {
-                _logger.LogError("An Error occured while calling flutterwave. {Error}", ex.Message);
-                return StatusCode(500,"Error occured");
+                _logger.LogError("An error occurred while calling Flutterwave. {Error}", ex.Message);
+                return StatusCode(500, "Error occurred");
             }
-
 
             var plan = new Plan()
             {
                 Id = Guid.NewGuid(),
                 Name = responseData.Data.Name,
                 Amount = responseData.Data.Amount,
-                status = responseData.Data.Status == "active" ? true : false,
+                Status = responseData.Data.Status == "active",
                 Created = responseData.Data.CreatedAt,
                 Currency = responseData.Data.Currency,
                 Duration = responseData.Data.Duration,
@@ -91,9 +88,92 @@ namespace Alansar.Controllers
             _context.Add(plan);
             await _context.SaveChangesAsync();
 
-            response.Message = "Plan Created successfully!";
+            response.Message = "Plan created successfully!";
             return Ok(response);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<Plan>>> GetAllPlans()
+        {
+            var plans = await _context.Plans.ToListAsync();
+            return Ok(plans);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Plan>> GetPlanById(Guid id)
+        {
+            var plan = await _context.Plans.FindAsync(id);
+            if (plan == null)
+            {
+                return NotFound(new BaseResponse { Status = false, Message = "Plan not found." });
+            }
+            return Ok(plan);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditPlan(Guid id, [FromBody] EditPlanRequest request)
+        {
+            var plan = await _context.Plans.FindAsync(id);
+            if (plan == null)
+            {
+                return NotFound(new BaseResponse { Status = false, Message = "Plan not found." });
+            }
+
+            // Update on Flutterwave API first
+            try
+            {
+                var apiResponse = await _httpClient.PutAsJsonAsync($"payment-plans/{plan.FlutterwavePlanId}", request);
+                if (!apiResponse.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Failed to update the plan on Flutterwave.");
+                    return BadRequest(new BaseResponse { Status = false, Message = "Failed to update the plan on Flutterwave." });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while updating the plan on Flutterwave. {Error}", ex.Message);
+                return StatusCode(500, "Error occurred while updating plan on Flutterwave.");
+            }
+
+            // Update locally
+            plan.Name = request.Name;
+
+            _context.Update(plan);
+            await _context.SaveChangesAsync();
+
+            return Ok(new BaseResponse { Status = true, Message = "Plan updated successfully!" });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePlan(Guid id)
+        {
+            var plan = await _context.Plans.FindAsync(id);
+            if (plan == null)
+            {
+                return NotFound(new BaseResponse { Status = false, Message = "Plan not found." });
+            }
+
+            // Call Flutterwave API to delete the plan first
+            try
+            {
+                var apiResponse = await _httpClient.DeleteAsync($"payment-plans/{plan.FlutterwavePlanId}");
+                if (!apiResponse.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Failed to delete the plan on Flutterwave.");
+                    return BadRequest(new BaseResponse { Status = false, Message = "Failed to delete the plan on Flutterwave." });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while deleting the plan on Flutterwave. {Error}", ex.Message);
+                return StatusCode(500, "Error occurred while deleting plan on Flutterwave.");
+            }
+
+            // Delete locally
+            _context.Plans.Remove(plan);
+            await _context.SaveChangesAsync();
+
+            return Ok(new BaseResponse { Status = true, Message = "Plan deleted successfully!" });
+        }
     }
 }

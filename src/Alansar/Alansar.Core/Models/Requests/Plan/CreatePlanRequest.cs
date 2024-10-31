@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alansar.Core.Models.Requests
+namespace Alansar.Core.Models.Requests.Plan
 {
     public record CreatePlanRequest
     {
