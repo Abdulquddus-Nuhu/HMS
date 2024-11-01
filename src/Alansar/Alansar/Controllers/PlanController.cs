@@ -110,7 +110,7 @@ namespace Alansar.Controllers
             return Ok(plan);
         }
 
-        [HttpPut("")]
+        [HttpPut]
         public async Task<ActionResult> ActivateDeactivatePlan(Guid id, bool status)
         {
             var plan = await _context.Plans.FindAsync(id);
@@ -189,7 +189,7 @@ namespace Alansar.Controllers
             return Ok(new BaseResponse { Status = true, Message = "Plan updated successfully!" });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeletePlan(Guid id)
         {
             var plan = await _context.Plans.FindAsync(id);
@@ -201,7 +201,7 @@ namespace Alansar.Controllers
             // Call Flutterwave API to delete the plan first
             try
             {
-                var apiResponse = await _httpClient.DeleteAsync($"payment-plans/{plan.FlutterwavePlanId}");
+                var apiResponse = await _httpClient.DeleteAsync($"payment-plans/{plan.FlutterwavePlanId}/cancel");
                 if (!apiResponse.IsSuccessStatusCode)
                 {
                     _logger.LogInformation("Failed to delete the plan on Flutterwave.");
