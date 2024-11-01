@@ -21,7 +21,7 @@ namespace Alansar.Core.Entities
         public int Duration { get; set; }
         public string Token { get; set; }
         public string Currency { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
 
 

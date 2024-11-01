@@ -76,7 +76,7 @@ namespace Alansar.Controllers
                 Id = Guid.NewGuid(),
                 Name = responseData.Data.Name,
                 Amount = responseData.Data.Amount,
-                Status = responseData.Data.Status == "active",
+                Status = responseData.Data.Status,
                 Created = responseData.Data.CreatedAt,
                 Currency = responseData.Data.Currency,
                 Duration = responseData.Data.Duration,
@@ -110,14 +110,20 @@ namespace Alansar.Controllers
             return Ok(plan);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> EditPlan(Guid id, [FromBody] EditPlanRequest request)
+        [HttpPut("")]
+        public async Task<ActionResult> ActivateDeactivatePlan(Guid id, bool status)
         {
             var plan = await _context.Plans.FindAsync(id);
             if (plan == null)
             {
                 return NotFound(new BaseResponse { Status = false, Message = "Plan not found." });
             }
+
+            var request = new EditPlanRequest()
+            {
+                Name = plan.Name,
+                Status = status == true ? "active" : "inactive",
+            };
 
             // Update on Flutterwave API first
             try
@@ -137,6 +143,45 @@ namespace Alansar.Controllers
 
             // Update locally
             plan.Name = request.Name;
+            plan.Status = request.Status;
+
+            _context.Update(plan);
+            await _context.SaveChangesAsync();
+
+            return Ok(new BaseResponse { Status = true, Message = "Plan updated successfully!" });
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditPlan(Guid id, [FromBody] EditPlanRequest request)
+        {
+            var plan = await _context.Plans.FindAsync(id);
+            if (plan == null)
+            {
+                return NotFound(new BaseResponse { Status = false, Message = "Plan not found." });
+            }
+
+            request.Status = plan.Status;
+
+            // Update on Flutterwave API first
+            try
+            {
+                var apiResponse = await _httpClient.PutAsJsonAsync($"payment-plans/{plan.FlutterwavePlanId}", request);
+                if (!apiResponse.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Failed to update the plan on Flutterwave.");
+                    return BadRequest(new BaseResponse { Status = false, Message = "Failed to update the plan on Flutterwave." });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while updating the plan on Flutterwave. {Error}", ex.Message);
+                return StatusCode(500, "Error occurred while updating plan on Flutterwave.");
+            }
+
+            // Update locally
+            plan.Name = request.Name;
+            plan.Status = request.Status;
 
             _context.Update(plan);
             await _context.SaveChangesAsync();

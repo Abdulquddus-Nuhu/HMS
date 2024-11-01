@@ -9,5 +9,6 @@ namespace Alansar.Core.Models.Requests.Plan
     public class EditPlanRequest
     {
         public string Name { get; set; }
+        public string Status { get; set; }
     }
 }
