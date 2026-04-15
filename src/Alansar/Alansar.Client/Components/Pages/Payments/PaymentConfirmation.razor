@@ -55,7 +55,7 @@
         if (queryDictionary.ContainsKey("status"))
         {
             var status = queryDictionary["status"];
-            isSuccess = status == "successful";
+            isSuccess = status == "completed";
             isLoading = false;
 
             // Optionally, confirm the payment with your backend

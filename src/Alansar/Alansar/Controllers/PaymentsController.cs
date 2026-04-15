@@ -110,7 +110,7 @@ namespace Alansar.Controllers
         {
             // Here you could implement logic to handle the payment confirmation
             // such as updating the user's booking status, sending a receipt, etc.
-            if (request.Status == "successful")
+            if (request.Status == "completed")
             {
                 // Handle successful payment
                 return Ok();
